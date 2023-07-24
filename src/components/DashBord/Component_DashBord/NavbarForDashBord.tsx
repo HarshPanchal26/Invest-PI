@@ -27,11 +27,11 @@ export default function NavbarForDashBord() {
   return (
     <>
       {/* <div className="min-h-full"> */}
-        <Disclosure as="nav" className="bg-white h-auto w-full sticky top-0 z-1 border">
+        <Disclosure as="nav" className="bg-white h-auto w-full sticky top-0 z-1 border-b-2">
           {({ open }) => (
             <>
-              <div className=" w-full px-4 sm:px-6 lg:px-8 shadow-xl">
-                <div className="flex h-16 items-center justify-between">
+              <div className=" w-full px-4 sm:px-6 lg:px-8 ">
+                <div className="flex h-14 items-center justify-between">
                   <div className="flex items-center">
                     <div className="flex-shrink-0 md:hidden block">
                       <img

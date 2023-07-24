@@ -29,6 +29,9 @@ const AccountType = lazy(
     ()=> import('../Authentication/AccountType')
 )
 
+const Registration = lazy(
+    () => import('../Authentication/SignInPage')
+)
 const FeedPage = lazy(
     ()=> import('../DashBord/Feed')
 )
@@ -137,12 +140,22 @@ const raisefund = {
     requiredRole : 'all' as UserRole
 }
 
+const registration = {
+    path :'/registration',
+    component: <Registration />,
+    title: 'Registartion ',
+    description: 'Sign Up for new user ',
+    exact : true,
+    fullPageWidth : true,
+    requiredRole : 'all' as UserRole
+}
+
 export const IntroPages : IPageMeta[] = [
     introPage ,
     logInPage,
     accountType,
     userType,
-    
+    registration   
 ]
 
 export const DashBordPages : IPageMeta[]=[
