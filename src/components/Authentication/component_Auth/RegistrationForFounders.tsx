@@ -6,15 +6,17 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import PersonalDetailsForFounder from '../component_Forms/PersonalDetailsForFounder';
+import ProductDetailsForFounder from '../component_Forms/ProductDetailsForFounder';
+import Interest from '../component_Forms/Interest';
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+const steps = ['Personal Details', 'Your Innterest', 'Verification'];
 
 export default function RegistrationForFounders() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
 
   const isStepOptional = (step: number) => {
-    return step === 1;
+    return step === -1;
   };
 
   const isStepSkipped = (step: number) => {
@@ -90,19 +92,31 @@ export default function RegistrationForFounders() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Box sx={{ mt: 2, mb: 1 }}>
-            {/* Step {activeStep + 1} */}
-            <PersonalDetailsForFounder handleNext={handleNext}/>
-          </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <div className='my-10 flex justify-start mx-2'>
             <Button
-              color="inherit"
+              variant='outlined'
+              color="primary"
               disabled={activeStep === 0}
               onClick={handleBack}
               sx={{ mr: 1 }}
             >
               Back
             </Button>
+          </div>
+          <Box sx={{ mt: 2, mb: 1 }}>
+            {activeStep === 0 && <PersonalDetailsForFounder handleNext={handleNext} />}
+            {activeStep === 1 && <Interest handleNext={handleNext} />}
+            {activeStep === 2 && <ProductDetailsForFounder />}
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            {/* <Button
+              color="inherit"
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
+              Back
+            </Button> */}
             <Box sx={{ flex: '1 1 auto' }} />
             {/* {isStepOptional(activeStep) && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>

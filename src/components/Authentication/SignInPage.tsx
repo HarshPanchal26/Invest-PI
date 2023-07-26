@@ -4,7 +4,7 @@ import RegistrationForAngel from './component_Auth/RegistrationForAngel';
 import RegistrationForFounders from './component_Auth/RegistrationForFounders';
 import RegistrationForStartUp from './component_Auth/RegistrationForStartUp';
 
-const userCast = ["VC" , "angelinvestor" , "founder" , "startUp"];
+const userCast = ["investor" , "business" , "founder" , "CF"];
 
 export default function SignInPage() {
   
@@ -23,19 +23,20 @@ export default function SignInPage() {
    } , [userType])
 
   return (
-    <div className='border h-full md:mx-5 md:p-8 mx-2 p-5'>
+    <div className='border h-auto md:mx-5 md:p-8 mx-2 p-5'>
       {
-        userType === 'VC' && <RegistartionForVC/>   
+        userType === 'CF' && <RegistartionForVC/>   
       }
       {
-        userType === 'angelinvestor' && <RegistrationForAngel/>   
+        userType === 'investor' && <RegistrationForAngel/>   
       }
       {
         userType === 'founder' && <RegistrationForFounders/>   
       }
       {
-        userType === 'startUp' && <RegistrationForStartUp/>   
+        userType === 'business' && <RegistrationForStartUp/>   
       }
+      
         
     </div>
   )

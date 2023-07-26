@@ -18,7 +18,8 @@ const steps = ['Select Categoery', 'Select Subcategory'];
 const categoryForUser =
     [
         { URL: '', title: 'Investor', value: 'investor' },
-        { URL: '', title: 'Founder', value: 'founder' }
+        { URL: '', title: 'Founder', value: 'founder' },
+        { URL: '', title: 'Business', value: 'business' }
     ]
 
 const objForFounder = [
@@ -27,8 +28,8 @@ const objForFounder = [
 ]
 
 const objForInvestor = [
-    { URL: '', title: 'Angel Investor', value: 'angelinvestor' },
-    { URL: '', title: 'Venture Capital', value: 'VC' }
+    { URL: '', title: 'Individual Investor', value: 'investor' },
+    { URL: '', title: 'Capital Firm', value: 'CF' }
 ]
 
 export default function AccountType() {
@@ -83,8 +84,12 @@ export default function AccountType() {
     };
 
     const categoryDidSelect = (value : String)=>{
-        setTypeOfUser(value);
-        handleNext();
+        if(value === "business" || value === "founder") window.location.href=`/registration?type=${value}`
+        else {
+            setTypeOfUser(value);
+            handleNext();
+
+        }
     }
 
     const subCatergoryDidSelect = (value : String)=>{
@@ -166,24 +171,25 @@ export default function AccountType() {
 
                                 </div>
                             </div>)}
-                        {activeStep === 1 && typeOfUser === 'founder' && (
+                        {/* {activeStep === 1 && typeOfUser === 'founder' && (
                             <div className=' flex items-center justify-center h-auto flex-col'>
                                 <Logo />
                                 <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10">Slecte your Preference</p>
                                 <div className='bg-white p-4 rounded-lg w-[80%] lg:w-5/6 text-center flex sm:flex-row flex-col flex-wrap h-[80%] border'>
                                     {/* Boxes */}
 
-                                    {objForFounder.map((item, index) => {
+                                    {/* {objForFounder.map((item, index) => {
                                         return (
-                                            <div className='shadow-md w-auto h-full rounded-lg text-center text-3xl my-10 mx-auto' onClick={()=>subCatergoryDidSelect(item.value)}>
+                                            <div className='shadow-md w-auto h-full rounded-lg text-center text-3xl my-10 mx-auto' onClick={()=>categoryDidSelect(item.value)}>
                                                 <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyF_wARWd9jbfA9k88RvbIj-c-KWBYOsqAeg&usqp=CAU' alt='Innvestor iamge ' className='h-full w-[200px] mx-auto'></img>
                                                 <p className="mt-2 text-xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10 mx-4">{item.title}</p>
                                             </div>)
                                     })
-                                    }
+                                    } */}
 
-                                </div>
-                            </div>)}
+                                {/* </div> */}
+                            {/* </div> */}
+                            {/* )} */} 
 
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>

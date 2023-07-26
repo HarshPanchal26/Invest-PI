@@ -48,7 +48,9 @@ const TieUps = lazy(
     ()=> import('../DashBord/TieUps')
 )
 
-
+const Interest = lazy(
+    ()=>import('../Authentication/component_Forms/Interest')
+)
 
 
 const introPage  = {
@@ -149,6 +151,16 @@ const registration = {
     fullPageWidth : true,
     requiredRole : 'all' as UserRole
 }
+
+// const interestPage = {
+//     path :'/registration',
+//     component: <Registration />,
+//     title: 'Registartion ',
+//     description: 'Sign Up for new user ',
+//     exact : true,
+//     fullPageWidth : true,
+//     requiredRole : 'all' as UserRole
+// }
 
 export const IntroPages : IPageMeta[] = [
     introPage ,
