@@ -6,7 +6,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import PersonalDetailsForFounder from '../component_Forms/PersonalDetailsForFounder';
-import ProductDetailsForFounder from '../component_Forms/ProductDetailsForFounder';
+import SignInForm from '../component_Forms/SignInForm';
 import Interest from '../component_Forms/Interest';
 
 const steps = ['Personal Details', 'Your Innterest', 'Verification'];
@@ -103,20 +103,24 @@ export default function RegistrationForFounders() {
               Back
             </Button>
           </div>
-          <Box sx={{ mt: 2, mb: 1 }}>
+          {/* <Box sx={{ mt: 2, mb: 1 }} > */}
+          <div className='h-auto mx-2 border'>
             {activeStep === 0 && <PersonalDetailsForFounder handleNext={handleNext} />}
             {activeStep === 1 && <Interest handleNext={handleNext} />}
-            {activeStep === 2 && <ProductDetailsForFounder />}
-          </Box>
+            {activeStep === 2 && <SignInForm />}
+          </div>
+          {/* </Box> */}
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            {/* <Button
-              color="inherit"
+            {activeStep !== 2 && (
+            <Button
+              color="primary"
+              variant='outlined'
               disabled={activeStep === 0}
               onClick={handleBack}
               sx={{ mr: 1 }}
             >
               Back
-            </Button> */}
+            </Button>)}
             <Box sx={{ flex: '1 1 auto' }} />
             {/* {isStepOptional(activeStep) && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
