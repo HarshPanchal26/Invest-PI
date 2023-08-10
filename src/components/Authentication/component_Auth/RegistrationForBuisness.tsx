@@ -5,17 +5,27 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import PersonalDetailsForFounder from '../component_Forms/PersonalDetailsForFounder';
+import CategoryForBusinesses from '../component_Forms/CategoryForBusinesses';
 import SignInForm from '../component_Forms/SignInForm';
 import Interest from '../component_Forms/Interest';
-const steps = ['Personal Details', 'Your Innterest', 'Verification'];
+import PersonalDetailsForEIL from '../component_Forms/PersonalDetailsForEIL';
+import PersonalDetailsForEC from '../component_Forms/PersonalDetailsForEC';
+import PersonalDetailsForStartUps from '../component_Forms/PersonalDetailsForStartUps';
 
-export default function RegistrationForFounders() {
+
+
+type typeForBusiness = 'Industry Leaders' | 'Emerging Challengers' | 'Visionary Startups';
+
+const steps = ['Buisness Category', 'Deatils about Business', 'Interest', 'Verification'];
+
+export default function RegistrationForStartUp() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
+  const [typeOfCompany, settypeOfCompany] = React.useState<typeForBusiness>();
   const [objForSignInComonent, setObjForSignInComonent] = React.useState<Object | null>(null);
   const [objForInterest,setObjForInterest] = React.useState<Array<string>>([]);
-  
+
+
   const isStepOptional = (step: number) => {
     return step === -1;
   };
@@ -58,29 +68,32 @@ export default function RegistrationForFounders() {
     setActiveStep(0);
   };
 
+
   return (
     <Box sx={{ width: '100%' }}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps: { completed?: boolean } = {};
-          const labelProps: {
-            optional?: React.ReactNode;
-          } = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant="caption">Optional</Typography>
+      <div className='md:block hidden'>
+        <Stepper activeStep={activeStep}>
+          {steps.map((label, index) => {
+            const stepProps: { completed?: boolean } = {};
+            const labelProps: {
+              optional?: React.ReactNode;
+            } = {};
+            if (isStepOptional(index)) {
+              labelProps.optional = (
+                <Typography variant="caption">Optional</Typography>
+              );
+            }
+            if (isStepSkipped(index)) {
+              stepProps.completed = false;
+            }
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
             );
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
+          })}
+        </Stepper>
+      </div>
       {activeStep === steps.length ? (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
@@ -104,29 +117,43 @@ export default function RegistrationForFounders() {
               Back
             </Button>
           </div>
-          <div className='h-auto mx-2 border'>
-            {activeStep === 0 && <PersonalDetailsForFounder 
-                                  handleNext={handleNext} 
-                                  setObjForSignInComonent={setObjForSignInComonent}
-                                  />}
-            {activeStep === 1 && <Interest handleNext={handleNext} setObjForInterest={setObjForInterest}/>}
-            {/* {activeStep === 1 && <Interest handleNext={handleNext} />} */}
-            {activeStep === 2 && <SignInForm 
-            objForSignInComonent={objForSignInComonent}
+          <div className='h-auto mx-2 '>
+            {activeStep === 0 && <CategoryForBusinesses handleNext={handleNext} setTypeofBusiness={settypeOfCompany} />}
+            {activeStep === 1 && (typeOfCompany === 'Industry Leaders' ? (
+              <PersonalDetailsForEIL
+                handleNext={handleNext}
+                setObjForSignInComonent={setObjForSignInComonent} />
+            ) : activeStep === 1 && typeOfCompany === 'Emerging Challengers' ? (
+              <PersonalDetailsForEC
+                handleNext={handleNext}
+                setObjForSignInComonent={setObjForSignInComonent} />
+            ) : activeStep === 1 && typeOfCompany === 'Visionary Startups' ? (
+              <PersonalDetailsForStartUps
+                handleNext={handleNext}
+                setObjForSignInComonent={setObjForSignInComonent} />
+            ) : (
+              <h1>Loadingggg ........</h1>
+            ))}
+            {/* {activeStep === 1 && (<h1>Loadingggg ........</h1>)} */}
+
+            {activeStep === 2 && <Interest handleNext={handleNext} setObjForInterest={setObjForInterest}/>}
+            {/* {activeStep === 2 && <Interest handleNext={handleNext} />} */}
+            {activeStep === 3 && <SignInForm 
+            objForSignInComonent={objForSignInComonent} 
             objForInterest={objForInterest}
             />}
           </div>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             {activeStep !== 2 && (
-            <Button
-              color="primary"
-              variant='outlined'
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>)}
+              <Button
+                color="primary"
+                variant='outlined'
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                Back
+              </Button>)}
             <Box sx={{ flex: '1 1 auto' }} />
             {/* {isStepOptional(activeStep) && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>

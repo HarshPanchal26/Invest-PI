@@ -5,12 +5,19 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import PersonalDetailsForInvestor from '../component_Forms/PersonalDetailsForInvestor';
+import SignInForm from '../component_Forms/SignInForm';
+import Interest from '../component_Forms/Interest';
 
-const steps = ['Personal Details', 'Investment Experience', 'Investment Preferences'];
+
+const steps = ['Personal Details', 'Your Innterest', 'Verification'];
 
 export default function RegistrationForAngel() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
+  const [objForSignInComonent, setObjForSignInComonent] = React.useState<Object | null>(null);
+  const [objForInterest,setObjForInterest] = React.useState<Array<string>>([]);
+
 
   const isStepOptional = (step: number) => {
     return step === 1;
@@ -89,28 +96,49 @@ export default function RegistrationForAngel() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+          <div className='my-10 flex justify-start mx-2'>
             <Button
-              color="inherit"
+              variant='outlined'
+              color="primary"
               disabled={activeStep === 0}
               onClick={handleBack}
               sx={{ mr: 1 }}
             >
               Back
             </Button>
+          </div>
+          <div className='h-auto mx-2 border'>
+            {activeStep === 0 && <PersonalDetailsForInvestor handleNext={handleNext} setObjForSignInComonent={setObjForSignInComonent} />}
+            {activeStep === 1 && <Interest handleNext={handleNext} setObjForInterest={setObjForInterest}/>}
+            {activeStep === 2 && <SignInForm 
+            objForSignInComonent={objForSignInComonent}
+            objForInterest={objForInterest}
+            />}
+          </div>
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            {activeStep !== 2 && (
+            <Button
+              color="primary"
+              variant='outlined'
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
+              Back
+            </Button>)}
             <Box sx={{ flex: '1 1 auto' }} />
             {isStepOptional(activeStep) && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                 Skip
               </Button>
             )}
-            <Button onClick={handleNext}>
+            {/* <Button onClick={handleNext}>
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
+            </Button> */}
           </Box>
         </React.Fragment>
       )}
     </Box>
   );
 }
+

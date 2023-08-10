@@ -2,23 +2,25 @@ import { useState } from "react";
 import { Button } from '@mui/material';
 import { PersonalDataVarificationForFounder } from '../../../Verification/PersonalDataVarification'
 import {objForPersonalDataOfFounder} from '../../../utils/factory/ObjForFormData';
+import {SchemaForFounderObj} from '../../../utils/factory/ObjForSchema'
 
 type propsType = {
-  handleNext: Function
+  handleNext: Function,
+  setObjForSignInComonent: React.Dispatch<React.SetStateAction<Object>>
 }
 type TypeForPersonalDetails = {
   "first-name": string,
   "last-name": string,
   "email": string,
-  "phone-number" : number,
-  "house-number" : number,
+  "phone-number" : string,
+  // "house-number" : number,
   "country": string,
   "street-address": string,
   "city": string,
-  "state": string,
+  "State": string,
   "ZIP": number
 }
-export default function PersonalDetailsForFounder({ handleNext }: propsType) {
+export default function PersonalDetailsForFounder({ handleNext  , setObjForSignInComonent}: propsType) {
 
 
   const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForPersonalDetails>(objForPersonalDataOfFounder)
@@ -37,6 +39,8 @@ export default function PersonalDetailsForFounder({ handleNext }: propsType) {
   const handleClick = async () => {
     try {
       await PersonalDataVarificationForFounder(dataForPersonalDetails);
+      let Schema = SchemaForFounderObj(dataForPersonalDetails)
+      setObjForSignInComonent(Schema);
       handleNext();
     } catch (error: any) {
       setErrorMessage(error)
@@ -109,7 +113,7 @@ export default function PersonalDetailsForFounder({ handleNext }: propsType) {
               <input
                 id="phone-number"
                 name="phone-number"
-                type="number"
+                type="text"
                 value={dataForPersonalDetails["phone-number"]}
                 autoComplete="phone-number"
                 onChange={handleChageInValue}
@@ -118,7 +122,7 @@ export default function PersonalDetailsForFounder({ handleNext }: propsType) {
             </div>
           </div>
 
-          <div className="sm:col-span-3">
+          {/* <div className="sm:col-span-3">
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
               House Number/Office Number
             </label>
@@ -133,7 +137,7 @@ export default function PersonalDetailsForFounder({ handleNext }: propsType) {
                 className="block p-5 w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
-          </div>
+          </div> */}
 
 
 
@@ -202,9 +206,9 @@ export default function PersonalDetailsForFounder({ handleNext }: propsType) {
             <div className="mt-2">
               <input
                 type="text"
-                name="state"
+                name="State"
                 id="region"
-                value={dataForPersonalDetails.state}
+                value={dataForPersonalDetails.State}
                 onChange={handleChageInValue}
                 autoComplete="address-level1"
                 className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button } from '@mui/material';
 import { DocumentPlusIcon } from '@heroicons/react/20/solid';
 import { ArrayForInvestorInterest } from '../../../utils/InterestArray'
+import {SchemaForInterest} from '../../../utils/factory/ObjForSchema'
 
 const ArrayForInterestOfInvestor = [
     ...ArrayForInvestorInterest
@@ -13,7 +14,8 @@ type TypeForstateForInterest = {
 }
 
 type propsType = {
-    handleNext: Function
+    handleNext: Function,
+    setObjForInterest : React.Dispatch<React.SetStateAction<Array<string>>>
 }
 
 
@@ -32,12 +34,14 @@ const stateForInterest: TypeForstateForInterest[] = [
     { type: "Manufacturing and Industry", feild: [] },
 ]
 
-export default function Interest({handleNext}: propsType) {
+export default function Interest({handleNext , setObjForInterest}: propsType) {
 
     const [feildOfInterestForInvestor, setfeildOfInterestForInvestor] = useState(stateForInterest);
     
     const handleClickForNext = () =>{
-        handleNext();
+        let interestObj = SchemaForInterest(feildOfInterestForInvestor)
+        setObjForInterest(interestObj);   
+        handleNext(interestObj);
     }
 
     const handleClick = (indexofInner: number, indexofOuter: number, type: any) => {
@@ -56,10 +60,8 @@ export default function Interest({handleNext}: propsType) {
         setfeildOfInterestForInvestor([
             ...newArrray
         ])
-
-
-
     }
+    console.log("Object" ,feildOfInterestForInvestor)
 
     return (
         <div className='bloch mx-auto md:w-1/2 w-full'>

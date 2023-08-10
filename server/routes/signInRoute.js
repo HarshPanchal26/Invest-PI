@@ -1,14 +1,22 @@
 const experess = require('express');
-const jwt = require('jsonwebtoken');
+const ContollerForSignIn = require('../controller/controllerForSignIn') 
+const {isValidUser , isAutorized} = require('../middleware/middlewareForAuthentication')
 
 const router = experess.Router();
 
 router.get('/', (req,res)=>{
-    res.send("I am get")
+    res.send("I am body")
 })
-router.post('/', (req,res)=>{
-    res.send("I am post")
+router.get('/authorization' , isAutorized , (_req , res)=>{
+    res.status(201).json({
+        authorized : true,
+        message : 'Autorized Person'
+    })
 })
+router.post('/founder', isValidUser , ContollerForSignIn);
+router.post('/investor', isValidUser , ContollerForSignIn);
+router.post('/business', isValidUser , ContollerForSignIn);
+
 
 module.exports = router;
 

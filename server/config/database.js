@@ -17,6 +17,7 @@ const connectionWithAtlas = ()=>{
         console.log("Error is :" , error.message)
     })
     
+    
 }
     
 module.exports = { connectionWithAtlas , mongoose}

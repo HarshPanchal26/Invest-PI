@@ -1,58 +1,105 @@
-import React, { useEffect , useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from '../../../Assets/logo';
-import {verifyDataForSignUp} from '../../../Verification/SignUpVerification'
-import {objForPersonalDataOfFounder} from '../../../utils/factory/ObjForFormData'
+import { verifyDataForSignUp } from '../../../Verification/SignUpVerification'
+import axios from 'axios';
 
 type formatForSignInData = {
-  Email : string,
-  Password : string,
-  CPassword : string
+  Email: string,
+  Password: string,
+  CPassword: string
 }
 
-export default function SignInForm() {
+type typeForProps = {
+  objForSignInComonent: any
+  objForInterest : Object
+}
 
-  const [dataForSignIn , setdataForSignIn] =  useState<formatForSignInData>({
-    Email : objForPersonalDataOfFounder["email"],
-    Password : '',
+/**
+ * 
+ * @param param0 is a Object which conatains additional data for registration process , like (personal information , cpmpony information etc . ) obj is changes whith the type of user 
+ * @returns 
+ */
+export default function SignInForm({ objForSignInComonent  , objForInterest}: typeForProps) {
+
+  const [dataForSignIn, setdataForSignIn] = useState<formatForSignInData>({
+    Email: objForSignInComonent.email,
+    Password: '',
     CPassword: ''
   })
 
-  const [error , setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [typeOfUser, setTypeOfUser] = useState<string | null>(null);
 
-  const handleClick = async() => {
+  const handleClick = async () => {
+    error !== null && setError(null);
+
     try {
-      console.log("dataForSignIn" , dataForSignIn)
-      const varified = await verifyDataForSignUp(dataForSignIn);
-      console.log("varified is" , varified)      
-      
-    } catch (error : any) {
-        console.log("Error is" , error)      
-        setError(error)
+      await verifyDataForSignUp(dataForSignIn);
+      if (typeOfUser !== null) {
+        try {
+          const objects = {
+            details: {
+              ...objForSignInComonent
+            },
+            authenticationData: {
+              email: dataForSignIn.Email,
+              password: dataForSignIn.Password,
+              type: typeOfUser
+            }
+          }
+          const result = await axios.post(`/signin/${typeOfUser}`, objects)
+          console.log("result", result)
+          if (!result.data.verified) {
+            setError('Email is already in use');
+          } else if (!result.data.status) {
+            setError(result.data.message);
+          } else if (!result.data.token) {
+            setError(result.data.message);
+          } else {
+            window.location.href = '/feed'
+          }
+
+        } catch (error) {
+          alert(`error : ${error}`)
+        }
+      }
+    } catch (error: any) {
+      console.log("Error is", error)
+      setError(error)
     }
   }
 
-  const handleChageInInputs = (event : any)=>{
-    const {name , value} = event.target;
+  const handleChageInInputs = (event: any) => {
+    const { name, value } = event.target;
     setdataForSignIn({
       ...dataForSignIn,
-      [name]  : value
+      [name]: value
     })
   }
-  
+
   useEffect(() => {
-    console.log("Hello form use effect");
-  })
-   
+    const location = window.location.search
+    const queryString = new URLSearchParams(location);
+    const type: any = queryString.get('type')
+    setTypeOfUser(type);
+  }, [])
+
+  console.log('objForSignInComonent==>', objForSignInComonent , objForInterest)
   return (
     <div className='flex md:w-1/2 w-full mx-auto flex-col h-auto my-10'>
-      <Logo />\
+      <Logo />
       {error && <p className=' my-5 border border-red-700 rounded-xl p-1 bg-red-600 block mx-auto text-white w-1/2'>{error}</p>}
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="space-y-6" >
           <div className="">
+            <div className="text-sm flex justify-between">
             <label htmlFor="password" className="flex justify-start text-sm font-medium leading-6 text-gray-900">
               Email
             </label>
+              <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                Change Email?
+              </a>
+            </div>
             <div className="mt-2">
               <input
                 id="email"
@@ -62,6 +109,7 @@ export default function SignInForm() {
                 required
                 value={dataForSignIn.Email}
                 onChange={handleChageInInputs}
+                disabled
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-5 "
               />
             </div>

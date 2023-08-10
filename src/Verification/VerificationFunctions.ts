@@ -69,3 +69,22 @@ export const checkValidString = (obj : Object) =>{
     })    
     
 }
+
+export const checkForValidPhoneNumber = (number: string) =>{
+    const stringRegx = /^[0-9]*$/;
+    return new Promise((resolve , reject)=>{
+        
+            if(!stringRegx.test(number)){
+             reject(new Error(`Only Numeric values are allowed for Phone Number`))
+            }
+            if(number.length !== 10){
+                reject(new Error(`Phone number should be if 10 digits`))
+            }
+        resolve({
+            type : 'None',
+            message : `Ebverything is Up to date`,
+            Verified : true
+        })
+    })    
+    
+}
