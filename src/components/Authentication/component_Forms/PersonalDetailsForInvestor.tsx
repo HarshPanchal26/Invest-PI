@@ -3,27 +3,19 @@ import { Button } from '@mui/material';
 import { PersonalDataVarificationForInvestor } from '../../../Verification/PersonalDataVarification'
 import { objForPersonalDataOfInvestor  } from '../../../utils/factory/ObjForFormData';
 import { SchemaForInvestorObj } from '../../../utils/factory/ObjForSchema';
+import {TypeForInvestorData} from '../../../utils/type'
 
 type propsType = {
     handleNext: Function
     setObjForSignInComonent: React.Dispatch<React.SetStateAction<Object>>
 }
 
-type TypeForPersonalDetails = {
-    "first-name": string,
-    "last-name": string,
-    "email": string,
-    "categories": string,
-    "country": string,
-    "State": string,
-    "city": string,
-}
 
 
 export default function PersonalDetailsForInvestor({ handleNext, setObjForSignInComonent }: propsType) {
 
 
-    const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForPersonalDetails>(objForPersonalDataOfInvestor )
+    const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForInvestorData>(objForPersonalDataOfInvestor )
 
     const [errorMessage, setErrorMessage] = useState<String | null>(null);
 

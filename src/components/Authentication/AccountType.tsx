@@ -16,7 +16,8 @@ const categoryForUser =
     [
         { URL: '', title: 'Investor', value: 'investor' },
         { URL: '', title: 'Founder', value: 'founder' },
-        { URL: '', title: 'Business', value: 'business' }
+        // { URL: '', title: 'Business', value: 'business' },
+        { URL: '', title: 'Compony/Products', value: 'product' }
     ]
 
 const objForFounder = [
@@ -35,7 +36,7 @@ export default function AccountType() {
     const [skipped, setSkipped] = React.useState(new Set<number>());
 
     const [typeOfUser, setTypeOfUser] = React.useState<String>("");
-    const [loader, setloader] = React.useState<boolean>(true)
+    const [loader, setloader] = React.useState<boolean>(false)
 
     const isStepOptional = (step: number) => {
         return step === -1;
@@ -80,7 +81,8 @@ export default function AccountType() {
     };
 
     const categoryDidSelect = (value: String) => {
-        if (value === "business" || value === "founder") window.location.href = `/registration?type=${value}`
+        if (value === "business" || value === "founder" ||value === "product" ) 
+        window.location.href = `/registration?type=${value}`
         else {
             setTypeOfUser(value);
             handleNext();
@@ -90,19 +92,18 @@ export default function AccountType() {
 
     const subCatergoryDidSelect = (value: String) => {
         window.location.href = `/registration?type=${value}`
-        // redirect(`/registration`)
     }
 
     const checkAutorization = async () => {
         await axios.get('/signin/authorization').then((result) => {
-            console.log("res", result)
+            console.log("res from account type", result)
             if(!result.data.authorized){
                 setloader(false)
             }else{
                 window.location.href = '/feed'
             }
         }).catch((error) => {
-            console.log("error", error)
+            console.log("error from account type", error)
             setloader(false)
         })
     }
@@ -113,7 +114,8 @@ export default function AccountType() {
 
     if (!loader) {
         return (
-            <div className='mx-10'>
+            // <div className='mx-5 border border-red-400'>
+            <div className='border h-full '>
                 <div className='hidden'>
                     <Stepper activeStep={activeStep} >
                         {steps.map((label, index) => {
@@ -151,18 +153,18 @@ export default function AccountType() {
                     <React.Fragment>
                         <Box sx={{ mt: 2, mb: 1 }}>
                             {activeStep === 0 && (
-                                <div className=' flex items-center justify-center h-auto flex-col'>
+                                <div className=' flex items-center justify-center h-full flex-col '>
                                     <Logo />
                                     <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10">Slecte your Preference</p>
-                                    <div className='bg-white p-4 rounded-lg w-[80%] lg:w-5/6 text-center flex sm:flex-row flex-col flex-wrap h-[80%] border'>
+                                    <div className='p-4 rounded-lg w-[80%] lg:w-5/6 text-center flex sm:flex-row flex-col flex-wrap h-[80%] md:bg-gray-200'>
                                         {/* Boxes */}
 
                                         {categoryForUser.map((item, index) => {
                                             return (
-                                                <div className='shadow-md w-auto h-full rounded-lg text-center text-3xl my-10 mx-auto cursor-pointer' 
+                                                <div className='shadow-lg w-auto h-full rounded-lg text-center text-3xl my-10 mx-auto cursor-pointer border border-black bg-white ' 
                                                 onClick={() => categoryDidSelect(item.value)}>
-                                                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyF_wARWd9jbfA9k88RvbIj-c-KWBYOsqAeg&usqp=CAU' alt='Innvestor iamge ' className='h-full w-[200px] mx-auto'></img>
-                                                    <p className="mt-2 text-xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10 mx-4">{item.title}</p>
+                                                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyF_wARWd9jbfA9k88RvbIj-c-KWBYOsqAeg&usqp=CAU' alt='Innvestor iamge ' className='h-full w-[200px] mx-auto rounded-lg'></img>
+                                                    <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900  my-10 mx-4">{item.title}</p>
                                                 </div>)
                                         })
                                         }
@@ -173,40 +175,22 @@ export default function AccountType() {
                                 <div className=' flex items-center justify-center h-auto flex-col po'>
                                     <Logo />
                                     <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10">Slecte your Preference</p>
-                                    <div className='bg-white p-4 rounded-lg w-[80%] lg:w-5/6 text-center flex sm:flex-row flex-col flex-wrap h-[80%] border'>
+                                    <div className='p-4 rounded-lg w-[80%] lg:w-5/6 text-center flex sm:flex-row flex-col flex-wrap h-[80%]  md:bg-gray-200'>
                                         {/* Boxes */}
 
                                         {objForInvestor.map((item, index) => {
                                             return (
-                                                <div className='shadow-md w-auto h-full rounded-lg text-center text-3xl my-10 mx-auto cursor-pointer' 
+                                                <div className='shadow-lg w-auto h-full rounded-lg text-center text-3xl my-10 mx-auto cursor-pointer border border-black bg-white ' 
                                                 onClick={() => subCatergoryDidSelect(item.value)}>
-                                                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyF_wARWd9jbfA9k88RvbIj-c-KWBYOsqAeg&usqp=CAU' alt='Innvestor iamge ' className='h-full w-[200px] mx-auto'></img>
-                                                    <p className="mt-2 text-xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10 mx-4">{item.title}</p>
+                                                    <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyF_wARWd9jbfA9k88RvbIj-c-KWBYOsqAeg&usqp=CAU' alt='Innvestor iamge ' className='h-full w-[200px] mx-auto rounded-lg'></img>
+                                                    <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900  my-10 mx-4">{item.title}</p>
                                                 </div>)
                                         })
                                         }
 
                                     </div>
                                 </div>)}
-                            {/* {activeStep === 1 && typeOfUser === 'founder' && (
-                            <div className=' flex items-center justify-center h-auto flex-col'>
-                                <Logo />
-                                <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10">Slecte your Preference</p>
-                                <div className='bg-white p-4 rounded-lg w-[80%] lg:w-5/6 text-center flex sm:flex-row flex-col flex-wrap h-[80%] border'>
-                                    {/* Boxes */}
-
-                            {/* {objForFounder.map((item, index) => {
-                                        return (
-                                            <div className='shadow-md w-auto h-full rounded-lg text-center text-3xl my-10 mx-auto' onClick={()=>categoryDidSelect(item.value)}>
-                                                <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyF_wARWd9jbfA9k88RvbIj-c-KWBYOsqAeg&usqp=CAU' alt='Innvestor iamge ' className='h-full w-[200px] mx-auto'></img>
-                                                <p className="mt-2 text-xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10 mx-4">{item.title}</p>
-                                            </div>)
-                                    })
-                                    } */}
-
-                            {/* </div> */}
-                            {/* </div> */}
-                            {/* )} */}
+                            
 
                         </Box>
                         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
@@ -235,7 +219,7 @@ export default function AccountType() {
     } else {
         return (
             <div className='mx-10'>
-                <h1>Loading</h1>
+                <h1>lorem300</h1>
             </div>
         )
     }

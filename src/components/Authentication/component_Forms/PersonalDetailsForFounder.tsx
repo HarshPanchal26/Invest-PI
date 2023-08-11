@@ -3,27 +3,16 @@ import { Button } from '@mui/material';
 import { PersonalDataVarificationForFounder } from '../../../Verification/PersonalDataVarification'
 import {objForPersonalDataOfFounder} from '../../../utils/factory/ObjForFormData';
 import {SchemaForFounderObj} from '../../../utils/factory/ObjForSchema'
+import {TypeForFoundersData} from '../../../utils/type'
 
 type propsType = {
   handleNext: Function,
   setObjForSignInComonent: React.Dispatch<React.SetStateAction<Object>>
 }
-type TypeForPersonalDetails = {
-  "first-name": string,
-  "last-name": string,
-  "email": string,
-  "phone-number" : string,
-  // "house-number" : number,
-  "country": string,
-  "street-address": string,
-  "city": string,
-  "State": string,
-  "ZIP": number
-}
+
 export default function PersonalDetailsForFounder({ handleNext  , setObjForSignInComonent}: propsType) {
 
-
-  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForPersonalDetails>(objForPersonalDataOfFounder)
+  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForFoundersData>(objForPersonalDataOfFounder)
 
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
 
@@ -112,10 +101,10 @@ export default function PersonalDetailsForFounder({ handleNext  , setObjForSignI
             <div className="mt-2">
               <input
                 id="phone-number"
-                name="phone-number"
+                name="phone"
                 type="text"
-                value={dataForPersonalDetails["phone-number"]}
-                autoComplete="phone-number"
+                value={dataForPersonalDetails.phone}
+                autoComplete="phone"
                 onChange={handleChageInValue}
                 className="block p-5 w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -141,22 +130,22 @@ export default function PersonalDetailsForFounder({ handleNext  , setObjForSignI
 
 
 
-          <div className="col-span-full">
+          {/* <div className="col-span-full">
             <label htmlFor="street-address" className="block text-sm font-medium leading-6 text-gray-900">
               Street address
             </label>
             <div className="mt-2">
               <input
                 type="text"
-                name="street-address"
+                name="street"
                 id="street-address"
-                value={dataForPersonalDetails['street-address']}
+                value={dataForPersonalDetails.street}
                 onChange={handleChageInValue}
                 autoComplete="street-address"
                 className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="sm:col-span-4">
             <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
@@ -207,7 +196,7 @@ export default function PersonalDetailsForFounder({ handleNext  , setObjForSignI
               <input
                 type="text"
                 name="State"
-                id="region"
+                id="State"
                 value={dataForPersonalDetails.State}
                 onChange={handleChageInValue}
                 autoComplete="address-level1"

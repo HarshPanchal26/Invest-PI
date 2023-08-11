@@ -14,7 +14,7 @@ export default function RegistrationForFounders() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const [objForSignInComonent, setObjForSignInComonent] = React.useState<Object | null>(null);
-  const [objForInterest,setObjForInterest] = React.useState<Array<string>>([]);
+  const [ArrayForInterest,setArrayForInterest] = React.useState<Array<string>>([]);
   
   const isStepOptional = (step: number) => {
     return step === -1;
@@ -109,11 +109,11 @@ export default function RegistrationForFounders() {
                                   handleNext={handleNext} 
                                   setObjForSignInComonent={setObjForSignInComonent}
                                   />}
-            {activeStep === 1 && <Interest handleNext={handleNext} setObjForInterest={setObjForInterest}/>}
+            {activeStep === 1 && <Interest handleNext={handleNext} setArrayForInterest={setArrayForInterest}/>}
             {/* {activeStep === 1 && <Interest handleNext={handleNext} />} */}
             {activeStep === 2 && <SignInForm 
             objForSignInComonent={objForSignInComonent}
-            objForInterest={objForInterest}
+            ArrayForInterest={ArrayForInterest}
             />}
           </div>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>

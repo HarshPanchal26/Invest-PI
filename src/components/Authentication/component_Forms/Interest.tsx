@@ -15,7 +15,7 @@ type TypeForstateForInterest = {
 
 type propsType = {
     handleNext: Function,
-    setObjForInterest : React.Dispatch<React.SetStateAction<Array<string>>>
+    setArrayForInterest : React.Dispatch<React.SetStateAction<Array<string>>>
 }
 
 
@@ -34,13 +34,13 @@ const stateForInterest: TypeForstateForInterest[] = [
     { type: "Manufacturing and Industry", feild: [] },
 ]
 
-export default function Interest({handleNext , setObjForInterest}: propsType) {
+export default function Interest({handleNext , setArrayForInterest}: propsType) {
 
     const [feildOfInterestForInvestor, setfeildOfInterestForInvestor] = useState(stateForInterest);
     
     const handleClickForNext = () =>{
         let interestObj = SchemaForInterest(feildOfInterestForInvestor)
-        setObjForInterest(interestObj);   
+        setArrayForInterest(interestObj);   
         handleNext(interestObj);
     }
 

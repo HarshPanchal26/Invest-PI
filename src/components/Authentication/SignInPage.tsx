@@ -4,8 +4,9 @@ import RegistartionForCF from './component_Auth/RegistartionForCF';
 import RegistrationForAngel from './component_Auth/RegistrationForAngel';
 import RegistrationForFounders from './component_Auth/RegistrationForFounders';
 import RegistrationForBuisness from './component_Auth/RegistrationForBuisness';
+import RegistrationForProducts from './component_Auth/RegistrationForProducts';
 
-const userCast = ["investor", "business", "founder", "CF"];
+const userCast = ["investor", "business", "founder", "CF" , "product"];
 
 export default function SignInPage() {
 
@@ -15,17 +16,19 @@ export default function SignInPage() {
   const checkAutorization = async () => {
     await axios.get('/signin/authorization').then((result) => {
       console.log("res", result)
-      if (result.data.authorized) {
-        // setloader(false)
-        // const location  = window.location.search
-        // const queryString = new URLSearchParams(location);
-        // const type : any  = queryString.get('type')
-        // if(type !== null && userCast.includes(type)){
-        //   setUserType(type)
-        // }else{
-        //   window.location.href= '/signin/type';
-        // }
-        window.location.href = '/feed'
+      if (result.data.authorization) {
+         window.location.href = '/feed'
+      }else{
+        //  No need here for else block jsut put for unexpected error (For Development only)
+        const location = window.location.search
+        const queryString = new URLSearchParams(location);
+        const type: any = queryString.get('type')
+        if (type !== null && userCast.includes(type)) {
+          setUserType(type)
+          setloader(false)
+        } else {
+          window.location.href = '/signin/type';
+        }
       }
     }).catch((error) => {
       console.log("error", error)
@@ -35,6 +38,7 @@ export default function SignInPage() {
       const type: any = queryString.get('type')
       if (type !== null && userCast.includes(type)) {
         setUserType(type)
+        setloader(false)
       } else {
         window.location.href = '/signin/type';
       }
@@ -44,6 +48,8 @@ export default function SignInPage() {
   useEffect(() => {
     checkAutorization()
   }, [])
+
+  if(!loader){
   return (
     <div className='border h-auto md:mx-5 md:p-8 mx-2 p-5'>
       {
@@ -62,8 +68,19 @@ export default function SignInPage() {
         //  used for registartion of Buisness (Start ups , Mid level compony , giant compony)
         userType === 'business' && <RegistrationForBuisness />
       }
+      {
+        //  used for registartion of Buisness (Start ups , Mid level compony , giant compony)
+        userType === 'product' && <RegistrationForProducts/>
+      }
 
 
     </div>
   )
+  }else{
+    return (
+      <div className='border h-auto md:mx-5 md:p-8 mx-2 p-5'>
+        {"Loading ................. "}
+      </div>
+    )
+  }
 }

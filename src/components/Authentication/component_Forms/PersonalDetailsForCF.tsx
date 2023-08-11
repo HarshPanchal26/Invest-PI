@@ -4,26 +4,17 @@ import { PersonalDataVarificationForCF } from '../../../Verification/PersonalDat
 import { objForPersonalDataOfCF } from '../../../utils/factory/ObjForFormData';
 import { SchemaForCFObj } from '../../../utils/factory/ObjForSchema';
 import Tooltip from '@mui/material/Tooltip';
+import {TypeForCFData} from '../../../utils/type'
+
 type propsType = {
   handleNext: Function
   setObjForSignInComonent: React.Dispatch<React.SetStateAction<Object>>
 }
 
-type TypeForPersonalDetails = {
-  "company-name": string,
-  "email": string,
-  "about": string,
-  // "size" : string,
-  "categories": string,
-  "headquarters": string,
-  "State": string,
-  "city": string,
-  "country": string,
-}
 export default function PersonalDetailsForCF({ handleNext, setObjForSignInComonent }: propsType) {
 
 
-  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForPersonalDetails>(objForPersonalDataOfCF)
+  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForCFData>(objForPersonalDataOfCF)
 
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
 

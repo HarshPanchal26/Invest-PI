@@ -2,13 +2,10 @@
   "first-name": "",
   "last-name": "",
   "email": "",
-  "phone-number" : "",
-  "country": "",
-  "street-address": "",
+  "phone" : "",
   "city": "",
   "State": "",
   "ZIP": "",
-  "type" : 'founder'
 }
 
  const objForPersonalDataOfInvestor : any = {
@@ -19,7 +16,6 @@
   "country" : "",
   "State" : "",
   "city" : "",
-  "type" : 'investor'
 }
 
 const objForPersonalDataOfCF : any = {
@@ -32,7 +28,6 @@ const objForPersonalDataOfCF : any = {
   "State" : "",
   "city" : "",
   "country" : "",
-  "type" : 'CF'
   }
 
  const objForEstablishedIndustryLeaders : any  = {
@@ -46,8 +41,21 @@ const objForPersonalDataOfCF : any = {
   "State" : "",
   "city" : "",
   "country" : "",
-  "type" : 'EIL'
 
+} 
+ const objForCompany : any  = {
+  "company-name" : "",
+  "email": "",
+  "about" : "",
+  "size" : "",
+  "industry" : "",
+  "specialization": "",
+  "headquarters" : "",
+  "State" : "",
+  "city" : "",
+  "country" : "",
+  "link " : "",
+  "stage" : ""
 } 
 
  const objForEmergingChallengers : any = {
@@ -84,5 +92,6 @@ export { objForStartups,
   objForEstablishedIndustryLeaders,
   objForPersonalDataOfCF,
   objForPersonalDataOfInvestor,
-  objForPersonalDataOfFounder
+  objForPersonalDataOfFounder,
+  objForCompany
 }

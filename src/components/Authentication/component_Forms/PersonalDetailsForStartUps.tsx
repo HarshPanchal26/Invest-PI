@@ -4,27 +4,17 @@ import { PersonalDataVarificationForStartUps } from '../../../Verification/Perso
 import {objForStartups} from '../../../utils/factory/ObjForFormData';
 import {SchemaForStartupsobj} from '../../../utils/factory/ObjForSchema'
 import {ArrayForInvestorInterest} from '../../../utils/InterestArray'
+import {TypeForStartUpsData} from '../../../utils/type'
 
 type propsType = {
   handleNext: Function,
   setObjForSignInComonent: React.Dispatch<React.SetStateAction<Object>>
 }
 
-type TypeForPersonalDetails = {
-  "company-name" : string,
-  "email": string,
-  "about" : string,
-  "link" : string
-  "industry" : string,
-  "specialization": string,
-  "State" : string,
-  "city" : string,
-  "country" : string,
- }
 export default function PersonalDetailsForStartUps({ handleNext ,setObjForSignInComonent }: propsType) {
 
 
-  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForPersonalDetails>(objForStartups)
+  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForStartUpsData>(objForStartups)
   const [industry , setIndustry] = useState<String[] | null >(null);
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
   

@@ -9,7 +9,7 @@ router.get('/', (req,res)=>{
 })
 router.get('/authorization' , isAutorized , (_req , res)=>{
     res.status(201).json({
-        authorized : true,
+        authorization : true,
         message : 'Autorized Person'
     })
 })

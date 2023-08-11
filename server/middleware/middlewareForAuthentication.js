@@ -11,12 +11,11 @@ const isValidUser = async (req, res, next) => {
     try {
         let user = await Model.findOne({ email: authenticationData.email });
         if (user !== null) {
-            console.log("error ===>"  , "Not valid") 
-            res.json({
+            res.status(401).json({
                 status: false,
                 verified: false,
                 token: false,
-                message: 'This Email is not valid'
+                message: 'This Email is already in use'
             })
         } else {
             next();
@@ -44,11 +43,10 @@ const isTokenValid = (req, res, next) => {
                 if (err) {
                     console.log(err.message);
                     res.json({
-                        Autorization: false,
+                        authorization: false,
                         message: err.message
                     })
                 } else {
-                    // console.log("decode =============?????", decoded)
                     req.headers['Access-id'] = decoded.uid
                     next();
                 }
@@ -58,7 +56,7 @@ const isTokenValid = (req, res, next) => {
         }
     } else {
         res.json({
-            Autorization: false,
+            authorization: false,
             message: 'You Need to Login Fisrt'
         });
     }

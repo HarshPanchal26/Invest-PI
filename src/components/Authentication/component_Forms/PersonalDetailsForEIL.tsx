@@ -4,27 +4,16 @@ import { PersonalDataVarificationForEIL } from '../../../Verification/PersonalDa
 import {objForEstablishedIndustryLeaders} from '../../../utils/factory/ObjForFormData';
 import {ArrayForInvestorInterest} from '../../../utils/InterestArray'
 import {SchemaForEILObj} from '../../../utils/factory/ObjForSchema'
+import {TypeForEILData} from '../../../utils/type'
 
 type propsType = {
   handleNext: Function,
   setObjForSignInComonent: React.Dispatch<React.SetStateAction<Object>>
 }
-type TypeForPersonalDetails = {
-  "company-name" : string,
-  "email": string,
-  "about" : string,
-  "size" : string,
-  "industry" : string,
-  "specialization": string,
-  "headquarters" : string,
-  "State" : string,
-  "city" : string,
-  "country" : string,
-}
 export default function PersonalDetailsForEIL({ handleNext , setObjForSignInComonent}: propsType) {
 
 
-  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForPersonalDetails>(objForEstablishedIndustryLeaders)
+  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForEILData>(objForEstablishedIndustryLeaders)
 
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
 

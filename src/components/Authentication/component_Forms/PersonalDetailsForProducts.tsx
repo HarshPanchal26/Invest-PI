@@ -1,24 +1,29 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from '@mui/material';
-import { PersonalDataVarificationForEC } from '../../../Verification/PersonalDataVarification'
-import { objForEmergingChallengers } from '../../../utils/factory/ObjForFormData';
-import { ArrayForInvestorInterest } from '../../../utils/InterestArray'
-import { SchemaForECObj } from '../../../utils/factory/ObjForSchema'
-import {TypeForECData} from '../../../utils/type'
+import { PersonalDataVarificationForCompany } from '../../../Verification/PersonalDataVarification'
+import { objForCompany } from '../../../utils/factory/ObjForFormData';
+import { SchemaForCFObj } from '../../../utils/factory/ObjForSchema';
+// import Tooltip from '@mui/material/Tooltip';
+import {ArrayForInvestorInterest} from '../../../utils/InterestArray'
+import {TypeForCompany} from '../../../utils/type'
 
 type propsType = {
-  handleNext: Function,
+  handleNext: Function
   setObjForSignInComonent: React.Dispatch<React.SetStateAction<Object>>
 }
 
-export default function PersonalDetailsForEC({ handleNext, setObjForSignInComonent }: propsType) {
+export default function PersonalDetailsForProducts({ handleNext, setObjForSignInComonent }: propsType) {
 
 
-  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForECData>(objForEmergingChallengers)
+  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForCompany>(objForCompany)
 
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
 
-  const [industry, setIndustry] = useState<String[] | null>(null);
+  const [industry , setIndustry] = useState<String[] | null >(null);
+
+  const [sizeOfCompany , setSizeOfCompany] = useState<String[] | null>(null);
+
+    
 
   const handleChageInValue = (event: any) => {
     const { value, name } = event.target;
@@ -26,47 +31,50 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
       ...dataForPersonalDetails,
       [name]: value
     })
-    objForEmergingChallengers[name] = value;
+    objForCompany[name] = value;
 
   }
 
-  const handleChangeInOption = (event: any) => {
-    const { value, name } = event.target;
-    if (name === 'industry') {
+  const handleChangeInOption=(event : any)=>{
+    const { value , name } = event.target;
+    if(name === 'industry'){
       setDataForPersonalDetails({
         ...dataForPersonalDetails,
         [name]: value
       })
-      objForEmergingChallengers[name] = value;
-      if (value !== '') {
-        let arrayForSpecialization: any = ArrayForInvestorInterest.filter((item) => {
-          return item.type === value && item.feild
+      objForCompany[name] = value;
+      if(value !== ''){
+        let arrayForSpecialization : any = ArrayForInvestorInterest.filter((item)=>{
+          return item.type === value &&  item.feild
         })
         setIndustry(arrayForSpecialization[0].feild);
-      } else {
+      }else{
         setDataForPersonalDetails({
           ...dataForPersonalDetails,
-          industry: "",
+          industry : "",
           specialization: ""
         })
-        objForEmergingChallengers["specialization"] = "";
+        objForCompany["specialization"] = "";
         setIndustry(null);
       }
     }
-  }
+    if(name === 'stage'){
 
+    }
+  }
+  
   const handleClick = async () => {
     try {
-      await PersonalDataVarificationForEC(dataForPersonalDetails);
-      let Schema = SchemaForECObj(dataForPersonalDetails)
-      setObjForSignInComonent(Schema);
+      await PersonalDataVarificationForCompany(dataForPersonalDetails);
+    //   let Schema = SchemaForCFObj(dataForPersonalDetails)
+    //   setObjForSignInComonent(Schema)
       handleNext();
     } catch (error: any) {
       setErrorMessage(error)
     }
   }
   useEffect(() => {
-    setDataForPersonalDetails(objForEmergingChallengers)
+    setDataForPersonalDetails(objForCompany)
   }, [])
   return (
     <div className='mx-2 my-5 '>
@@ -78,7 +86,7 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="col-span-5 md:col-span-3">
             <label htmlFor="company-name" className="block text-sm font-medium leading-6 text-gray-900">
-              Company Name
+            Company Name / Product Name
             </label>
             <div className="mt-2">
               <input
@@ -129,7 +137,29 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
 
           <div className="col-span-5 md:col-span-3">
             <label htmlFor="industry" className="block text-sm font-medium leading-6 text-gray-900">
-              Company Size
+            Stage (Products / Company Stage)
+            </label>
+            <div className="mt-2">
+              <select
+                id="stage"
+                name="stage"
+                autoComplete="stage"
+                onChange={handleChageInValue}
+                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                required
+                value={dataForPersonalDetails.stage}
+              >
+                <option value={''} >{'None'}</option>
+                <option value={'EIL'} >{'Established Industry Leaders'}</option>
+                <option value={'EC'}>{'Emerging Challengers'}</option>
+                <option value={'startup'} >{'Visionary Startups'}</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="col-span-5 md:col-span-3">
+            <label htmlFor="industry" className="block text-sm font-medium leading-6 text-gray-900">
+            Company Size
             </label>
             <div className="mt-2">
               <select
@@ -142,9 +172,9 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
                 value={dataForPersonalDetails.size}
               >
                 <option value={''} >{'None'}</option>
-                <option value={'<1000'} >{'<1000'}</option>
-                <option value={'1000-5000'}>{'1000-5000'}</option>
-                <option value={'>5000'} >{'>5000'}</option>
+                <option value={'<5000'} >{'<5000'}</option>
+                <option value={'5000-10,000'}>{'5000-10,000'}</option>
+                <option value={'>10,000'} >{'>10,000'}</option>
               </select>
             </div>
           </div>
@@ -152,7 +182,7 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
 
           <div className="col-span-5 md:col-span-3">
             <label htmlFor="industry" className="block text-sm font-medium leading-6 text-gray-900">
-              Industry
+            Industry
             </label>
             <div className="mt-2">
               <select
@@ -165,7 +195,7 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
                 value={dataForPersonalDetails.industry}
               >
                 <option value={''} >{'None'}</option>
-                {ArrayForInvestorInterest.map((item: any, index: any) => {
+                {ArrayForInvestorInterest.map((item : any,index :any)=>{
                   return (
                     <option value={item.type} key={index}>{item.type}</option>
                   )
@@ -175,9 +205,9 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
           </div>
 
 
-          <div className="col-span-5 md:col-span-3 sm:col-start-1">
+          <div className="col-span-5 md:col-span-3">
             <label htmlFor="specialization" className="block text-sm font-medium leading-6 text-gray-900">
-              Industry Specialization
+            Industry Specialization
             </label>
             <div className="mt-2">
               <select
@@ -192,7 +222,7 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
                 value={dataForPersonalDetails.specialization}
               >
                 <option value={''} >{'None'}</option>
-                {industry !== null && industry.map((item: any, index: any) => {
+                {industry!== null && industry.map((item : any,index :any)=>{
                   return (
                     <option value={item.category} key={index}>{item.category}</option>
                   )
@@ -201,11 +231,9 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
             </div>
           </div>
 
-
-
           <div className="col-span-5 md:col-span-full">
             <label htmlFor="headquarters" className="block text-sm font-medium leading-6 text-gray-900">
-              Headquarters Address (do not mention city or country here)
+            Headquarters Address (do not mention city or country here)
             </label>
             <div className="mt-2">
               <input
@@ -220,7 +248,24 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
             </div>
           </div>
 
-          <div className="col-span-5 md:col-span-3 sm:col-start-1">
+          <div className="col-span-5 md:col-span-full">
+            <label htmlFor="link" className="block text-sm font-medium leading-6 text-gray-900">
+                Link ( Website link or any thing which describe your product/ company)
+            </label>
+            <div className="mt-2">
+              <input
+                type="text"
+                name="link"
+                id="link"
+                value={dataForPersonalDetails["link "]}
+                onChange={handleChageInValue}
+                autoComplete="link"
+                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+          </div>
+
+          <div className="col-span-5 md:col-span-3">
             <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
               City
             </label>
@@ -256,7 +301,7 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
 
           <div className="col-span-5 md:col-span-4">
             <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
-              Country
+            Country
             </label>
             <div className="mt-2">
               <select
@@ -277,8 +322,8 @@ export default function PersonalDetailsForEC({ handleNext, setObjForSignInComone
           </div>
 
         </div>
+
       </div>
-      {/* <button type='button' className='p-3 w-28 border my-5' onClick={handleClick}>Next Inside</button> */}
       <Button
         variant='contained'
         color='primary'

@@ -8,6 +8,7 @@ const port = 5000;
 const {connectionWithAtlas} = require('./config/database')
 const SignInRoute = require('./routes/signInRoute')
 const LogInRoute = require('./routes/logInRoute')
+const FeedRoute = require('./routes/FeedRoute')
 
 app.use(bodyparser.json());
 app.use(
@@ -22,6 +23,7 @@ app.get('/' , (req,res)=>{
     
 app.use('/login', LogInRoute);
 app.use('/signin', SignInRoute);
+app.use('/feed', FeedRoute);
 
 app.get('*', (_req, res)=>{
  res.send("Inavlid request")

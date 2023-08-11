@@ -11,7 +11,7 @@ type formatForSignInData = {
 
 type typeForProps = {
   objForSignInComonent: any
-  objForInterest : Object
+  ArrayForInterest: Array<string>
 }
 
 /**
@@ -19,7 +19,7 @@ type typeForProps = {
  * @param param0 is a Object which conatains additional data for registration process , like (personal information , cpmpony information etc . ) obj is changes whith the type of user 
  * @returns 
  */
-export default function SignInForm({ objForSignInComonent  , objForInterest}: typeForProps) {
+export default function SignInForm({ objForSignInComonent, ArrayForInterest }: typeForProps) {
 
   const [dataForSignIn, setdataForSignIn] = useState<formatForSignInData>({
     Email: objForSignInComonent.email,
@@ -48,24 +48,19 @@ export default function SignInForm({ objForSignInComonent  , objForInterest}: ty
             }
           }
           const result = await axios.post(`/signin/${typeOfUser}`, objects)
-          console.log("result", result)
-          if (!result.data.verified) {
-            setError('Email is already in use');
-          } else if (!result.data.status) {
-            setError(result.data.message);
-          } else if (!result.data.token) {
-            setError(result.data.message);
+          console.log("result from form", result)
+          if (result.data.authorization) {
+            window.location.href = '/feed';
           } else {
-            window.location.href = '/feed'
+            setError(result.data.message)
           }
 
-        } catch (error) {
-          alert(`error : ${error}`)
+        } catch (error: any) {
+          setError(error.response.data.message)
         }
       }
     } catch (error: any) {
-      console.log("Error is", error)
-      setError(error)
+      alert(`Error is ${error}`)
     }
   }
 
@@ -78,13 +73,12 @@ export default function SignInForm({ objForSignInComonent  , objForInterest}: ty
   }
 
   useEffect(() => {
-    const location = window.location.search
-    const queryString = new URLSearchParams(location);
-    const type: any = queryString.get('type')
-    setTypeOfUser(type);
+    // Effect for push user type and ArrayForInterest inside main objects 
+    objForSignInComonent.interest = [...ArrayForInterest]
+    setTypeOfUser(objForSignInComonent.type);
+    console.log('objForSignInComonent==>', objForSignInComonent , ArrayForInterest)
   }, [])
-
-  console.log('objForSignInComonent==>', objForSignInComonent , objForInterest)
+  
   return (
     <div className='flex md:w-1/2 w-full mx-auto flex-col h-auto my-10'>
       <Logo />
@@ -93,9 +87,9 @@ export default function SignInForm({ objForSignInComonent  , objForInterest}: ty
         <div className="space-y-6" >
           <div className="">
             <div className="text-sm flex justify-between">
-            <label htmlFor="password" className="flex justify-start text-sm font-medium leading-6 text-gray-900">
-              Email
-            </label>
+              <label htmlFor="password" className="flex justify-start text-sm font-medium leading-6 text-gray-900">
+                Email
+              </label>
               <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
                 Change Email?
               </a>

@@ -6,7 +6,6 @@ const ContollerForSignIn = async(req , res)=>{
   try {
         const hashpassword = await SignInServices.encryptedPassword(password)
         const signUp = await SignInServices.createUser({email : email , password : hashpassword ,type : type} , details); 
-        console.log("signUp" , signUp)   
         if(signUp?.token){
             res.cookie('access_token' , signUp.token , {
                 httpOnly : true, // To prevent access from javascript 
@@ -16,27 +15,14 @@ const ContollerForSignIn = async(req , res)=>{
             })
             res.status(200).json({
                 status : true,
-                verified: true,
-                token : true,
+                authorization : true,
+                additionalData: true,
                 message : 'Sign In Completed'
             })    
-        }else{
-            res.status(200).json({
-                status : true,
-                verified: true,
-                token : false,
-                message : 'Sign In Completed But token is not generated please login'
-            })    
-
         }
   } catch (error) {
     console.log("error" , error)
-    res.status(200).json({
-        status : false,
-        verified: false,
-        token : false,
-        message : error
-    })
+    res.status(401).json(error)
   }
 }
 module.exports = ContollerForSignIn;

@@ -48,9 +48,6 @@ const TieUps = lazy(
     ()=> import('../DashBord/TieUps')
 )
 
-const Interest = lazy(
-    ()=>import('../Authentication/component_Forms/Interest')
-)
 
 
 const introPage  = {
@@ -76,7 +73,7 @@ const logInPage = {
 
 const accountType = {
     path: '/signin/type',
-    component: <AccountType />,
+    component: <AccountType/>,
     title: 'Types of Account ',
     description: 'Choose your account preference ',
     exact : true,
@@ -84,15 +81,15 @@ const accountType = {
     requiredRole : 'all' as UserRole
 }
 
-const userType = {
-    path: '/signin/user',
-    component: <AccountType />,
-    title: 'Types of Account ',
-    description: 'Choose your account preference ',
-    exact : true,
-    fullPageWidth : true,
-    requiredRole : 'all' as UserRole
-}
+// const userType = {
+//     path: '/signin/user',
+//     component: <AccountType />,
+//     title: 'Types of Account ',
+//     description: 'Choose your account preference ',
+//     exact : true,
+//     fullPageWidth : true,
+//     requiredRole : 'all' as UserRole
+// }
 
 const dashbord = {
     path :'/feed',
@@ -166,7 +163,6 @@ export const IntroPages : IPageMeta[] = [
     introPage ,
     logInPage,
     accountType,
-    userType,
     registration   
 ]
 

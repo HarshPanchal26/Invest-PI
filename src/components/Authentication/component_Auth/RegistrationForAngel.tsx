@@ -16,7 +16,7 @@ export default function RegistrationForAngel() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const [objForSignInComonent, setObjForSignInComonent] = React.useState<Object | null>(null);
-  const [objForInterest,setObjForInterest] = React.useState<Array<string>>([]);
+  const [ArrayForInterest,setArrayForInterest] = React.useState<Array<string>>([]);
 
 
   const isStepOptional = (step: number) => {
@@ -109,10 +109,10 @@ export default function RegistrationForAngel() {
           </div>
           <div className='h-auto mx-2 border'>
             {activeStep === 0 && <PersonalDetailsForInvestor handleNext={handleNext} setObjForSignInComonent={setObjForSignInComonent} />}
-            {activeStep === 1 && <Interest handleNext={handleNext} setObjForInterest={setObjForInterest}/>}
+            {activeStep === 1 && <Interest handleNext={handleNext} setArrayForInterest={setArrayForInterest}/>}
             {activeStep === 2 && <SignInForm 
             objForSignInComonent={objForSignInComonent}
-            objForInterest={objForInterest}
+            ArrayForInterest={ArrayForInterest}
             />}
           </div>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
