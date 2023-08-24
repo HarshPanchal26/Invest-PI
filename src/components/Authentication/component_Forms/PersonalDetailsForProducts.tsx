@@ -2,14 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Button } from '@mui/material';
 import { PersonalDataVarificationForCompany } from '../../../Verification/PersonalDataVarification'
 import { objForCompany } from '../../../utils/factory/ObjForFormData';
-import { SchemaForCFObj } from '../../../utils/factory/ObjForSchema';
-// import Tooltip from '@mui/material/Tooltip';
+import { SchemaForCompanyObj } from '../../../utils/factory/ObjForSchema';
 import {ArrayForInvestorInterest} from '../../../utils/InterestArray'
 import {TypeForCompany} from '../../../utils/type'
 
 type propsType = {
   handleNext: Function
   setObjForSignInComonent: React.Dispatch<React.SetStateAction<Object>>
+}
+
+
+const ObjForCompanySize : any = {
+    EIL : ['<5000' , '5000-10,000' , '>10,000'],
+    EC : ['<500' ,'500-1000' , '>1000'],
+    startup : ['10-50' , '50-100' , '>100']
 }
 
 export default function PersonalDetailsForProducts({ handleNext, setObjForSignInComonent }: propsType) {
@@ -21,7 +27,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
 
   const [industry , setIndustry] = useState<String[] | null >(null);
 
-  const [sizeOfCompany , setSizeOfCompany] = useState<String[] | null>(null);
+  const [sizeOfCompany , setSizeOfCompany] = useState<Array<string> | null>(null);
 
     
 
@@ -37,12 +43,12 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
 
   const handleChangeInOption=(event : any)=>{
     const { value , name } = event.target;
+    setDataForPersonalDetails({
+      ...dataForPersonalDetails,
+      [name]: value
+    })
+    objForCompany[name] = value;
     if(name === 'industry'){
-      setDataForPersonalDetails({
-        ...dataForPersonalDetails,
-        [name]: value
-      })
-      objForCompany[name] = value;
       if(value !== ''){
         let arrayForSpecialization : any = ArrayForInvestorInterest.filter((item)=>{
           return item.type === value &&  item.feild
@@ -59,15 +65,24 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
       }
     }
     if(name === 'stage'){
-
+      if(value !== ''){
+        setSizeOfCompany([...ObjForCompanySize[value]])
+      }else{
+        setDataForPersonalDetails({
+          ...dataForPersonalDetails,
+          size: ""
+        })
+        objForCompany["size"] = "";
+        setSizeOfCompany(null);
+      }
     }
   }
   
   const handleClick = async () => {
     try {
       await PersonalDataVarificationForCompany(dataForPersonalDetails);
-    //   let Schema = SchemaForCFObj(dataForPersonalDetails)
-    //   setObjForSignInComonent(Schema)
+      let Schema = SchemaForCompanyObj(dataForPersonalDetails)
+      setObjForSignInComonent(Schema)
       handleNext();
     } catch (error: any) {
       setErrorMessage(error)
@@ -118,7 +133,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
             </div>
           </div>
 
-          <div className="col-span-5 md:col-span-4">
+          {/* <div className="col-span-5 md:col-span-4">
             <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
               Bio (About your Product / Startup)
             </label>
@@ -132,7 +147,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
                 className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
-          </div>
+          </div> */}
 
 
           <div className="col-span-5 md:col-span-3">
@@ -144,7 +159,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
                 id="stage"
                 name="stage"
                 autoComplete="stage"
-                onChange={handleChageInValue}
+                onChange={handleChangeInOption}
                 className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 required
                 value={dataForPersonalDetails.stage}
@@ -171,10 +186,14 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
                 required
                 value={dataForPersonalDetails.size}
               >
-                <option value={''} >{'None'}</option>
-                <option value={'<5000'} >{'<5000'}</option>
-                <option value={'5000-10,000'}>{'5000-10,000'}</option>
-                <option value={'>10,000'} >{'>10,000'}</option>
+                <option value={'NA'} >{'NA'}</option>
+                {sizeOfCompany !==  null &&
+                  sizeOfCompany.map((item, index)=>{
+                    return (
+                      <option value={item} key={index}>{item}</option>
+                    )
+                  })
+                }
               </select>
             </div>
           </div>
@@ -248,7 +267,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
             </div>
           </div>
 
-          <div className="col-span-5 md:col-span-full">
+          {/* <div className="col-span-5 md:col-span-full">
             <label htmlFor="link" className="block text-sm font-medium leading-6 text-gray-900">
                 Link ( Website link or any thing which describe your product/ company)
             </label>
@@ -257,11 +276,34 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
                 type="text"
                 name="link"
                 id="link"
-                value={dataForPersonalDetails["link "]}
+                value={dataForPersonalDetails.link}
                 onChange={handleChageInValue}
                 autoComplete="link"
                 className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+            </div>
+          </div> */}
+
+
+<div className="col-span-5 md:col-span-4">
+            <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
+            Country
+            </label>
+            <div className="mt-2">
+              <select
+                id="country"
+                name="country"
+                autoComplete="country"
+                onChange={handleChageInValue}
+                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                required
+                value={dataForPersonalDetails.country}
+              >
+                <option value={''} >{'None'}</option>
+                <option value={'India'} >{'India'}</option>
+                <option value={'Canada'}>{'Canada'}</option>
+                <option value={'USA'} >{'USA'}</option>
+              </select>
             </div>
           </div>
 
@@ -299,27 +341,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
             </div>
           </div>
 
-          <div className="col-span-5 md:col-span-4">
-            <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
-            Country
-            </label>
-            <div className="mt-2">
-              <select
-                id="country"
-                name="country"
-                autoComplete="country"
-                onChange={handleChageInValue}
-                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                required
-                value={dataForPersonalDetails.country}
-              >
-                <option value={''} >{'None'}</option>
-                <option value={'India'} >{'India'}</option>
-                <option value={'Canada'}>{'Canada'}</option>
-                <option value={'USA'} >{'USA'}</option>
-              </select>
-            </div>
-          </div>
+          
 
         </div>
 

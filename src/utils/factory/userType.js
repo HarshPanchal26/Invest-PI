@@ -1,4 +1,4 @@
 export const UserType = {
-    Founder : "Founder",
+    Individuals : "Individuals",
     Investor : "Investor ",
 }

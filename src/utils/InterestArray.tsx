@@ -107,7 +107,7 @@ export const ArrayForInvestorInterest = [
 
 
 
-export const ArrayForFounderInterest = [
+export const ArrayForIndividualsInterest = [
     {
       type: "Technology and Software",
       feild: [

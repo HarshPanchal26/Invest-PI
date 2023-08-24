@@ -1,3 +1,6 @@
+//  Not in use Now
+
+
 import React, { useEffect, useState } from "react";
 import { Button } from '@mui/material';
 import { PersonalDataVarificationForInvestor } from '../../../Verification/PersonalDataVarification'
@@ -26,7 +29,7 @@ export default function PersonalDetailsForInvestor({ handleNext, setObjForSignIn
             ...dataForPersonalDetails,
             [name]: value
         })
-        objForPersonalDataOfInvestor [name] = value;
+        objForPersonalDataOfInvestor[name] = value;
 
     }
     const handleClick = async () => {

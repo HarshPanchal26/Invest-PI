@@ -9,13 +9,13 @@ import {
     TypeForECData,
     TypeForCFData,
     TypeForInvestorData,
-    TypeForFoundersData,
+    TypeForIndividualsData,
     TypeForCompany
 } from '../utils/type'
 
 
 
-export const PersonalDataVarificationForFounder = (Obj: TypeForFoundersData) => {
+export const PersonalDataVarificationForIndividuals = (Obj: TypeForIndividualsData) => {
     return new Promise(async (resolve, reject) => {
         try {
             await verifyAllFeilds(Obj);
@@ -169,7 +169,6 @@ export const PersonalDataVarificationForCompany = (Obj: TypeForCompany) => {
             await checkEmail(Obj.email);
             await checkValidString({
                 "Company Name": Obj['company-name'],
-                "about" : Obj.about,
                 "State": Obj.State,
                 "city": Obj.city,
                 "Country": Obj.country,

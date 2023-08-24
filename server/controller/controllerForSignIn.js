@@ -2,16 +2,21 @@ const SignInServices = require('../services/servicesForAuthentication')
 
 const ContollerForSignIn = async(req , res)=>{
   const {authenticationData , details} = req.body;
-  const {email , password , type } = authenticationData;
+  const {email , password , type , username } = authenticationData;
   try {
         const hashpassword = await SignInServices.encryptedPassword(password)
-        const signUp = await SignInServices.createUser({email : email , password : hashpassword ,type : type} , details); 
+        const signUp = await SignInServices.createUser( details , {
+            email : email ,
+            password : hashpassword ,
+            type : type,
+            username : username
+          }); 
         if(signUp?.token){
             res.cookie('access_token' , signUp.token , {
                 httpOnly : true, // To prevent access from javascript 
-                secure : true, //For secure connection 
+                secure : true,   //For secure connection 
                 sameSite : true, //To limit cross site request 
-                maxAge : 1800000 // vanish after 1/2 hour 
+                maxAge : (1800000) // vanish after 1 hour 
             })
             res.status(200).json({
                 status : true,

@@ -15,7 +15,7 @@ export default function SideBar() {
 
     return (
         // fixed top-0 left-0 border
-        <div className='md:flex w-auto flex-col justify-between h-full hidden'> 
+        <div className='md:flex w-auto flex-col justify-between h-full hidden bg-slate-200 shadow-md'> 
             <div className=' flex flex-col flex-1 my-1'>
                 <div className='p-5 cursor-pointer'>
                     <Logo />
@@ -39,8 +39,8 @@ export default function SideBar() {
                     })}
                 </div>
             </div>
-            <div className='border'>
-                <div className='flex flex-col border-b justify-center'>
+            <div className='my-2 border'>
+                <div className='flex flex-col border-t-black justify-center'>
                     <span className='h-7 w-7 mx-auto my-2 cursor-pointer'><CogIcon /></span>
                     <div className=' cursor-pointer'>
                         {'Setting'}

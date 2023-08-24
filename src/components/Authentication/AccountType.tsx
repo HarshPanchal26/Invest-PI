@@ -14,16 +14,15 @@ const steps = ['Select Categoery', 'Select Subcategory'];
 
 const categoryForUser =
     [
-        { URL: '', title: 'Investor', value: 'investor' },
-        { URL: '', title: 'Founder', value: 'founder' },
-        // { URL: '', title: 'Business', value: 'business' },
-        { URL: '', title: 'Compony/Products', value: 'product' }
+        { URL: '', title: 'Individual User', value: 'individuals' },
+        { URL: '', title: 'Invesment Group', value: 'CF' },
+        { URL: '', title: 'Company/Products', value: 'product' }
     ]
 
-const objForFounder = [
-    { URL: '', title: 'Individual Founder', value: 'founder' },
-    { URL: '', title: 'Start Up Compony', value: 'startUp' }
-]
+// const objForIndividuals = [
+//     { URL: '', title: 'Individual Individuals', value: 'founder' },
+//     { URL: '', title: 'Start Up company', value: 'startUp' }
+// ]
 
 const objForInvestor = [
     { URL: '', title: 'Individual Investor', value: 'investor' },
@@ -81,12 +80,11 @@ export default function AccountType() {
     };
 
     const categoryDidSelect = (value: String) => {
-        if (value === "business" || value === "founder" ||value === "product" ) 
-        window.location.href = `/registration?type=${value}`
+        if (value === "CF" || value === "individuals" ||value === "product") 
+            window.location.href = `/registration?type=${value}`
         else {
             setTypeOfUser(value);
             handleNext();
-
         }
     }
 
@@ -97,7 +95,7 @@ export default function AccountType() {
     const checkAutorization = async () => {
         await axios.get('/signin/authorization').then((result) => {
             console.log("res from account type", result)
-            if(!result.data.authorized){
+            if(!result.data.authorization){
                 setloader(false)
             }else{
                 window.location.href = '/feed'
@@ -114,7 +112,6 @@ export default function AccountType() {
 
     if (!loader) {
         return (
-            // <div className='mx-5 border border-red-400'>
             <div className='border h-full '>
                 <div className='hidden'>
                     <Stepper activeStep={activeStep} >
@@ -171,7 +168,8 @@ export default function AccountType() {
 
                                     </div>
                                 </div>)}
-                            {activeStep === 1 && typeOfUser === 'investor' && (
+
+                            {activeStep === 4 && typeOfUser === 'investor' && (
                                 <div className=' flex items-center justify-center h-auto flex-col po'>
                                     <Logo />
                                     <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10">Slecte your Preference</p>
@@ -189,7 +187,7 @@ export default function AccountType() {
                                         }
 
                                     </div>
-                                </div>)}
+                            </div>)}
                             
 
                         </Box>
@@ -219,7 +217,7 @@ export default function AccountType() {
     } else {
         return (
             <div className='mx-10'>
-                <h1>lorem300</h1>
+                <h1>{'Loading.......'}</h1>
             </div>
         )
     }

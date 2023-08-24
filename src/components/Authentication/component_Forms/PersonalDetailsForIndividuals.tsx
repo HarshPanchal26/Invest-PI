@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Button } from '@mui/material';
-import { PersonalDataVarificationForFounder } from '../../../Verification/PersonalDataVarification'
-import {objForPersonalDataOfFounder} from '../../../utils/factory/ObjForFormData';
-import {SchemaForFounderObj} from '../../../utils/factory/ObjForSchema'
-import {TypeForFoundersData} from '../../../utils/type'
+import { PersonalDataVarificationForIndividuals } from '../../../Verification/PersonalDataVarification'
+import {objForPersonalDataOfIndividuals} from '../../../utils/factory/ObjForFormData';
+import {SchemaForIndividualsObj} from '../../../utils/factory/ObjForSchema'
+import {TypeForIndividualsData} from '../../../utils/type'
 
 type propsType = {
   handleNext: Function,
   setObjForSignInComonent: React.Dispatch<React.SetStateAction<Object>>
 }
 
-export default function PersonalDetailsForFounder({ handleNext  , setObjForSignInComonent}: propsType) {
+export default function PersonalDetailsForIndividuals({ handleNext  , setObjForSignInComonent}: propsType) {
 
-  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForFoundersData>(objForPersonalDataOfFounder)
+  const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForIndividualsData>(objForPersonalDataOfIndividuals)
 
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
 
@@ -22,13 +22,13 @@ export default function PersonalDetailsForFounder({ handleNext  , setObjForSignI
       ...dataForPersonalDetails,
       [name]: value
     })
-    objForPersonalDataOfFounder[name] = value;
+    objForPersonalDataOfIndividuals[name] = value;
   }
 
-  const handleClick = async () => {
+  const handleClick = async() => {
     try {
-      await PersonalDataVarificationForFounder(dataForPersonalDetails);
-      let Schema = SchemaForFounderObj(dataForPersonalDetails)
+      await PersonalDataVarificationForIndividuals(dataForPersonalDetails);
+      let Schema = SchemaForIndividualsObj(dataForPersonalDetails);
       setObjForSignInComonent(Schema);
       handleNext();
     } catch (error: any) {

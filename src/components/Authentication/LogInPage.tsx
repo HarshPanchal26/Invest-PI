@@ -18,8 +18,9 @@ export default function LogInPage() {
   const [error, setError] = useState<string | null>(null);
 
 
-  const checkAutorization = async () => {
-    await axios.get('/login/authorization')
+  const checkAutorization = () => {
+    try {
+      axios.get('/login/authorization')
       .then((result) => {
         if (result.data.authorized) {
           window.location.href = '/feed'
@@ -28,8 +29,12 @@ export default function LogInPage() {
         }
       }).catch((error) => {
         setLoader(false);
-        console.log("Login Error relatred to token", error)
+        console.log("Login Error ", error)
       })
+    } catch (error : any) {
+      alert(`Error is ${error.message}`)  
+    }
+    
   }
 
   const handlechangeInData=(event : any )=>{
@@ -46,11 +51,12 @@ export default function LogInPage() {
       const res: any = await verifyDataForLogIn(loginData);
       console.log("res form login" , res)
       if(res?.Verified){
-      await axios.post('/login' , loginData)
-        .then((_res)=>{
+       axios.post('/login/user' , loginData)
+        .then((res)=>{
           window.location.href = '/feed' 
+          console.log("Res" , res);
         }).catch((error)=>{
-          console.log(error.message)
+          console.log("Error" , error)
         })
       }else{
         setError(res?.message)
@@ -126,7 +132,7 @@ export default function LogInPage() {
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 onClick={handleLogin}
               >
-                Sign in
+                Log In
               </button>
             </div>
           </form>

@@ -1,4 +1,4 @@
- const objForPersonalDataOfFounder : any = {
+ const objForPersonalDataOfIndividuals : any = {
   "first-name": "",
   "last-name": "",
   "email": "",
@@ -6,6 +6,7 @@
   "city": "",
   "State": "",
   "ZIP": "",
+  "investorType" : "NA"
 }
 
  const objForPersonalDataOfInvestor : any = {
@@ -21,16 +22,31 @@
 const objForPersonalDataOfCF : any = {
   "company-name" : "",
   "email": "",
-  "about" : "",
   // "size" : "",
   "categories" : "",
+  "headquarters" : "",
+  "country" : "",
+  "State" : "",
+  "city" : "",
+  }
+
+ 
+ const objForCompany : any  = {
+  "company-name" : "",
+  "email": "",
+  // "about" : "",
+  "size" : "",
+  "industry" : "",
+  "specialization": "",
   "headquarters" : "",
   "State" : "",
   "city" : "",
   "country" : "",
-  }
+  // "link" : "",
+  "stage" : ""
+} 
 
- const objForEstablishedIndustryLeaders : any  = {
+const objForEstablishedIndustryLeaders : any  = {
   "company-name" : "",
   "email": "",
   "about" : "",
@@ -43,22 +59,8 @@ const objForPersonalDataOfCF : any = {
   "country" : "",
 
 } 
- const objForCompany : any  = {
-  "company-name" : "",
-  "email": "",
-  "about" : "",
-  "size" : "",
-  "industry" : "",
-  "specialization": "",
-  "headquarters" : "",
-  "State" : "",
-  "city" : "",
-  "country" : "",
-  "link " : "",
-  "stage" : ""
-} 
 
- const objForEmergingChallengers : any = {
+const objForEmergingChallengers : any = {
   "company-name" : "",
   "email": "",
   "about" : "",
@@ -92,6 +94,6 @@ export { objForStartups,
   objForEstablishedIndustryLeaders,
   objForPersonalDataOfCF,
   objForPersonalDataOfInvestor,
-  objForPersonalDataOfFounder,
+  objForPersonalDataOfIndividuals,
   objForCompany
 }

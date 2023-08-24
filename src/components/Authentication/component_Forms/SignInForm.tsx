@@ -5,6 +5,7 @@ import axios from 'axios';
 
 type formatForSignInData = {
   Email: string,
+  username : string,
   Password: string,
   CPassword: string
 }
@@ -19,10 +20,12 @@ type typeForProps = {
  * @param param0 is a Object which conatains additional data for registration process , like (personal information , cpmpony information etc . ) obj is changes whith the type of user 
  * @returns 
  */
+
 export default function SignInForm({ objForSignInComonent, ArrayForInterest }: typeForProps) {
 
   const [dataForSignIn, setdataForSignIn] = useState<formatForSignInData>({
     Email: objForSignInComonent.email,
+    username : '',
     Password: '',
     CPassword: ''
   })
@@ -39,11 +42,13 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
         try {
           const objects = {
             details: {
-              ...objForSignInComonent
+              ...objForSignInComonent,
+              username : dataForSignIn.username
             },
             authenticationData: {
               email: dataForSignIn.Email,
               password: dataForSignIn.Password,
+              username : dataForSignIn.username,
               type: typeOfUser
             }
           }
@@ -56,7 +61,10 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
           }
 
         } catch (error: any) {
-          setError(error.response.data.message)
+          console.log("error form Sign in Form " , error)
+          if(error.response?.data?.message) setError(error.response.data.message);
+          else setError('Error Due to Network Issue')
+
         }
       }
     } catch (error: any) {
@@ -73,12 +81,12 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
   }
 
   useEffect(() => {
-    // Effect for push user type and ArrayForInterest inside main objects 
+    // Effect for push user type and ArrayForInterest inside main objects            
     objForSignInComonent.interest = [...ArrayForInterest]
+    console.log('objForSignInComonent==>', objForSignInComonent, ArrayForInterest)
     setTypeOfUser(objForSignInComonent.type);
-    console.log('objForSignInComonent==>', objForSignInComonent , ArrayForInterest)
   }, [])
-  
+
   return (
     <div className='flex md:w-1/2 w-full mx-auto flex-col h-auto my-10'>
       <Logo />
@@ -108,6 +116,25 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
               />
             </div>
             <p className="mt-1 text-sm leading-6 text-gray-600">This Email will use for your login , If you want you can change it now.</p>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                Username
+              </label>
+            </div>
+            <div className="mt-2">
+              <input
+                id="username"
+                name="username"
+                type="username"
+                autoComplete="username"
+                required
+                onChange={handleChageInInputs}
+                className="block w-full rounded-md border-0 py-1.5 px-5  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
           </div>
 
           <div>

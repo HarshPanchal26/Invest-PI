@@ -18,7 +18,7 @@ const postData = [
 
 function Post() {
   return (
-    <div className='flex flex-col md:w-4/6 w-full mx-2 bg-slate-50'>
+    <>
         {postData.map((item , index)=>{
           return (
             <div className='flex flex-col my-2 mx-auto  h-auto md:w-4/6 w-full border rounded-2xl' key={index}>
@@ -59,9 +59,7 @@ function Post() {
           </div>
           )
         })}
-          {/* Post content (Which will be going in loop) */}
-          
-        </div>
+    </>
   )
 }
 

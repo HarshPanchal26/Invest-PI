@@ -22,7 +22,7 @@ const isValidUser = async (req, res, next) => {
         }
     } catch (error) {
         console.log("error =>"  , error) 
-        res.json({
+        res.status(401).json({
             status: false,
             verified: false,
             token: false,
@@ -64,7 +64,7 @@ const isTokenValid = (req, res, next) => {
 }
 
 const isAutorized = (req, res, next) => {
-    console.log("headers", req.cookies['access_token']);
+    console.log("headers===>", req.cookies['access_token']);
     let token = req.cookies['access_token'];
     if (token) {
 
@@ -73,16 +73,18 @@ const isAutorized = (req, res, next) => {
                 if (err) {
                     res.json({
                         authorized: false,
-                        message: 'You Need to Login/SignIn '
+                        message: 'You Need to Login/SignIn'
                     })
                 } else {
-                    console.log("decoded token " , decoded.uid)
+                    // console.log("decoded token===>" , decoded)
                     req.headers['Access-id'] = decoded.uid;
+                    res.locals.uid = decoded.uid
+                    res.locals.type = decoded.type
                     next();
                 }
             })
         } catch (error) {
-            res.json({
+            res.status(401).json({
                 authorized: false,
                 message: error.message
             })
@@ -95,7 +97,25 @@ const isAutorized = (req, res, next) => {
     }
 }
 
+const varifySessionData = (req , res)=>{
 
-module.exports = { isValidUser, isTokenValid, isAutorized }
+}
+
+
+const createTokenForSessionStorage = ()=>{
+    
+}
+
+
+module.exports = { isValidUser, isTokenValid, isAutorized  , varifySessionData}
+
+/**
+    format of data for session storage = {
+        id : ,
+        interest : ',
+        type : '
+    }
+ * 
+ */
 
 

@@ -48,6 +48,10 @@ const TieUps = lazy(
     ()=> import('../DashBord/TieUps')
 )
 
+const Profile = lazy(
+    ()=>import('../DashBord/Profile')
+)
+
 
 
 const introPage  = {
@@ -81,15 +85,15 @@ const accountType = {
     requiredRole : 'all' as UserRole
 }
 
-// const userType = {
-//     path: '/signin/user',
-//     component: <AccountType />,
-//     title: 'Types of Account ',
-//     description: 'Choose your account preference ',
-//     exact : true,
-//     fullPageWidth : true,
-//     requiredRole : 'all' as UserRole
-// }
+const profile = {
+    path: '/profile',
+    component: <Profile/>,
+    title: 'Types of Account ',
+    description: 'Choose your account preference ',
+    exact : true,
+    fullPageWidth : true,
+    requiredRole : 'all' as UserRole
+}
 
 const dashbord = {
     path :'/feed',
@@ -149,21 +153,12 @@ const registration = {
     requiredRole : 'all' as UserRole
 }
 
-// const interestPage = {
-//     path :'/registration',
-//     component: <Registration />,
-//     title: 'Registartion ',
-//     description: 'Sign Up for new user ',
-//     exact : true,
-//     fullPageWidth : true,
-//     requiredRole : 'all' as UserRole
-// }
-
 export const IntroPages : IPageMeta[] = [
     introPage ,
     logInPage,
     accountType,
-    registration   
+    registration,
+    
 ]
 
 export const DashBordPages : IPageMeta[]=[
@@ -172,6 +167,10 @@ export const DashBordPages : IPageMeta[]=[
     raisefund,
     impression,
     tieups    
+]
+
+export const ProfilePages : IPageMeta[]=[
+    profile   
 ]
 
 

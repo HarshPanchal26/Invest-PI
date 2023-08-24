@@ -14,7 +14,7 @@ const connectionWithAtlas = ()=>{
     .then(()=>{
         console.log("Connected with mongoDB atlas")
     }).catch((error)=>{
-        console.log("Error is :" , error.message)
+        console.log("Error from connection ===> :" , error.message)
     })
     
     

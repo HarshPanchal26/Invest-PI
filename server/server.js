@@ -9,6 +9,10 @@ const {connectionWithAtlas} = require('./config/database')
 const SignInRoute = require('./routes/signInRoute')
 const LogInRoute = require('./routes/logInRoute')
 const FeedRoute = require('./routes/FeedRoute')
+const LogoutRoute = require('./routes/LogoutRoute')
+const { isAutorized } = require('./middleware/middlewareForAuthentication')
+const getUserData = require('./middleware/middlewareForUserData')
+
 
 app.use(bodyparser.json());
 app.use(
@@ -24,6 +28,15 @@ app.get('/' , (req,res)=>{
 app.use('/login', LogInRoute);
 app.use('/signin', SignInRoute);
 app.use('/feed', FeedRoute);
+app.use('/logout' ,LogoutRoute)
+
+app.get('/api/authorization' ,  isAutorized , getUserData , (_req , res)=>{
+    res.status(201).json({
+        authorized : true,
+        user : res.locals.user,
+        message : 'Autorized Person.',
+    })
+})
 
 app.get('*', (_req, res)=>{
  res.send("Inavlid request")

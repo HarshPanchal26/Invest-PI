@@ -8,7 +8,7 @@ router.get('/', (_req,res)=>{
     res.send("I am body")
 })
 
-router.post('/', controllerForLogIn);
+router.post('/user', controllerForLogIn);
 
 router.get('/authorization' , isAutorized , (_req , res)=>{
     res.status(201).json({
@@ -19,21 +19,3 @@ router.get('/authorization' , isAutorized , (_req , res)=>{
 
 module.exports = router;
 
-
-
-
-
-
-
-
-
-// Paassword for Cluster
-// # ATnFtvrjXmwmsMlW
-
-// passowrd for Realm
-// # 3HSNlszVuqdlOy5L
-
-
-// link 
-// # mongodb+srv://hrppanchal27:ATnFtvrjXmwmsMlW@clusterpi.3x7htsc.mongodb.net/?retryWrites=true&w=majority
-// # mongodb+srv://hrppanchal27:<password>@clusterpi.3x7htsc.mongodb.net/

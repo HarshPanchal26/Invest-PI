@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import RegistartionForCF from './component_Auth/RegistartionForCF';
 import RegistrationForAngel from './component_Auth/RegistrationForAngel';
-import RegistrationForFounders from './component_Auth/RegistrationForFounders';
 import RegistrationForBuisness from './component_Auth/RegistrationForBuisness';
 import RegistrationForProducts from './component_Auth/RegistrationForProducts';
+import RegistrationForIndividuals from './component_Auth/RegistrationForIndividuals';
 
-const userCast = ["investor", "business", "founder", "CF" , "product"];
+
+const userCast = ["investor", "business", "founder", "CF" , "product" , "individuals"];
 
 export default function SignInPage() {
 
@@ -51,25 +52,25 @@ export default function SignInPage() {
 
   if(!loader){
   return (
-    <div className='border h-auto md:mx-5 md:p-8 mx-2 p-5'>
+    <div className='h-auto md:mx-5 md:p-8 mx-2 p-5'>
       {
         //  used for Registration of capital firm
         userType === 'CF' && <RegistartionForCF />  
       }
       {
-        //  used for angel investor or individual investpr
-        userType === 'investor' && <RegistrationForAngel />
+        //  used for angel investor or individual investpr (Not in use)
+        userType === 'investor' && <RegistrationForAngel/>
       }
       {
         //  used for founders registration
-        userType === 'founder' && <RegistrationForFounders />
+        userType === 'individuals' && <RegistrationForIndividuals/>
       }
       {
-        //  used for registartion of Buisness (Start ups , Mid level compony , giant compony)
+        //(Not in use right now)  used for registartion of Buisness (Start ups , Mid level company , giant company)
         userType === 'business' && <RegistrationForBuisness />
       }
       {
-        //  used for registartion of Buisness (Start ups , Mid level compony , giant compony)
+        //  used for registartion of Buisness (Start ups , Mid level company , giant company)
         userType === 'product' && <RegistrationForProducts/>
       }
 
