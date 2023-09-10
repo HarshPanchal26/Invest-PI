@@ -1,3 +1,4 @@
+const { timeStamp } = require('console');
 const mongoose = require('mongoose');
 const validator = require('validator');
 
@@ -53,7 +54,7 @@ const SchemaForIndividuals = new mongoose.Schema({
     required: true,
   },
   badges : {
-    type : String,
+    type : Array,
     require : false,
     default  : []
   },
@@ -211,6 +212,21 @@ const SchemaForCF = new mongoose.Schema({
     require : false,
     default  : 'NA'
   },
+  people : {
+    type : Array,   
+    require : false,
+    default  : []
+  },
+  createdAt : {
+    type : Date,
+    require : false,
+    default : new Date()    
+  },
+  lastUpdated : {
+    type : Date,
+    require : false,
+    default : new Date()
+  }
 
 })
 
@@ -547,3 +563,23 @@ module.exports = { SchemaForIndividuals,
 //   }
 
 // })
+
+
+
+
+// const client = new Client();
+
+// client
+//     .setEndpoint('https://cloud.appwrite.io/v1')
+//     .setProject('64e86e3e11bf8bb954c6');
+
+
+
+
+/*
+  VERTICAL HORIZONTAL SCALLINIG
+  APP SERVER WEB SERVER 
+  CDN
+  PRIVATE NETWORK 
+  DRIVERS 
+*/

@@ -143,7 +143,7 @@ type ContextTypeForIndividual = {
     email : string,
     bio : string,
     about : string,
-    follower : string,
+    followers : string,
     following :  string,
     badges : string,
     phone : string,

@@ -1,7 +1,7 @@
 export const ArrayForInvestorInterest = [
     {
       type: "Technology",
-      feild: [
+      feild : [
         { category: "Software", selected: false },
         { category: "AI", selected: false },
         { category: "ML", selected: false },

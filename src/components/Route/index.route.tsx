@@ -41,7 +41,7 @@ export default function IndexForRoute() {
                                 path={page.path}
                                 element={
                                     <ContextProviderForDashBord>
-                                        <div className='md:flex flex-row h-full '>
+                                        <div className='md:flex flex-row h-full w-auto'>
                                             <SideBar />
                                             <div className='flex flex-col flex-grow w-auto'>
                                                 <NavbarForDashBord />
@@ -67,19 +67,9 @@ export default function IndexForRoute() {
 
                                         <div className='flex flex-col flex-grow w-auto' >
                                             <NavbarForDashBord />
-                                            <div className='bg-white h-auto flex flex-row  md:mx-5 '>
-                                                <div className="bg-white shadow-lg overflow-hidden md:w-2/3 w-auto">
-                                                    <Suspense fallback={<div>Loading......</div>}>
-                                                        <div className=' my-5 overflow-auto h-auto'>
-                                                            {page.component}
-                                                        </div>
-                                                    </Suspense>
-
-                                                </div>
-                                                <div className='md:w-1/3 md:flex hidden flex-col items-center mx-5'>
-                                                    <Suggestions />
-                                                </div>
-                                            </div>
+                                                <Suspense fallback={<div>Loading......</div>}>
+                                                        {page.component}
+                                                </Suspense>
 
                                         </div>
                                     </ContextProviderForDashBord>

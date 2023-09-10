@@ -1,0 +1,123 @@
+Indexing 
+
+1. Collectiion Scan(Without Indexing)
+
+
+Type OF INDEX 
+
+1 . Single Feild Indexes 
+2 . Compound Feild Indexes
+3 . Text Indexes
+
+1 . Single Feild Index
+
+    Using single feild index will be created 
+    db.collection.getindexes()  ==> Give lost of Index for collection
+    db.collection.createdIndex({feild : 1})  ===> return name or object
+    db.dropIndex() ==> Drop Index
+
+
+2 . Compund Scan 
+                     Merge two or more feils to create an Index 
+    ex : db,collection.createdIndex({username : 1 , rid : 1})
+        
+        will create index named username_1_rid_1 . 
+
+        Now if we query for any document like 
+           db.collection.find({username : "xyz , rid: "23u2o492"}).explain('executinStats')
+
+           then it only "totalDocsExamined" will be only  1 
+
+
+           if query is something like 
+           db.collection.find({username : "xy"}).explain('executinStats')
+
+           then even result is same , but for below query result might get different
+
+           db.collection.find({rid: "23u2o492"}).explain('executinStats')
+
+
+           for this query "totalDocsExamined" will be only  larger or we can say max , and it user "CALLSCAN" Collection sacn for identifying document
+
+           and other query users "IndexScan" for serching 
+
+
+
+           ===>If yoy want index to be applied on unique value we can set it as 
+               
+               db.collection.createIndex({name : 1} , {unique : true})
+
+               prevent same name value by sorting B tree in asc order by name feild 
+
+
+
+        ===>  we even can set filter inside filter 
+
+
+        db.collection.createdIndex({age : 1 , {partialFilterExression : {age : {$gt : 22}}}})
+
+
+        Now only documents with age gt then 22 will be added in index tree / B tree 
+
+        NOw if i run query like ==> db.collection.find({age : {$lt : 21}})
+
+        Now for this query CALLSCAN will happen , 
+
+        if we set our filter for age >= 22 then and then INDEXSCAN (index scan ) will be triggered 
+
+
+        Exmaple : 2
+
+        db.collection.createdIndex({name : 1 , {partialFilterExression : {rid : {$exists : true}}}})
+
+
+        take only those documents in inside index tree which has rid feild , documents which has no existance of rid feils are not been inculded inside tree 
+
+
+
+
+        =======> Covered Query 
+
+        All the feilds in query are the part of an index 
+        All the feilds returned in the query are in the same index 
+
+        Covered query are very fast queries ,let us understad it by example 
+
+        db.collection.createdIndex({age : 1 , gender : 1})
+
+        Index is been made of a combinatin of age and gender 
+
+        now covered query is 
+
+        db.collection.find({age : {$gt : 21} , gender : "male"})
+
+
+
+        
+        =====> Winnig plan 
+
+        if for one query there is more then two or more then one index is available then before triggereing the query , or i don't know the exact time but ya mongo messure the perfomance for both index for a sample  collection and caches ihe index for a while(almost for next 1000 write operation) , and used it for other simillar operation 
+
+
+
+        ====> Multi Key Index 
+
+        used on array and its feilds(Arrays value)
+
+        It creates index for array and for each value of array too .
+
+
+
+        ===> Text base Index 
+
+            ==> Query for create Text base Index 
+
+        db['user-as-individual'].createIndex({firstname : "text" , lastname : "text" , username : "text"} , {weights : {firstname : 2, lastname : 1 , username : 2}})
+
+        ===> Retrive data bases on text 
+
+         db['user-as-individual'].find({$text : {$search : "harsh official"}})
+
+
+        ====>   Add score for each result 
+          db['user-as-individual'].find({$text : {$search : "harsh official"}}, {hamaraScore }).pretty()  

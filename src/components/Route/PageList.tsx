@@ -49,8 +49,13 @@ const TieUps = lazy(
 )
 
 const Profile = lazy(
-    ()=>import('../DashBord/Profile')
+    ()=>import('../Profile/Profile')
 )
+
+const SharePost = lazy(
+    ()=>import('../DashBord/Component_DashBord/SharePost')
+)
+
 
 
 
@@ -86,7 +91,7 @@ const accountType = {
 }
 
 const profile = {
-    path: '/profile',
+    path: '/profile/:username',
     component: <Profile/>,
     title: 'Types of Account ',
     description: 'Choose your account preference ',
@@ -98,6 +103,16 @@ const profile = {
 const dashbord = {
     path :'/feed',
     component: <FeedPage />,
+    title: 'Types of Account ',
+    description: 'Choose your account preference ',
+    exact : true,
+    fullPageWidth : true,
+    requiredRole : 'all' as UserRole
+}
+
+const sharePost = {
+    path :'/post',
+    component: <SharePost />,
     title: 'Types of Account ',
     description: 'Choose your account preference ',
     exact : true,
@@ -166,7 +181,8 @@ export const DashBordPages : IPageMeta[]=[
     network,
     raisefund,
     impression,
-    tieups    
+    tieups,
+    sharePost    
 ]
 
 export const ProfilePages : IPageMeta[]=[

@@ -8,6 +8,7 @@
     "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.16",
     "@heroicons/react": "^2.0.18",
+    "@mui/base": "5.0.0-beta.13",
     "@mui/core": "5.0.0-alpha.54",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.2",

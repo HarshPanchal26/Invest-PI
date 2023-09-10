@@ -10,6 +10,8 @@ const SignInRoute = require('./routes/signInRoute')
 const LogInRoute = require('./routes/logInRoute')
 const FeedRoute = require('./routes/FeedRoute')
 const LogoutRoute = require('./routes/LogoutRoute')
+const ProfileRoute = require('./routes/ProfileRoute')
+const ThoughtsRoute = require('./routes/ThoughtsRoute')
 const { isAutorized } = require('./middleware/middlewareForAuthentication')
 const getUserData = require('./middleware/middlewareForUserData')
 
@@ -28,8 +30,9 @@ app.get('/' , (req,res)=>{
 app.use('/login', LogInRoute);
 app.use('/signin', SignInRoute);
 app.use('/feed', FeedRoute);
-app.use('/logout' ,LogoutRoute)
-
+app.use('/logout' ,LogoutRoute);
+app.use('/profile' , ProfileRoute)
+app.use('/thoughts' , ThoughtsRoute)
 app.get('/api/authorization' ,  isAutorized , getUserData , (_req , res)=>{
     res.status(201).json({
         authorized : true,

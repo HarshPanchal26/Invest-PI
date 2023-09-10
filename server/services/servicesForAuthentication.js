@@ -1,14 +1,13 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const { mongoose } = require('../config/database');
-const { 
+const {
     SchemaForIndividuals,
-    SchemaForCommanUserData, 
-    // SchemaForInvestor,
+    SchemaForCommanUserData,
     SchemaForCF,
     SchemaForCompany } = require('../models/signinmodels');
 
-const createUser = ( objForData , objForSignIn) => {
+const createUser = (objForData, objForSignIn) => {
     const responceObj = {
         status: false,
         token: null,
@@ -20,15 +19,15 @@ const createUser = ( objForData , objForSignIn) => {
 
     // console.log("objForData.type" , objForData.type , objForData.stage)
 
-    if(objForData.type === 'product'){
-        Schema = SchemaForCompany 
+    if (objForData.type === 'product') {
+        Schema = SchemaForCompany
         Collection = 'user-as-company'
-    }else if(objForData.type === 'CF'){
+    } else if (objForData.type === 'CF') {
         Schema = SchemaForCF
         Collection = 'user-as-CF'
-    }else {
+    } else {
         Schema = SchemaForIndividuals
-        Collection = 'user-as-individual'  
+        Collection = 'user-as-individual'
     }
 
 
@@ -38,10 +37,10 @@ const createUser = ( objForData , objForSignIn) => {
         try {
             const res = await Model.create(objForSignIn);
             responceObj.status = true
-            const token = await createSession({ uid: res._id , type : objForData.type})
+            const token = await createSession({ uid: res._id, type: objForData.type })
             // console.log("token", token)
             responceObj.token = token
-            const additionalData = await addUserDetails({ rid: res._id, ...objForData } , Schema , Collection.trim())
+            const additionalData = await addUserDetails({ rid: res._id, ...objForData }, Schema, Collection.trim())
             responceObj.dataStorage = additionalData._id;
             resolve(responceObj)
         } catch (error) {
@@ -53,7 +52,7 @@ const createUser = ( objForData , objForSignIn) => {
     })
 }
 
-const addUserDetails = (obj , Schema , Collection) => {
+const addUserDetails = (obj, Schema, Collection) => {
     return new Promise(async (resolve, reject) => {
         const db = mongoose.connection.useDb('users');
         const Model = db.model('Users', Schema, Collection);
@@ -73,7 +72,7 @@ const encryptedPassword = (value) => {
     return new Promise(async (resolve, reject) => {
         try {
             const salt = await bcrypt.genSalt(saltRounds);
-            console.log("salt" ,salt)
+            console.log("salt", salt)
             const hashedPassword = await bcrypt.hash(value, `$2b$10$.Ndp7FhVhm1.wo0aiRLPpO`);
             resolve(hashedPassword);
         } catch (error) {
@@ -94,7 +93,23 @@ const createSession = (obj) => {
     })
 }
 
-module.exports = { createUser, createSession, encryptedPassword };
+const findSchemaAndCollection = (type) => {
+    let Schema = null;
+    let Collection = null;
+    if (type === 'product') {
+        Schema = SchemaForCompany
+        Collection = 'user-as-company'
+    } else if (type === 'CF') {
+        Schema = SchemaForCF
+        Collection = 'user-as-CF'
+    } else {
+        Schema = SchemaForIndividuals
+        Collection = 'user-as-individual'
+    }
+    return { Schema: Schema, Collection: Collection }
+}
+
+module.exports = { createUser, createSession, encryptedPassword, findSchemaAndCollection };
 
 
 
@@ -102,3 +117,5 @@ module.exports = { createUser, createSession, encryptedPassword };
 
 
 // $2b$10$.Ndp7FhVhm1.wo0aiRLPpO
+
+

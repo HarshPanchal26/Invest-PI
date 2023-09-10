@@ -1,7 +1,7 @@
 const experess = require('express');
-const ControllerForFeed = require('../controller/controllerForFeed') 
-const {isValidUser , isAutorized} = require('../middleware/middlewareForAuthentication')
-const getUserData = require('../middleware/middlewareForUserData')
+const {isAutorized} = require('../middleware/middlewareForAuthentication')
+const getUserData = require('../middleware/middlewareForUserData');
+const controllerForFeed = require('../controller/controllerForFeed');
 
 const router = experess.Router();
 
@@ -16,10 +16,7 @@ router.get('/authorization' , isAutorized , getUserData , (_req , res)=>{
         message : 'Autorized Person.',
     })
 })
-router.post('/posts', isValidUser , (req , res)=>{
-    res.status(201).send("All Clear")
-});
 
-
+router.post('/fetchposts', isAutorized , controllerForFeed);
 
 module.exports = router;

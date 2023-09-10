@@ -1,16 +1,18 @@
 import { ContextTypeForProduct ,
     ContextTypeForIndividual , 
     ContextTypeForCF} from '../type';
+import {decodeTextFromDisplay} from '../../utils/factory/FormatText'
 
 const GenerateObjForIndividual = (Obj : ContextTypeForIndividual)=>{
+   console.log("Data For Individual" ,Obj )
    return {
       USERNAME: Obj.username,
       FIRST_NAME: Obj.firstName,
       LAST_NAME: Obj.lastName,
       EMAIL: Obj.email,
       BIO: Obj.bio,
-      ABOUT: Obj.about,
-      FOLLOWER: Obj.follower,
+      ABOUT: decodeTextFromDisplay(Obj.about),
+      FOLLOWER: Obj.followers,
       FOLLOWING: Obj.following,
       BADGES: Obj.badges,
       PHONE: Obj.phone,
@@ -29,13 +31,12 @@ const GenerateObjForIndividual = (Obj : ContextTypeForIndividual)=>{
 
 
 const GenerateObjForProducts = (Obj: ContextTypeForProduct) => {
-   console.log("Product Generator " , Obj)
    return {
       USERNAME: Obj.username,
       COMPANYNAME: Obj.companyname,
       EMAIL: Obj.email,
       BIO: Obj.bio,
-      ABOUT: Obj.about,
+      ABOUT: decodeTextFromDisplay(Obj.about),
       FOLLOWER: Obj.followers,
       FOLLOWING: Obj.following,
       SIZE: Obj.size,
@@ -58,12 +59,13 @@ const GenerateObjForProducts = (Obj: ContextTypeForProduct) => {
 }
 
 const GenerateObjForCF = (Obj : ContextTypeForCF)=>{
+   console.log("Data for CF " , Obj)
    return {
       USERNAME: Obj.username,
       FIRMNAME: Obj.firmname,
       EMAIL: Obj.email,
       BIO: Obj.bio,
-      ABOUT: Obj.about,
+      ABOUT: decodeTextFromDisplay(Obj.about),
       FOLLOWER: Obj.followers,
       FOLLOWING: Obj.following,
       CATEGORIES: Obj.categories,
@@ -82,4 +84,8 @@ const GenerateObjForCF = (Obj : ContextTypeForCF)=>{
    }
 }
 
-export {  GenerateObjForProducts , GenerateObjForIndividual,GenerateObjForCF};
+
+const ObjForVisitedUser : Array<Object>  = [];
+
+
+export {  GenerateObjForProducts , GenerateObjForIndividual,GenerateObjForCF , ObjForVisitedUser };

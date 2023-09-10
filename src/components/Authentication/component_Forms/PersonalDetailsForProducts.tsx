@@ -3,8 +3,8 @@ import { Button } from '@mui/material';
 import { PersonalDataVarificationForCompany } from '../../../Verification/PersonalDataVarification'
 import { objForCompany } from '../../../utils/factory/ObjForFormData';
 import { SchemaForCompanyObj } from '../../../utils/factory/ObjForSchema';
-import {ArrayForInvestorInterest} from '../../../utils/InterestArray'
-import {TypeForCompany} from '../../../utils/type'
+import { ArrayForInvestorInterest } from '../../../utils/InterestArray'
+import { TypeForCompany } from '../../../utils/type'
 
 type propsType = {
   handleNext: Function
@@ -12,10 +12,10 @@ type propsType = {
 }
 
 
-const ObjForCompanySize : any = {
-    EIL : ['<5000' , '5000-10,000' , '>10,000'],
-    EC : ['<500' ,'500-1000' , '>1000'],
-    startup : ['10-50' , '50-100' , '>100']
+const ObjForCompanySize: any = {
+  'Established Industry Leaders': ['<5000', '5000-10,000', '>10,000'],
+  'Emerging Challengers': ['<500', '500-1000', '>1000'],
+  'Visionary Startups': ['10-50', '50-100', '>100']
 }
 
 export default function PersonalDetailsForProducts({ handleNext, setObjForSignInComonent }: propsType) {
@@ -25,11 +25,11 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
 
   const [errorMessage, setErrorMessage] = useState<String | null>(null);
 
-  const [industry , setIndustry] = useState<String[] | null >(null);
+  const [industry, setIndustry] = useState<String[] | null>(null);
 
-  const [sizeOfCompany , setSizeOfCompany] = useState<Array<string> | null>(null);
+  const [sizeOfCompany, setSizeOfCompany] = useState<Array<string> | null>(null);
 
-    
+
 
   const handleChageInValue = (event: any) => {
     const { value, name } = event.target;
@@ -41,33 +41,33 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
 
   }
 
-  const handleChangeInOption=(event : any)=>{
-    const { value , name } = event.target;
+  const handleChangeInOption = (event: any) => {
+    const { value, name } = event.target;
     setDataForPersonalDetails({
       ...dataForPersonalDetails,
       [name]: value
     })
     objForCompany[name] = value;
-    if(name === 'industry'){
-      if(value !== ''){
-        let arrayForSpecialization : any = ArrayForInvestorInterest.filter((item)=>{
-          return item.type === value &&  item.feild
+    if (name === 'industry') {
+      if (value !== '') {
+        let arrayForSpecialization: any = ArrayForInvestorInterest.filter((item) => {
+          return item.type === value && item.feild
         })
         setIndustry(arrayForSpecialization[0].feild);
-      }else{
+      } else {
         setDataForPersonalDetails({
           ...dataForPersonalDetails,
-          industry : "",
+          industry: "",
           specialization: ""
         })
         objForCompany["specialization"] = "";
         setIndustry(null);
       }
     }
-    if(name === 'stage'){
-      if(value !== ''){
+    if (name === 'stage') {
+      if (value !== '') {
         setSizeOfCompany([...ObjForCompanySize[value]])
-      }else{
+      } else {
         setDataForPersonalDetails({
           ...dataForPersonalDetails,
           size: ""
@@ -77,7 +77,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
       }
     }
   }
-  
+
   const handleClick = async () => {
     try {
       await PersonalDataVarificationForCompany(dataForPersonalDetails);
@@ -101,7 +101,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="col-span-5 md:col-span-3">
             <label htmlFor="company-name" className="block text-sm font-medium leading-6 text-gray-900">
-            Company Name / Product Name
+              Company Name / Product Name
             </label>
             <div className="mt-2">
               <input
@@ -151,8 +151,8 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
 
 
           <div className="col-span-5 md:col-span-3">
-            <label htmlFor="industry" className="block text-sm font-medium leading-6 text-gray-900">
-            Stage (Products / Company Stage)
+            <label htmlFor="stage" className="block text-sm font-medium leading-6 text-gray-900">
+              Stage (Products / Company Stage)
             </label>
             <div className="mt-2">
               <select
@@ -165,16 +165,16 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
                 value={dataForPersonalDetails.stage}
               >
                 <option value={''} >{'None'}</option>
-                <option value={'EIL'} >{'Established Industry Leaders'}</option>
-                <option value={'EC'}>{'Emerging Challengers'}</option>
-                <option value={'startup'} >{'Visionary Startups'}</option>
+                <option value={'Established Industry Leaders'} >{'Established Industry Leaders'}</option>
+                <option value={'Emerging Challengers'}>{'Emerging Challengers'}</option>
+                <option value={'Visionary Startups'} >{'Visionary Startups'}</option>
               </select>
             </div>
           </div>
 
           <div className="col-span-5 md:col-span-3">
-            <label htmlFor="industry" className="block text-sm font-medium leading-6 text-gray-900">
-            Company Size
+            <label htmlFor="size" className="block text-sm font-medium leading-6 text-gray-900">
+              Company Size
             </label>
             <div className="mt-2">
               <select
@@ -187,8 +187,8 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
                 value={dataForPersonalDetails.size}
               >
                 <option value={'NA'} >{'NA'}</option>
-                {sizeOfCompany !==  null &&
-                  sizeOfCompany.map((item, index)=>{
+                {sizeOfCompany !== null &&
+                  sizeOfCompany.map((item, index) => {
                     return (
                       <option value={item} key={index}>{item}</option>
                     )
@@ -201,7 +201,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
 
           <div className="col-span-5 md:col-span-3">
             <label htmlFor="industry" className="block text-sm font-medium leading-6 text-gray-900">
-            Industry
+              Industry
             </label>
             <div className="mt-2">
               <select
@@ -214,7 +214,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
                 value={dataForPersonalDetails.industry}
               >
                 <option value={''} >{'None'}</option>
-                {ArrayForInvestorInterest.map((item : any,index :any)=>{
+                {ArrayForInvestorInterest.map((item: any, index: any) => {
                   return (
                     <option value={item.type} key={index}>{item.type}</option>
                   )
@@ -226,7 +226,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
 
           <div className="col-span-5 md:col-span-3">
             <label htmlFor="specialization" className="block text-sm font-medium leading-6 text-gray-900">
-            Industry Specialization
+              Industry Specialization
             </label>
             <div className="mt-2">
               <select
@@ -241,7 +241,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
                 value={dataForPersonalDetails.specialization}
               >
                 <option value={''} >{'None'}</option>
-                {industry!== null && industry.map((item : any,index :any)=>{
+                {industry !== null && industry.map((item: any, index: any) => {
                   return (
                     <option value={item.category} key={index}>{item.category}</option>
                   )
@@ -252,7 +252,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
 
           <div className="col-span-5 md:col-span-full">
             <label htmlFor="headquarters" className="block text-sm font-medium leading-6 text-gray-900">
-            Headquarters Address (do not mention city or country here)
+              Headquarters Address (do not mention city or country here)
             </label>
             <div className="mt-2">
               <input
@@ -285,9 +285,9 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
           </div> */}
 
 
-<div className="col-span-5 md:col-span-4">
+          <div className="col-span-5 md:col-span-4">
             <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
-            Country
+              Country
             </label>
             <div className="mt-2">
               <select
@@ -341,7 +341,7 @@ export default function PersonalDetailsForProducts({ handleNext, setObjForSignIn
             </div>
           </div>
 
-          
+
 
         </div>
 

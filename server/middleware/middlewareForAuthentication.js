@@ -2,6 +2,8 @@ const { mongoose } = require('../config/database')
 const { SchemaForCommanUserData } = require('../models/signinmodels')
 const jwt = require('jsonwebtoken');
 
+
+// function for check whether user with same email and username is exist or not 
 const isValidUser = async (req, res, next) => {
     const { authenticationData } = req.body;
 
@@ -30,8 +32,6 @@ const isValidUser = async (req, res, next) => {
         })
     }
 }
-
-
 
 const isTokenValid = (req, res, next) => {
     console.log("headers", req.cookies['access_token']);
@@ -63,8 +63,9 @@ const isTokenValid = (req, res, next) => {
 
 }
 
+// method for authenticate session token whethere it is valid or not 
 const isAutorized = (req, res, next) => {
-    console.log("headers===>", req.cookies['access_token']);
+    console.log("headers is Authorized ==>", req.cookies['access_token']);
     let token = req.cookies['access_token'];
     if (token) {
 
@@ -76,9 +77,9 @@ const isAutorized = (req, res, next) => {
                         message: 'You Need to Login/SignIn'
                     })
                 } else {
-                    // console.log("decoded token===>" , decoded)
+                    console.log("decoded token===>" , decoded.uid)
                     req.headers['Access-id'] = decoded.uid;
-                    res.locals.uid = decoded.uid
+                    res.locals.uid =  decoded.uid
                     res.locals.type = decoded.type
                     next();
                 }
@@ -102,20 +103,7 @@ const varifySessionData = (req , res)=>{
 }
 
 
-const createTokenForSessionStorage = ()=>{
-    
-}
-
 
 module.exports = { isValidUser, isTokenValid, isAutorized  , varifySessionData}
-
-/**
-    format of data for session storage = {
-        id : ,
-        interest : ',
-        type : '
-    }
- * 
- */
 
 

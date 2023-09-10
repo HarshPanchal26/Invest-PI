@@ -10,7 +10,8 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: whitesmoke; /* Color of the thumb */
+  background-color: whitesmoke;
+  background-color: #1e87f0; /* Color of the thumb */
   border-radius: 6px; /* Round edges */
 }
 
