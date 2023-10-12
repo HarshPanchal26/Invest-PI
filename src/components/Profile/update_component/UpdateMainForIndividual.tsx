@@ -1,22 +1,31 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, SetStateAction } from 'react'
 import Loading from '../../../Assets/Loading';
-import { VerificationForMainDataOfCF } from '../../../Verification/UpdateDataVerification'
 import axios from 'axios';
 import { ContextForDashBord } from '../../../context/contextForDashBord';
 
 type TypeForProps = {
   objForProfile: any
+  closeModal: React.Dispatch<SetStateAction<{ open: boolean, child: null | string }>>
 }
 
 type TypeForUpdatedMainData = {
-  firstname: '',
-  lastname: '',
-  username: '',
-  bio: '',
-  email: '',
+  firstname: string,
+  lastname: string,
+  username: string,
+  bio: string,
+  email: string,
+}
+type TypeForUpdatedStatus = {
+  firstname: boolean,
+  lastname: boolean,
+  username: boolean,
+  bio: boolean,
+  email: boolean,
 }
 
-export default function UpdateMainForIndividual({ objForProfile }: TypeForProps) {
+
+
+export default function UpdateMainForIndividual({ objForProfile, closeModal }: TypeForProps) {
 
   const contextForDashBord = useContext(ContextForDashBord);
   const [loader, setLoader] = useState<boolean>(true);
@@ -35,18 +44,26 @@ export default function UpdateMainForIndividual({ objForProfile }: TypeForProps)
       ...updatedAboutData,
       [name]: value
     })
+    
   }
 
   const handleUpdateForCF = async () => {
     setError(null);
+    const updatedStatus = await checkForFeildChange(updatedAboutData);
+    console.log(updatedStatus);
     try {
-      const updated = await axios.post('/profile/update/main', updatedAboutData);
-      console.log("updated", updated)
-      contextForDashBord.USER.FIRST_NAME = updatedAboutData.firstname;
-      contextForDashBord.USER.LAST_NAME = updatedAboutData.lastname;
-      contextForDashBord.USER.EMAIL = updatedAboutData.email;
-      contextForDashBord.USER.USERNAME = updatedAboutData.username;
-      contextForDashBord.USER.BIO = updatedAboutData.bio;
+      const updated = await axios.post('/profile/update/main', {data : {...updatedAboutData} , status : updatedStatus});
+      console.log("updated", updated);
+      const User = contextForDashBord.USER;
+      User.FIRST_NAME = updatedAboutData.firstname.trim();
+      User.LAST_NAME = updatedAboutData.lastname.trim();
+      User.EMAIL = updatedAboutData.email.trim();
+      User.USERNAME = updatedAboutData.username.trim();
+      User.BIO = updatedAboutData.bio.trim();
+      closeModal({
+        child: null,
+        open: false
+      })
     } catch (error: any) {
       setError(`${error?.message || error}`)
     }
@@ -61,8 +78,46 @@ export default function UpdateMainForIndividual({ objForProfile }: TypeForProps)
       email: objForProfile.EMAIL
     })
     setLoader(false);
+    console.log("I am Main UseEffect from Main of individual ");
   }, [])
 
+  // Maintrain the document for which feild is been modified (Do not make change without concern)
+
+  const checkForFeildChange = (Obj : TypeForUpdatedMainData) : Promise<TypeForUpdatedStatus> => {
+    const User = contextForDashBord.USER;
+    console.log(contextForDashBord.USER)
+    let statusObj = {
+      firstname: false,
+      lastname: false,
+      username: false,
+      bio: false,
+      email: false,
+    }
+    return new Promise((resolve , reject)=>{
+      try {
+        
+        if(Obj.username.trim() !== User.USERNAME){
+          console.log(Obj.username.trim() , User.username)
+          statusObj.username = true;
+        } 
+        if(Obj.email.trim() !== User.EMAIL){
+          statusObj.email = true;
+        } 
+        if(Obj.firstname.trim() !== User.FIRST_NAME){
+          statusObj.firstname = true;
+        }
+        if(Obj.lastname.trim() !== User.LAST_NAME){
+          statusObj.lastname = true;
+        }
+        if(Obj.bio.trim() !== User.BIO) {
+          statusObj.bio = true;
+        }
+        resolve(statusObj);
+      } catch (error) {
+        reject(error) 
+      }
+    })  
+  }
 
   return (
     <>
@@ -80,7 +135,7 @@ export default function UpdateMainForIndividual({ objForProfile }: TypeForProps)
                   name="username"
                   id="username"
                   className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={updatedAboutData.username}
+                  value={updatedAboutData.username.trim()}
                   onChange={handleChageInValue}
                 />
               </div>

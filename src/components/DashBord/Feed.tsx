@@ -13,10 +13,11 @@ export default function Feed() {
 
   const fetchData = async()=>{
     const res = await axios.post('/feed/fetchposts');
-    console.log("res" , res.data.data)
     SetThoughts(res.data.data);
     setLoader(false);
-  }
+    contextForDashBord.POSTS = [...res.data.data];
+    console.log("contextForDashBord.POSTS" , contextForDashBord.POSTS);
+}
 
   React.useEffect(() => {
     console.log("isAutorizedUser " ,contextForDashBord.isAutorizedUser)
@@ -32,13 +33,13 @@ export default function Feed() {
 
     return (
 
-      <div className='flex flex-row h-full '>
+      <div className='flex flex-row h-full'>
         {/*  component for posts/promition etc */}
-        <div className='flex flex-col md:w-4/6 w-full h-full overflow-auto scroll-m-1'>
+        <div className='xl:w-4/6 w-full h-full overflow-auto scroll-m-1 '>
           <Post ArrayOfthoughts={thoughts} />
         </div>
         {/* space for promotion and suggestions  */}
-        <div className='md:flex flex-col hidden w-2/6 mx-2 '>
+        <div className='xl:flex flex-col hidden w-2/6 mx-2 '>
           <Suggestions />
         </div>
       </div>

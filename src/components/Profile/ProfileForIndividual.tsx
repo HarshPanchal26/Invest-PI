@@ -19,6 +19,9 @@ import UpdateProfileImage from './update_component/UpdateProfileImage';
 import UpdateMainForIndividual from './update_component/UpdateMainForIndividual';
 import UpdateAboutForIndividual from './update_component/UpdateAboutForIndividual';
 import { ContextForDashBord } from '../../context/contextForDashBord';
+import Post from '../DashBord/Component_DashBord/Post';
+import BackButton from '../../Assets/BackButton';
+import NoData from '../../Assets/NoData';
 
 
 interface TabPanelProps {
@@ -118,10 +121,12 @@ export default function ProfileForIndividual({ objForProfile }: any) {
     };
 
     useEffect(() => {
+        console.log("objForProfile from Individual" ,objForProfile)
         setDataForProfilePage(objForProfile);
     }, [objForProfile])
     return (
         <>
+        <BackButton/>
             <div className="bg-white overflow-hidden w-auto border">
                 {/* Header */}
                 <header className="h-auto">
@@ -293,13 +298,17 @@ export default function ProfileForIndividual({ objForProfile }: any) {
                                 </Tabs>
                             </Box>
                             <CustomTabPanel value={value} index={0}>
-                                Thoughts
+                                <Post ArrayOfthoughts={objForProfile.ARRAYOFTHOUGHTS} />
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>
-                                Companies
+                                {objForProfile?.COMPANIES.length === 0 && (
+                                    <NoData/>
+                                )}
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={2}>
-                                Investment
+                                {objForProfile?.INVESTMENTS.length === 0 && (
+                                    <NoData/>
+                                )}
                             </CustomTabPanel>
                         </div>
 
@@ -332,8 +341,8 @@ export default function ProfileForIndividual({ objForProfile }: any) {
                     </div>
                     {modalData.child === 'Profile' && <UpdateProfileImage objForProfile={objForProfile} closeModal={setModalData} />}
                     {modalData.child === 'Cover' && <UpdateCoverImage objForProfile={objForProfile} closeModal={setModalData} />}
-                    {modalData.child === 'Main' && <UpdateMainForIndividual objForProfile={objForProfile} />}
-                    {modalData.child === 'About' && <UpdateAboutForIndividual objForProfile={objForProfile} />}
+                    {modalData.child === 'Main' && <UpdateMainForIndividual objForProfile={objForProfile} closeModal={setModalData} />}
+                    {modalData.child === 'About' && <UpdateAboutForIndividual objForProfile={objForProfile} closeModal={setModalData}/>}
                     {/* {modalData.child === 'activity' && <UpdatActivityForCompany />} */}
                 </div>
             </Modal>

@@ -7,24 +7,30 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ContextForDashBord } from '../../../context/contextForDashBord';
-import {decodeTextFromDisplay , formatTextForDisplay} from '../../../utils/factory/FormatText'
+import { formatTextForDisplay } from '../../../utils/factory/FormatText'
 import axios from 'axios';
+import Backdrop from '@mui/material/Backdrop';
+import { CircularProgress } from '@mui/material';
+import Loading from '../../../Assets/Loading';
+
+
 type TypeForFileData = {
     url: string,
     uploadedFile: File | null
 }
 
 type TypeForMetaData = {
-    thoughts : string,
-    username : string
-    author : string,
-    isMedia : boolean    
+    thoughts: string,
+    // username : string
+    // author : string,
+    isMedia: boolean
 }
 
-export default function SharePost() { 
+export default function SharePost() {
 
     const contextForDashBord = useContext(ContextForDashBord)
     const [open, setOpen] = useState<boolean>(true)
+    const [loading, setLoading] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [errorMessage, setErroMessage] = useState<null | string>(null)
     const [fileData, setFileData] = useState<TypeForFileData>({
@@ -81,34 +87,36 @@ export default function SharePost() {
             })
     }
 
-    const handlePublishPost = async() => {
+    const handlePublishPost = async () => {
         let content = document.querySelector('textarea')?.value;
         const regex = /^(?![ ]+$).+/;
         if (content && regex.test(content)) {
             let formatedText = formatTextForDisplay(content);
 
-            let MetaDataForPost : TypeForMetaData = {
-                thoughts : formatedText,
-                username : contextForDashBord.USER.USERNAME,
-                author : contextForDashBord.USER.FIRMNAME || contextForDashBord.USER.COMPANYNAME || (contextForDashBord.USER.FIRST_NAME + " " + contextForDashBord.USER.LAST_NAME),
-                isMedia : fileData.uploadedFile ? true : false                  
+            let MetaDataForPost: TypeForMetaData = {
+                thoughts: formatedText,
+                // username : contextForDashBord.USER.USERNAME,
+                // author : contextForDashBord.USER.FIRMNAME || contextForDashBord.USER.COMPANYNAME || (contextForDashBord.USER.FIRST_NAME + " " + contextForDashBord.USER.LAST_NAME),
+                isMedia: fileData.uploadedFile ? true : false
             }
-            if(fileData.uploadedFile) {
-                console.log("Inside" ,  fileData.uploadedFile)
-                formData.append('image' , fileData.uploadedFile)
-            } 
-            MetaDataForPost && formData.append('data' , JSON.stringify(MetaDataForPost))
+            if (fileData.uploadedFile) {
+                formData.append('image', fileData.uploadedFile)
+            }
+            MetaDataForPost && formData.append('data', JSON.stringify(MetaDataForPost))
 
             try {
-                const res = await axios.post('/thoughts/publish' , formData , {
+                setLoading(true);
+                const res = await axios.post('/thoughts/publish', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data', // Important for file uploads
-                      },                    
+                    },
                 });
-                console.log("res From post" , res)
-            } catch (error) {
-                handleCloseForModal();
-               console.log("Error from post publish " , error)   
+                location(-1);
+                console.log("res From post", res)
+            } catch (error: any) {
+                console.log("Error from post publish ", error)
+                setLoading(false);
+                setErroMessage(error.message)
             }
         } else {
             alert("String consists of only spaces.");
@@ -118,131 +126,145 @@ export default function SharePost() {
 
     return (
         <Modal
-           open={open}
-           aria-labelledby="modal-modal-title"
-           aria-describedby="modal-modal-description"
-           className='mx-2'
+            open={open}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            className='mx-2'
         >
-            <div className='w-full bg-white p-4 rounded-xl md:w-auto h-auto md:min-w-[800px] overflow-auto' style={styleForModal}>
-                <div className='my-auto w-auto'>
-                    <IconButton
-                        aria-label="upload picture"
-                        component="span"
-                        className="h-12 w-12 cursor-pointer bg-black border my-auto"
-                        style={{ color: 'black' }}
-                        onClick={handleCloseForModal}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                </div>
-                <div className='p-2 text-2xl flex flex-row gap-3 my-1 rounded-full bg-gray-200'>
-                    <div className=' mr-0 my-auto bg-gray-200 rounded-full mx-3'>
-                        <IconButton
-                            aria-label="upload picture"
-                            component="span"
-                            className="h-12 w-12 cursor-pointer bg-black border my-auto border-red-600 "
-                            style={{ color: 'black' }}
-                        >
-                            <Avatar
-                                alt="Remy Sharp"
-                                src={contextForDashBord.USER.PROFILEIMAGE}  
-                                sx={{ width: 60, height: 60 }}
-                                className="rounded-full border-4 border-white shadow-lg"
-                            />
-                        </IconButton>
-                    </div>
-                    <div className=' w-full border mx-1'>
-                        <p className='text-2xl font-bold '>{`${contextForDashBord.USER.FIRMNAME || contextForDashBord.USER.COMPANYNAME || (contextForDashBord.USER.FIRST_NAME + " " + contextForDashBord.USER.LAST_NAME)} `}</p>
-                        <p className='text-sm font-light'>{`${contextForDashBord.USER.USERNAME}`}</p>
-                    </div>
-                </div>
-                {/* Thougth  Section */}
-                <div className='max-h-[400px] overflow-auto border-b-2'>
-                    <div className='my-2'>
-                        <textarea
-                            about='content-for-post'
-                            name='post-content'
-                            id='post-content'
-                            className='w-full focus:outline-none my-3 resize-none border-none outline-none p-2 h-auto text-lg'
-                            placeholder={`Hey Rahul What's in your mind ? `}
-                            aria-multiline='true'
-                            maxLength={600}
-                            rows={7}
-                            onChange={handleChageForPost}
-                        />
-                    </div>
-                    {/* Image Size */}
-                    {errorMessage && (<p className='my-1 font-medium text-red-600 float-left'>{errorMessage}</p>)}
-                    {fileData.uploadedFile && (
-                        <>
+            <>
+                {!loading && (
+                    <div className='w-full bg-white p-4 rounded-xl md:w-auto h-auto md:min-w-[800px] overflow-auto' style={styleForModal}>
+                        <div className='my-auto w-auto'>
                             <IconButton
                                 aria-label="upload picture"
                                 component="span"
-                                className="h-12 w-12 cursor-pointer bg-black border my-auto float-right"
+                                className="h-12 w-12 cursor-pointer bg-black border my-auto"
                                 style={{ color: 'black' }}
-                                onClick={handleremoveImage}
+                                onClick={handleCloseForModal}
                             >
-                                <DeleteIcon />
+                                <CloseIcon />
                             </IconButton>
-                            <div
-                                className="flex h-96 bg-slate-200 justify-end w-4/5 mx-auto"
-                                style={{
-                                    backgroundImage: `url(${fileData.url})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                }}
-                            >
+                        </div>
+                        <div className='p-2 text-2xl flex flex-row gap-3 my-1 rounded-full bg-gray-200'>
+                            <div className=' mr-0 my-auto bg-gray-200 rounded-full mx-3'>
+                                <IconButton
+                                    aria-label="upload picture"
+                                    component="span"
+                                    className="h-12 w-12 cursor-pointer bg-black border my-auto border-red-600 "
+                                    style={{ color: 'black' }}
+                                >
+                                    <Avatar
+                                        alt="Remy Sharp"
+                                        src={contextForDashBord.USER.PROFILEIMAGE}
+                                        sx={{ width: 60, height: 60 }}
+                                        className="rounded-full border-4 border-white shadow-lg"
+                                    />
+                                </IconButton>
                             </div>
-                        </>
-                    )}
+                            <div className=' w-full border mx-1'>
+                                <p className='text-2xl font-bold '>{`${contextForDashBord.USER.FIRMNAME || contextForDashBord.USER.COMPANYNAME || (contextForDashBord.USER.FIRST_NAME + " " + contextForDashBord.USER.LAST_NAME)} `}</p>
+                                <p className='text-sm font-light'>{`@${contextForDashBord.USER.USERNAME}`}</p>
+                            </div>
+                        </div>
+                        {/* Thougth  Section */}
+                        <div className='max-h-[400px] overflow-auto border-b-2'>
+                            <div className='my-2'>
+                                <textarea
+                                    about='content-for-post'
+                                    name='post-content'
+                                    id='post-content'
+                                    className='w-full focus:outline-none my-3 resize-none border-none outline-none p-2 h-auto text-lg'
+                                    placeholder={`Hey Rahul What's in your mind ? `}
+                                    aria-multiline='true'
+                                    maxLength={600}
+                                    rows={7}
+                                    onChange={handleChageForPost}
+                                />
+                            </div>
+                            {/* Image Size */}
+                            {errorMessage && (<p className='my-1 font-medium text-red-600 float-left'>{errorMessage}</p>)}
+                            {fileData.uploadedFile && (
+                                <>
+                                    <IconButton
+                                        aria-label="upload picture"
+                                        component="span"
+                                        className="h-12 w-12 cursor-pointer bg-black border my-auto float-right"
+                                        style={{ color: 'black' }}
+                                        onClick={handleremoveImage}
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
+                                    <div
+                                        className="flex h-96 bg-slate-200 justify-end w-4/5 mx-auto"
+                                        style={{
+                                            backgroundImage: `url(${fileData.url})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                        }}
+                                    >
+                                    </div>
+                                </>
+                            )}
 
-                </div>
-                {/* Upload files */}
-                <div className=' w-full flex flex-row'>
-                    <div className='flex flex-row gap-3 w-3/4 my-auto'>
+                        </div>
+                        {/* Upload files */}
+                        <div className=' w-full flex flex-row'>
+                            <div className='flex flex-row gap-3 w-3/4 my-auto'>
 
-                        <IconButton
-                            aria-label="upload picture"
-                            component="span"
-                            className="h-12 w-12 cursor-pointer bg-black border my-auto"
-                            style={{ color: 'black' }}
-                            onClick={handleCloseForModal}
+                                <IconButton
+                                    aria-label="upload picture"
+                                    component="span"
+                                    className="h-12 w-12 cursor-pointer bg-black border my-auto"
+                                    style={{ color: 'black' }}
+                                    onClick={handleCloseForModal}
+                                >
+                                    <EyeIcon />
+                                </IconButton>
+                                <IconButton
+                                    aria-label="upload picture"
+                                    component="span"
+                                    className="h-12 w-12 cursor-pointer bg-black border my-auto"
+                                    style={{ color: 'black' }}
+                                    onClick={openFileInput}
+                                >
+                                    <AttachFileIcon />
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        id="file-upload"
+                                        accept="image/*"
+                                        style={{ display: "none" }}
+                                        onChange={handleFileSelection}
+                                    />
+
+                                </IconButton>
+                            </div>
+                            <div className='flex w-1/4 my-3'>
+                                <button
+                                    about='btn'
+                                    type='button'
+                                    className='p-3 bg-blue-600 text-white md:w-3/5 rounded-lg mx-auto'
+                                    onClick={handlePublishPost}
+                                >
+                                    <PublishedWithChangesIcon />
+                                    <span className='mx-1'>{'Publish'}</span>
+                                </button>
+                            </div>
+                        </div>
+                        {/* <Backdrop
+                            sx={{ color: 'blue', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                            open={loading}
                         >
-                            <EyeIcon />
-                        </IconButton>
-                        <IconButton
-                            aria-label="upload picture"
-                            component="span"
-                            className="h-12 w-12 cursor-pointer bg-black border my-auto"
-                            style={{ color: 'black' }}
-                            onClick={openFileInput}
-                        >
-                            <AttachFileIcon />
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                id="file-upload"
-                                accept="image/*"
-                                style={{ display: "none" }}
-                                onChange={handleFileSelection}
-                            />
-
-                        </IconButton>
-                    </div>
-                    <div className='flex w-1/4 my-3'>
-                        <button
-                            about='btn'
-                            type='button'
-                            className='p-3 bg-blue-600 text-white md:w-3/5 rounded-lg mx-auto'
-                            onClick={handlePublishPost}
-                        >
-                            <PublishedWithChangesIcon />
-                            <span className='mx-1'>{'Publish'}</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
+                            <div className='flex flex-row h-full'>
+                                <CircularProgress color="inherit" />
+                                <span className='mx-3 my-auto'>{'Creating.......'}</span>
+                            </div>
+                        </Backdrop> */}
+                    </div>)}
+                {loading && (
+                    <Loading />
+                )}
+            </>
         </Modal>
     )
 

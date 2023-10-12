@@ -19,6 +19,9 @@ import UpdateMainForCF from './update_component/UpdateMainForCF';
 import CloseIcon from '@mui/icons-material/Close';
 import UpdateProfileImage from './update_component/UpdateProfileImage';
 import UpdateCoverImage from './update_component/UpdateCoverImage';
+import BackButton from '../../Assets/BackButton';
+import Post from '../DashBord/Component_DashBord/Post';
+import NoData from '../../Assets/NoData';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -110,7 +113,6 @@ export default function ProfileForCF({ objForProfile }: props) {
         })
     }
 
-
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -136,6 +138,7 @@ export default function ProfileForCF({ objForProfile }: props) {
     }, [objForProfile])
     return (
         <>
+        <BackButton/>
             <div className="bg-white overflow-hidden w-auto border">
                 {/* Header */}
                 <header className="h-auto">
@@ -298,10 +301,7 @@ export default function ProfileForCF({ objForProfile }: props) {
                                     </div>
                                     <div className="mt-6 border-t border-gray-100">
                                         <dl className="divide-y divide-gray-100">
-                                            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                                <dt className="text-sm font-medium leading-6 text-gray-900">Company Name</dt>
-                                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{dataForProfilePage?.COMPANYNAME}</dd>
-                                            </div> */}
+                                        
                                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                 <dt className="text-sm font-medium leading-6 text-gray-900">Firm Name </dt>
                                                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{dataForProfilePage?.FIRMNAME}</dd>
@@ -315,52 +315,14 @@ export default function ProfileForCF({ objForProfile }: props) {
                                                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                                     {dataForProfilePage?.HEADQUARTERS} , {dataForProfilePage?.CITY} , {dataForProfilePage?.COUNTRY}</dd>
                                             </div>
-                                            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                                <dt className="text-sm font-medium leading-6 text-gray-900">Size</dt>
-                                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{
-                                                    dataForProfilePage?.SIZE}</dd>
-                                            </div> */}
+
                                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                 <dt className="text-sm font-medium leading-6 text-gray-900">Link</dt>
                                                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                                                     {dataForProfilePage?.LINK}
                                                 </dd>
                                             </div>
-                                            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                                <dt className="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
-                                                <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                                    <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
-                                                        <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                                            <div className="flex w-0 flex-1 items-center">
-                                                                <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                                                                <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                                                    <span className="truncate font-medium">resume_back_end_developer.pdf</span>
-                                                                    <span className="flex-shrink-0 text-gray-400">2.4mb</span>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ml-4 flex-shrink-0">
-                                                                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                                    Download
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                                            <div className="flex w-0 flex-1 items-center">
-                                                                <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                                                                <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                                                    <span className="truncate font-medium">coverletter_back_end_developer.pdf</span>
-                                                                    <span className="flex-shrink-0 text-gray-400">4.5mb</span>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ml-4 flex-shrink-0">
-                                                                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                                    {`Download`}
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </dd>
-                                            </div> */}
+                                          
                                         </dl>
                                     </div>
                                 </div>
@@ -388,13 +350,17 @@ export default function ProfileForCF({ objForProfile }: props) {
                                 </Tabs>
                             </Box>
                             <CustomTabPanel value={value} index={0}>
-                                Thoughts
+                                <Post ArrayOfthoughts={objForProfile.ARRAYOFTHOUGHTS}/>
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>
-                                Companies
+                                {objForProfile?.COMPANIES.length === 0 && (
+                                    <NoData/>
+                                )}
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={2}>
-                                Investment
+                                {objForProfile?.INVESTMENTS.length === 0 && (
+                                    <NoData/>
+                                )}
                             </CustomTabPanel>
                         </div>
                     </div>
@@ -422,14 +388,13 @@ export default function ProfileForCF({ objForProfile }: props) {
                                 <CloseIcon />
                             </IconButton>
                         </div>
-                    </div>
+                    </div>  
                     {modalData.child === 'Profile' && <UpdateProfileImage objForProfile={objForProfile} closeModal={setModalData}/>}
-                    {modalData.child === 'Main' && <UpdateMainForCF objForProfile={objForProfile} />}
+                    {modalData.child === 'Main' && <UpdateMainForCF objForProfile={objForProfile} closeModal={setModalData}/>}
                     {modalData.child === 'Cover' && <UpdateCoverImage objForProfile={objForProfile} closeModal={setModalData}/>}
                     {modalData.child === 'About' && <UpdateAboutForCF 
                                                         objForProfile={objForProfile} 
-                                                        setModalData={setModalData}
-                                                        setDataForProfilePage={setDataForProfilePage}
+                                                        closeModal={setModalData}
                                                         />
                                                     }
                     {modalData.child === 'Activity' && <UpdatActivityForCompany />}

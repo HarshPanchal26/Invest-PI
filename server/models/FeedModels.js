@@ -7,15 +7,22 @@ const SchemaForPost = new mongoose.Schema({
     },
     username : {
         type: String,
-        required: true,                
+        required: false,
+        default : ""                
     },
     author : {
         type: String,
-        required: true,                        
+        required: false,
+        default : ""                        
     },
     authortype : {
         type: String,
         required: true,                        
+    },
+    authorprofile : {
+        type: String,
+        required: false,
+        default : ""
     },
     thoughts : {
         type: String,

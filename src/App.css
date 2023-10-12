@@ -5,8 +5,9 @@
 /* src/styles.css */
 /* Apply custom scrollbar styling */
 /* Webkit (Chrome, Safari, Opera) */
+
 ::-webkit-scrollbar {
-  width: 8px; /* Width of the scrollbar */
+  width: 7px; /* Width of the scrollbar */
 }
 
 ::-webkit-scrollbar-thumb {
@@ -57,6 +58,11 @@ scrollbar-color: #3498db #f1f1f1; Color of the thumb and track */
 
 .App-link {
   color: #61dafb;
+}
+
+.active {
+    border-bottom: black;
+    color: blue;
 }
 
 @keyframes App-logo-spin {

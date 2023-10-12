@@ -1,26 +1,28 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState , useContext , SetStateAction} from 'react'
 import Loading from '../../../Assets/Loading';
 import {VerificationForMainDataOfCF} from '../../../Verification/UpdateDataVerification'
 import axios from 'axios';
+import { ContextForDashBord } from '../../../context/contextForDashBord';
 
-type TypeForProps = {
-  objForProfile : any
+type PropsType = {
+  objForProfile : any,
+  closeModal : React.Dispatch<SetStateAction<{open : boolean , child : string | null}>>
 }
 
 type TypeForUpdatedMainData = {
-    name : '',
-    username : '',
-    bio : '',
+    name : string,
+    username : string,
+    bio : string,
 }
 
-export default function UpdateMainForCF({ objForProfile} :TypeForProps) {
-
+export default function UpdateMainForCF({ objForProfile ,  closeModal} :PropsType) {
+  const contextForDashBord = useContext(ContextForDashBord);
   const [loader, setLoader] = useState<boolean>(true);
   const [error , setError] = useState<string | null>(null);
   const [updatedAboutData, setUpdatedAboutData] = useState<TypeForUpdatedMainData>({
-    name : '',
-    username : '',
-    bio : '',
+    name : "",
+    username : "",
+    bio : "",
   });
 
   const handleChageInValue = (event: any) => {
@@ -34,9 +36,23 @@ export default function UpdateMainForCF({ objForProfile} :TypeForProps) {
   const handleUpdateForCF = async()=>{
     setError(null);
     try {
-        await VerificationForMainDataOfCF(updatedAboutData);                
-        const updated = await axios.post('/profile/update/main' , updatedAboutData);
+      console.log("updatedAboutData" , updatedAboutData) 
+      let TrimedObject : TypeForUpdatedMainData= {
+        name : updatedAboutData.name.trim(),
+        username : updatedAboutData.username.trim(),
+        bio : updatedAboutData.bio.trim(),
+      }               
+      await VerificationForMainDataOfCF(TrimedObject);
+        const updated = await axios.post('/profile/update/main' , {data : TrimedObject});
         console.log("updated" ,updated)
+        const User = contextForDashBord.USER;
+        User.FIRMNAME = TrimedObject.name;
+        User.USERNAME = TrimedObject.username;
+        User.BIO = TrimedObject.bio;
+        closeModal({
+          child : null,
+          open : false
+        })
     } catch (error : any) {
         setError(`${error?.message || error }`)
     }
@@ -68,11 +84,10 @@ export default function UpdateMainForCF({ objForProfile} :TypeForProps) {
                   name="username"
                   id="username"
                   className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={updatedAboutData.username}
+                  value={updatedAboutData.username.trim()}
                   onChange={handleChageInValue}
                 />
               </div>
-              <p className='text-sm my-4 text-gray-500'>Write about your product in more then 250 words</p>
             </div>
 
             <div className="col-span-5 md:col-span-3">

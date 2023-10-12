@@ -9,7 +9,7 @@ type PropsType = {
   closeModal : React.Dispatch<SetStateAction<{open : boolean , child : string | null}>>
 }
 
-export default function UpdateProfileImage({ objForProfile , closeModal}: PropsType) {
+export default function UpdateProfileImage({objForProfile , closeModal}: PropsType) {
 
   const contextForDashBord = useContext(ContextForDashBord);
   const [urlForProfile, setUrl] = useState<string>('');

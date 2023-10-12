@@ -1,10 +1,7 @@
 const { mongoose } = require('../config/database')
-const { 
-    SchemaForIndividuals,
-    // SchemaForCommanUserData, 
-    SchemaForCF,
-    SchemaForCompany } = require('../models/signinmodels');
 
+const ServiceForThoughts = require('../services/serviceForThoughts');
+const {findSchemaAndCollection} = require('../services/servicesForAuthentication')
 
 const getUserData = async(_req, res , next)=>{
 
@@ -12,19 +9,8 @@ const getUserData = async(_req, res , next)=>{
     try {
         let uid =res.locals.uid;
         let typeOfUser = res.locals.type; 
-        let CollectionForUser = null;
-        let Schema = null;
-        if(typeOfUser === 'product'){
-            Schema = SchemaForCompany 
-            CollectionForUser = 'user-as-company'
-        }else if(typeOfUser === 'CF'){
-            Schema = SchemaForCF
-            CollectionForUser = 'user-as-CF'
-        }else{
-            Schema = SchemaForIndividuals
-            CollectionForUser = 'user-as-individual'
-        }
-        const Model = db.model('Users', Schema, CollectionForUser);
+        const {Schema, Collection} = findSchemaAndCollection(typeOfUser);
+        const Model = db.model('Users', Schema, Collection);
         
         const user = await Model.findOne({rid : uid});
         const userData = Object.keys(user._doc).reduce((acc , key)=>{
@@ -33,10 +19,15 @@ const getUserData = async(_req, res , next)=>{
             }
             return acc;
         } , {})
-        // console.log("User Data   ====>" , userData)
+        const thoughts = await ServiceForThoughts.fetchThoughtsForUser(uid);
+        if(typeOfUser === '')
+        console.log("User thoughts ===>" , thoughts)
         res.locals.user = {
             ...userData,
-        }    
+        }
+        res.locals.thoughts = [
+            ...thoughts,
+        ]    
         next()
         
     } catch (error) {

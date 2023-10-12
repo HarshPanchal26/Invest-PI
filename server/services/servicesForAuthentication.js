@@ -7,29 +7,17 @@ const {
     SchemaForCF,
     SchemaForCompany } = require('../models/signinmodels');
 
+const ServiceForProducts = require('../services/serviceForProducts')
+
 const createUser = (objForData, objForSignIn) => {
     const responceObj = {
         status: false,
         token: null,
         dataStorage: false,
+        productStorge : false,
         message: ''
     }
-    let Schema = null;
-    let Collection = '';
-
-    // console.log("objForData.type" , objForData.type , objForData.stage)
-
-    if (objForData.type === 'product') {
-        Schema = SchemaForCompany
-        Collection = 'user-as-company'
-    } else if (objForData.type === 'CF') {
-        Schema = SchemaForCF
-        Collection = 'user-as-CF'
-    } else {
-        Schema = SchemaForIndividuals
-        Collection = 'user-as-individual'
-    }
-
+    const {Schema, Collection} = findSchemaAndCollection(objForData.type);
 
     return new Promise(async (resolve, reject) => {
         const db = mongoose.connection.useDb('users');
@@ -38,10 +26,14 @@ const createUser = (objForData, objForSignIn) => {
             const res = await Model.create(objForSignIn);
             responceObj.status = true
             const token = await createSession({ uid: res._id, type: objForData.type })
-            // console.log("token", token)
             responceObj.token = token
             const additionalData = await addUserDetails({ rid: res._id, ...objForData }, Schema, Collection.trim())
             responceObj.dataStorage = additionalData._id;
+            if(Collection === 'user-as-company'){
+                const createProduct  = await ServiceForProducts.createProduct({rid: res._id});
+                console.log("createProduct==>" , createProduct)
+                responceObj.productStorge = true;
+            }
             resolve(responceObj)
         } catch (error) {
             reject({

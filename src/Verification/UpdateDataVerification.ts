@@ -8,9 +8,9 @@ type TypeForUpdatedCFData = {
 }
 
 type TypeForUpdatedMainData = {
-    name : '',
-    username : '',
-    bio : '',
+    name : string,
+    username : string,
+    bio : string,
 }
 
 export const VerificationForAboutDataOfCF = (Obj: TypeForUpdatedCFData) => {

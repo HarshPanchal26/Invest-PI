@@ -1,26 +1,37 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext ,SetStateAction} from 'react'
 import { ArrayForInvestorInterest } from '../../../utils/InterestArray'
 import { ContextForDashBord } from '../../../context/contextForDashBord';
 import Loading from '../../../Assets/Loading';
-import { IconButton } from '@mui/material';
-import { EyeIcon } from '@heroicons/react/20/solid';
+// import { IconButton } from '@mui/material';
+// import { EyeIcon } from '@heroicons/react/20/solid';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import axios from 'axios';
 
 
-type TypeForProps = {
-  objForProfile : any
+type Props = {
+  objForProfile: any,
+  closeModal: React.Dispatch<SetStateAction<{ open: boolean, child: any }>>
 }
 
-export default function UpdateAboutForCompany({ objForProfile} :TypeForProps) {
+const ObjForCompanySize: any = {
+  'Established Industry Leaders': ['<5000', '5000-10,000', '>10,000'],
+  'Emerging Challengers': ['<500', '500-1000', '>1000'],
+  'Visionary Startups': ['10-50', '50-100', '>100']
+}
 
-  const ObjForCompanySize: any = {
-    'Established Industry Leaders': ['<5000', '5000-10,000', '>10,000'],
-    'Emerging Challengers': ['<500', '500-1000', '>1000'],
-    'Visionary Startups': ['10-50', '50-100', '>100']
-  }
+export default function UpdateAboutForCompany({ objForProfile , closeModal }: Props) {
+
+
+  const contextForDashBord = useContext(ContextForDashBord);
 
   const [dataForSpecialization, setDataForSpecialization] = useState([]);
+
   const [dataForSize, setDataForSize] = useState<any>([]);
   const [loader, setLoader] = useState<boolean>(true);
+  const [openBackDrop, setBackDrop] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null);
+  
   const [updatedAboutData, setUpdatedAboutData] = useState({
     about: '',
     stage: '',
@@ -28,10 +39,10 @@ export default function UpdateAboutForCompany({ objForProfile} :TypeForProps) {
     industry: '',
     specialization: '',
     headquarters: '',
-    link : '',
-    city : '',
-    state : '',
-    country : '',
+    link: '',
+    city: '',
+    state: '',
+    country: '',
   });
 
   const handleChageInValue = (event: any) => {
@@ -83,6 +94,31 @@ export default function UpdateAboutForCompany({ objForProfile} :TypeForProps) {
     }
   }
 
+  const handleUpdateForCF = async () => {
+    setError(null);
+    setBackDrop(true);
+    try {
+      // await VerificationForAboutDataOfCF(updatedAboutData);                
+      const res = await axios.post('/profile/update/about', updatedAboutData);
+      console.log("res", res)
+      await contextForDashBord.checkAuthorization();
+      contextForDashBord.USER.ABOUT = updatedAboutData.about;
+      contextForDashBord.USER.HEADQUARTERS = updatedAboutData.headquarters;
+      contextForDashBord.USER.LINK = updatedAboutData.link;
+      contextForDashBord.USER.CITY = updatedAboutData.city;
+      contextForDashBord.USER.STATE = updatedAboutData.state;
+      contextForDashBord.USER.COUNTRY = updatedAboutData.country;
+      closeModal({
+        child: null,
+        open: false
+      })
+    } catch (error: any) {
+      console.log("updated error", error)
+      setBackDrop(false);
+      setError(`${error.message}`)
+    }
+  }
+
   useEffect(() => {
     console.log("Updated Data ", objForProfile)
     let ObjForSpecialization: any = ArrayForInvestorInterest
@@ -100,10 +136,10 @@ export default function UpdateAboutForCompany({ objForProfile} :TypeForProps) {
       industry: objForProfile.INDUSTRY,
       specialization: objForProfile.SPECIALIZATION,
       headquarters: objForProfile.HEADQUARTERS,
-      link : objForProfile.LINK,
-      city : objForProfile.CITY,
-      state : objForProfile.STATE,
-      country : objForProfile.COUNTRY,
+      link: objForProfile.LINK,
+      city: objForProfile.CITY,
+      state: objForProfile.STATE,
+      country: objForProfile.COUNTRY,
     })
   }, [])
 
@@ -260,71 +296,82 @@ export default function UpdateAboutForCompany({ objForProfile} :TypeForProps) {
             </div>
 
             <div className="col-span-5 md:col-span-4">
-            <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
-              Country
-            </label>
-            <div className="mt-2">
-              <select
-                id="country"
-                name="country"
-                autoComplete="country"
-                onChange={handleChageInValue}
-                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                required
-                value={updatedAboutData.country}
-              >
-                <option value={''} >{'None'}</option>
-                <option value={'India'} >{'India'}</option>
-                <option value={'Canada'}>{'Canada'}</option>
-                <option value={'USA'} >{'USA'}</option>
-              </select>
+              <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
+                Country
+              </label>
+              <div className="mt-2">
+                <select
+                  id="country"
+                  name="country"
+                  autoComplete="country"
+                  onChange={handleChageInValue}
+                  className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  required
+                  value={updatedAboutData.country}
+                >
+                  <option value={''} >{'None'}</option>
+                  <option value={'India'} >{'India'}</option>
+                  <option value={'Canada'}>{'Canada'}</option>
+                  <option value={'USA'} >{'USA'}</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          <div className="col-span-5 md:col-span-3">
-            <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
-              City
-            </label>
-            <div className="mt-2">
-              <input
-                type="text"
-                name="city"
-                id="city"
-                value={updatedAboutData.city}
-                onChange={handleChageInValue}
-                autoComplete="address-level2"
-                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
+            <div className="col-span-5 md:col-span-3">
+              <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
+                City
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="city"
+                  id="city"
+                  value={updatedAboutData.city}
+                  onChange={handleChageInValue}
+                  autoComplete="address-level2"
+                  className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="col-span-5 md:col-span-3">
-            <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">
-              State / Province
-            </label>
-            <div className="mt-2">
-              <input
-                type="text"
-                name="State"
-                id="region"
-                value={updatedAboutData.state}
-                onChange={handleChageInValue}
-                autoComplete="address-level1"
-                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
+            <div className="col-span-5 md:col-span-3">
+              <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">
+                State / Province
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="State"
+                  id="region"
+                  value={updatedAboutData.state}
+                  onChange={handleChageInValue}
+                  autoComplete="address-level1"
+                  className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
             </div>
-          </div>
 
             <div className="mt-10 border col-span-3">
               <button
                 type="button"
                 className="flex rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 justify-center w-full"
+                onClick={handleUpdateForCF}
+
               >
                 Update
               </button>
             </div>
 
           </div>
+          <Backdrop
+            sx={{ color: 'blue', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={openBackDrop}
+          >
+            <div className=' flex flex-row'>
+              <CircularProgress color="inherit" />
+              <span className='mx-3 my-auto'>{'Upadting .......'}</span>
+            </div>
+          </Backdrop>
         </div>
       </div>)}
     </>

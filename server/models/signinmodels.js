@@ -1,4 +1,3 @@
-const { timeStamp } = require('console');
 const mongoose = require('mongoose');
 const validator = require('validator');
 
@@ -101,7 +100,8 @@ const SchemaForIndividuals = new mongoose.Schema({
   profileImage : {
     type : String,
     require : false,
-    default  : 'NA'
+    default : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'        
+
   },
   coverImage : {
     type : String,
@@ -183,6 +183,11 @@ const SchemaForCF = new mongoose.Schema({
     type: String,
     required: true,
   },
+  link : {
+    type: String,
+    required: false,
+    default : 'NA'    
+  },
   interest  :{
     type : Array,
     required: true,
@@ -205,7 +210,8 @@ const SchemaForCF = new mongoose.Schema({
   profileImage : {
     type : String,
     require : false,
-    default  : 'NA'
+    default : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'        
+
   },
   coverImage : {
     type : String,
@@ -279,7 +285,8 @@ const SchemaForCompany = new mongoose.Schema({
   },
   link : {
     type: String,
-    required: false,    
+    required: false,
+    default : 'NA'    
   },
   industry : {
     type: String,
@@ -337,10 +344,16 @@ const SchemaForCompany = new mongoose.Schema({
     require : false,
     default : []
   },
+  products : {
+    type : Array,
+    require : false,
+    default : []    
+  },
   profileImage : {
     type : String,
     require : false,
-    default : 'NA'
+    default : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'        
+
   },
   coverImage : {
     type : String,
@@ -350,7 +363,7 @@ const SchemaForCompany = new mongoose.Schema({
 
 })
 
-// Schema for common data (authentication and authorization )
+// Schema for common data (authentication and authorization)
 const SchemaForCommanUserData = new mongoose.Schema({
   email: {
     type: String,
@@ -372,7 +385,18 @@ const SchemaForCommanUserData = new mongoose.Schema({
   username : {
     type: String,
     required: true,
+  },
+  name : {
+    type: String,
+    required: false,
+    default : 'name'    
+  },
+  profileImage : {
+    type: String,
+    required: false,
+    default : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'        
   }
+
 })
 
 

@@ -41,13 +41,13 @@ const SchemaForCompanyObj = (Obj: TypeForCompany) => {
 
 const SchemaForCFObj = (Obj: TypeForCFData) => {
     return {
-        firmname: Obj['company-name'],
-        email: Obj.email,
-        categories: Obj.categories,
-        headquarters: Obj.headquarters,
-        country: Obj.country,
-        city: Obj.city,
-        state: Obj.State,
+        firmname: Obj['company-name'].trim(),
+        email: Obj.email.trim(),
+        categories: Obj.categories.trim(),
+        headquarters: Obj.headquarters.trim(),
+        country: Obj.country.trim(),
+        city: Obj.city.trim(),
+        state: Obj.State.trim(),
         type: 'CF',
         interest: []
     }

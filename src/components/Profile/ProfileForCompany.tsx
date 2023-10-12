@@ -18,6 +18,12 @@ import UpdateCoverImage from './update_component/UpdateCoverImage';
 import UpdateAboutForCompany from './update_component/UpdateAboutForCompany';
 import UpdatActivityForCompany from './update_component/UpdatActivityForCompany';
 import CloseIcon from '@mui/icons-material/Close';
+import AddIcon from '@mui/icons-material/Add'
+import BackButton from '../../Assets/BackButton';
+import UpdateMainForCompany from './update_component/UpdateMainForCompany';
+import Post from '../DashBord/Component_DashBord/Post';
+import NoData from '../../Assets/NoData';
+import UpdateAndCreateProdcts from './update_component/UpdateAndCreateProdcts';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -114,7 +120,6 @@ export default function ProfileForCompany({ objForProfile }: any) {
         setAnchorEl(null);
     };
 
-
     const [value, setValue] = React.useState(0);
     const [valueForAbout, setvalueForAbout] = React.useState(0);
 
@@ -128,17 +133,19 @@ export default function ProfileForCompany({ objForProfile }: any) {
 
     useEffect(() => {
         setDataForProfilePage(objForProfile);
+        console.log("objForProfile======>", objForProfile)
     }, [objForProfile])
+
     return (
         <>
+            <BackButton />
             <div className="bg-white overflow-hidden w-auto border">
                 {/* Header */}
                 <header className="h-auto">
-
                     <div
                         className="flex h-44 border-b bg-slate-200 justify-end"
                         style={{
-                            backgroundImage: `url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80')`,
+                            backgroundImage: `url(${dataForProfilePage?.COVERIMAGE})`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                         }}
@@ -148,22 +155,21 @@ export default function ProfileForCompany({ objForProfile }: any) {
                             component="span"
                             className="h-12 w-12 my-2 cursor-pointer bg-black"
                             style={{ color: 'white' }}
-                            onClick={() => handleOpenForModal('cover')}
+                            onClick={() => handleOpenForModal('Cover')}
                         >
                             <PencilSquareIcon />
                         </IconButton>
                     </div>
                 </header>
-
                 {/* Profile */}
                 <main className='relative bottom-24 z-0'>
                     <section className="py-8">
                         <div className="flex mx-10">
                             <div className="relative">
-                                <IconButton onClick={() => handleOpenForModal('profile')}>
+                                <IconButton onClick={() => handleOpenForModal('Profile')}>
                                     <Avatar
                                         alt="Remy Sharp"
-                                        src="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQCyzdroOgXf1JRT-59-ejJoIE0a9KVvyVwXUrA5xytU8gCuncLXYXL3DO2b1_-YnaUWD0lgEsd3ddXvZg"
+                                        src={dataForProfilePage?.PROFILEIMAGE}
                                         sx={{ width: 160, height: 160 }}
                                         className="rounded-full w-40 h-40 border-4 border-white shadow-lg"
                                     />
@@ -243,15 +249,21 @@ export default function ProfileForCompany({ objForProfile }: any) {
                                         <MenuItem onClick={handleClose}>Logout</MenuItem>
                                     </Menu>
                                 </div>
-                                <div className='my-2 w-7 h-7 mx-auto'>
-                                    <PencilSquareIcon style={{
-                                        "color": "blue"
-                                    }} />
+                                <div className='my-2'>
+                                    <Button
+                                        id="demo-positioned-button"
+                                        onClick={() => handleOpenForModal('Main')}
+                                    >
+                                        <PencilSquareIcon style={{
+                                            "color": "blue",
+                                            "width": '25px',
+                                            "height": '25px'
+                                        }} />
+                                    </Button>
                                 </div>
                             </div>
                         </div>
                     </section>
-                    {/* main content */}
                     <div className='my-3 flex flex-col'>
                         {/* About Section */}
                         <div className='border mx-2 rounded-md'>
@@ -261,7 +273,7 @@ export default function ProfileForCompany({ objForProfile }: any) {
                                     aria-label="upload picture"
                                     className="h-12 w-12 cursor-pointer bg-black mr-1"
                                     style={{ color: 'black' }}
-                                    onClick={() => handleOpenForModal('about')}
+                                    onClick={() => handleOpenForModal('About')}
                                 >
                                     <PencilSquareIcon />
                                 </IconButton>
@@ -354,8 +366,31 @@ export default function ProfileForCompany({ objForProfile }: any) {
                                 </div>
                             </CustomTabPanel2>
                         </div>
-
-                        {/* tab*/}
+                        {/* Products section */}
+                        <div className='border rounded-md mx-2 my-3'>
+                            <div className="flex flex-row justify-between">
+                                <p className='text-2xl mx-3 font-bold p-2'>{'Products'}</p>
+                                <IconButton
+                                    aria-label="upload picture"
+                                    className="h-16 w-16 cursor-pointer bg-black mr-1"
+                                    style={{ color: 'black' }}
+                                    onClick={() => handleOpenForModal('Products')}
+                                >
+                                    <AddIcon />
+                                </IconButton>
+                            </div>
+                            <section className="flex flex-col py-4  border-gray-200">
+                                {/* <p className='felx text-left my-3 mx-3 p-3 bg-slate-50 rounded-md'>
+                                    {dataForProfilePage?.ABOUT}
+                                </p> */}
+                                <div className='flex my-3 mx-3 p-3 bg-slate-50 rounded-md'>
+                                    {objForProfile?.PRODUCTS.length === 0 && (
+                                        <NoData />
+                                    )}
+                                </div>
+                            </section>
+                        </div>
+                        {/* Activity Section*/}
                         <div className='border mx-2 rounded-md my-4'>
                             <div className="flex flex-row justify-between">
                                 <p className='text-2xl mx-3 font-bold p-2'>{'Activity'}</p>
@@ -363,7 +398,7 @@ export default function ProfileForCompany({ objForProfile }: any) {
                                     aria-label="upload picture"
                                     className="h-12 w-12 cursor-pointer bg-black mr-1"
                                     style={{ color: 'black' }}
-                                    onClick={() => handleOpenForModal('activity')}
+                                    onClick={() => handleOpenForModal('Activity')}
                                 >
                                     <PencilSquareIcon />
                                 </IconButton>
@@ -376,23 +411,22 @@ export default function ProfileForCompany({ objForProfile }: any) {
                                 </Tabs>
                             </Box>
                             <CustomTabPanel value={value} index={0}>
-                                Thoughts
+                                <Post ArrayOfthoughts={objForProfile?.ARRAYOFTHOUGHTS} />
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>
-                                Companies
+                                {objForProfile?.COMPANIES.length === 0 && (
+                                    <NoData />
+                                )}
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={2}>
-                                Investment
+                                {objForProfile?.INVESTMENTS.length === 0 && (
+                                    <NoData />
+                                )}
                             </CustomTabPanel>
                         </div>
-
-
                     </div>
                 </main>
-
-
             </div>
-
             <Modal
                 open={modalData.open}
                 // onClose={handleCloseForModal}
@@ -401,9 +435,9 @@ export default function ProfileForCompany({ objForProfile }: any) {
                 className='mx-2'
             >
                 <div className='w-full bg-white p-4 rounded-xl md:w-auto' style={styleForModal}>
-                <div className='p-2 text-2xl flex flex-row justify-between '>
-                        <p className='my-auto  p-3 bg-gray-200 rounded-md'>{`${modalData.child} Sction`}</p>
-                        <div className=' mr-0 my-auto bg-gray-200 rounded-full'>
+                    <div className='p-2 text-2xl flex flex-row justify-between'>
+                        <p className='my-auto p-2 bg-gray-200 rounded-md'>{`${modalData.child} Section `}</p>
+                        <div className='mr-0 my-auto bg-gray-200 rounded-full'>
                             <IconButton
                                 aria-label="upload picture"
                                 component="span"
@@ -415,10 +449,19 @@ export default function ProfileForCompany({ objForProfile }: any) {
                             </IconButton>
                         </div>
                     </div>
-                    {modalData.child === 'Profile' && <UpdateProfileImage objForProfile={objForProfile} closeModal={setModalData} />}
-                    {modalData.child === 'Cover' && <UpdateCoverImage objForProfile={objForProfile} closeModal={setModalData}/>}
-                    {modalData.child === 'about' && <UpdateAboutForCompany objForProfile={objForProfile} />}
-                    {modalData.child === 'activity' && <UpdatActivityForCompany />}
+                    {modalData.child === 'Profile' && <UpdateProfileImage
+                        objForProfile={objForProfile}
+                        closeModal={setModalData} />}
+                    {modalData.child === 'Cover' && <UpdateCoverImage
+                        objForProfile={objForProfile}
+                        closeModal={setModalData} />}
+                    {modalData.child === 'About' && <UpdateAboutForCompany
+                        objForProfile={objForProfile}
+                        closeModal={setModalData} />}
+                    {modalData.child === 'Main' && <UpdateMainForCompany
+                        objForProfile={objForProfile}
+                        closeModal={setModalData} />}
+                    {modalData.child === 'Products' && <UpdateAndCreateProdcts />}
                 </div>
             </Modal>
         </>

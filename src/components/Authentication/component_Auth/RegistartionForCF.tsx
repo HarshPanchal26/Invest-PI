@@ -16,7 +16,7 @@ export default function RegistartionForCF() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const [objForSignInComonent, setObjForSignInComonent] = React.useState<Object | null>(null);
-  const [ArrayForInterest,setArrayForInterest] = React.useState<Array<string>>([]);
+  const [ArrayForInterest, setArrayForInterest] = React.useState<Array<string>>([]);
 
 
   const isStepOptional = (step: number) => {
@@ -109,24 +109,24 @@ export default function RegistartionForCF() {
           </div>
           <div className='h-auto mx-2 border'>
             {activeStep === 0 && <PersonalDetailsForCF handleNext={handleNext} setObjForSignInComonent={setObjForSignInComonent} />}
-            {activeStep === 1 && <Interest handleNext={handleNext} setArrayForInterest={setArrayForInterest}/>}
+            {activeStep === 1 && <Interest handleNext={handleNext} setArrayForInterest={setArrayForInterest} />}
             {/* {activeStep === 1 && <Interest handleNext={handleNext} />} */}
-            {activeStep === 2 && <SignInForm 
-            objForSignInComonent={objForSignInComonent}
-            ArrayForInterest={ArrayForInterest}
+            {activeStep === 2 && <SignInForm
+              objForSignInComonent={objForSignInComonent}
+              ArrayForInterest={ArrayForInterest}
             />}
           </div>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             {activeStep !== 2 && (
-            <Button
-              color="primary"
-              variant='outlined'
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>)}
+              <Button
+                color="primary"
+                variant='outlined'
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                Back
+              </Button>)}
             <Box sx={{ flex: '1 1 auto' }} />
             {/* {isStepOptional(activeStep) && (
               <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>

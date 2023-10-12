@@ -16,3 +16,17 @@ export function decodeTextFromDisplay(text:string)  : string{
     return text;
 }
 
+
+export const convertText = (text: string | undefined) : string => {
+    if (text) { 
+      console.log("text" , text)
+      const Ptag = document.createElement('p') as HTMLInputElement
+      Ptag.innerHTML = text
+      document.body.appendChild(Ptag);
+      return Ptag.innerText;
+    } else {
+      return '';
+    }
+  }
+
+

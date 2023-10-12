@@ -1,70 +1,82 @@
-import React, { SetStateAction, useEffect, useState , useContext} from 'react'
+import React, { SetStateAction, useEffect, useState, useContext } from 'react'
 import Loading from '../../../Assets/Loading';
-import {VerificationForAboutDataOfCF} from '../../../Verification/UpdateDataVerification'
+import { VerificationForAboutDataOfCF } from '../../../Verification/UpdateDataVerification'
 import axios from 'axios';
-import { ContextForDashBord } from '../../../context/contextForDashBord';
-import {formatTextForDisplay} from '../../../utils/factory/FormatText'
+import { ContextForDashBord } from '../../../context/contextForDashBord'
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 type TypeForProps = {
-  objForProfile : any, 
-  setModalData: React.Dispatch<SetStateAction<{open : boolean , child : any}>>
-  setDataForProfilePage: React.Dispatch<SetStateAction<any>>
+  objForProfile: any,
+  closeModal: React.Dispatch<SetStateAction<{ open: boolean, child: any }>>
 }
 
 type TypeForUpdatedCFData = {
-    about: '',
-    headquarters: '',
-    link : '',
-    city : '',
-    state : '',
-    country : '',
+  about: '',
+  headquarters: '',
+  link: '',
+  city: '',
+  state: '',
+  country: '',
 }
 
-export default function UpdateAboutForCF({ objForProfile , setModalData ,setDataForProfilePage} :TypeForProps) {
+export default function UpdateAboutForCF({ objForProfile, closeModal }: TypeForProps) {
 
-  const contextForDashBord =useContext(ContextForDashBord);  
+  const contextForDashBord = useContext(ContextForDashBord);
   const [loader, setLoader] = useState<boolean>(true);
-  const [error , setError] = useState<string | null>(null);
+  const [openBackDrop, setBackDrop] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null);
   const [updatedAboutData, setUpdatedAboutData] = useState<TypeForUpdatedCFData>({
     about: '',
     headquarters: '',
-    link : '',
-    city : '',
-    state : '',
-    country : '',
+    link: '',
+    city: '',
+    state: '',
+    country: '',
   });
 
   const handleChageInValue = (event: any) => {
     let { value, name } = event.target;
-    if(name === 'about') value = formatTextForDisplay(value);
+    // if(name === 'about') value = formatTextForDisplay(value);
     setUpdatedAboutData({
       ...updatedAboutData,
       [name]: value
     })
   }
 
-  const handleUpdateForCF = async()=>{
+  const handleUpdateForCF = async () => {
     setError(null);
+    setBackDrop(true);
     try {
-        await VerificationForAboutDataOfCF(updatedAboutData);                
-        const res = await axios.post('/profile/update/about' , updatedAboutData);
-        console.log("res" , res)
-        // await contextForDashBord.checkAuthorization();
-        window.location.reload();
-    } catch (error : any) {
-        console.log("updated error"  ,error)
-        setError(`${error.message}`)
+      // await VerificationForAboutDataOfCF(updatedAboutData);                
+      const res = await axios.post('/profile/update/about', updatedAboutData);
+      console.log("res", res)
+      await contextForDashBord.checkAuthorization();
+      contextForDashBord.USER.ABOUT = updatedAboutData.about;
+      contextForDashBord.USER.HEADQUARTERS = updatedAboutData.headquarters;
+      contextForDashBord.USER.LINK = updatedAboutData.link;
+      contextForDashBord.USER.CITY = updatedAboutData.city;
+      contextForDashBord.USER.STATE = updatedAboutData.state;
+      contextForDashBord.USER.COUNTRY = updatedAboutData.country;
+      closeModal({
+        child: null,
+        open: false
+      })
+    } catch (error: any) {
+      console.log("updated error", error)
+      setBackDrop(false);
+      setError(`${error.message}`)
     }
   }
 
   useEffect(() => {
     setUpdatedAboutData({
-        about: objForProfile.ABOUT,
-        headquarters: objForProfile.HEADQUARTERS,
-        link : objForProfile.LINK,
-        city : objForProfile.CITY,
-        state : objForProfile.STATE,
-        country : objForProfile.COUNTRY,
+      about: objForProfile.ABOUT,
+      headquarters: objForProfile.HEADQUARTERS,
+      link: objForProfile.LINK,
+      city: objForProfile.CITY,
+      state: objForProfile.STATE,
+      country: objForProfile.COUNTRY,
     })
     setLoader(false);
   }, [objForProfile])
@@ -73,7 +85,7 @@ export default function UpdateAboutForCF({ objForProfile , setModalData ,setData
     <>
       {loader && <Loading />}
       {!loader && (<div className='overflow-auto h-[500px] mx-2 w-full'>
-        {error !==null  && <p className='text-red-600 flex text-sm justify-center'>{error}</p>}
+        {error !== null && <p className='text-red-600 flex text-sm justify-center'>{error}</p>}
         <div className='p-2'>
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
             <div className="col-span-5 md:col-span-3">
@@ -130,60 +142,60 @@ export default function UpdateAboutForCF({ objForProfile , setModalData ,setData
 
 
             <div className="col-span-5 md:col-span-4">
-            <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
-              Country
-            </label>
-            <div className="mt-2">
-              <select
-                id="country"
-                name="country"
-                autoComplete="country"
-                onChange={handleChageInValue}
-                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                required
-                value={updatedAboutData.country}
-              >
-                <option value={''} >{'None'}</option>
-                <option value={'India'} >{'India'}</option>
-                <option value={'Canada'}>{'Canada'}</option>
-                <option value={'USA'} >{'USA'}</option>
-              </select>
+              <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
+                Country
+              </label>
+              <div className="mt-2">
+                <select
+                  id="country"
+                  name="country"
+                  autoComplete="country"
+                  onChange={handleChageInValue}
+                  className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  required
+                  value={updatedAboutData.country}
+                >
+                  <option value={''} >{'None'}</option>
+                  <option value={'India'} >{'India'}</option>
+                  <option value={'Canada'}>{'Canada'}</option>
+                  <option value={'USA'} >{'USA'}</option>
+                </select>
+              </div>
             </div>
-          </div>
 
-          <div className="col-span-5 md:col-span-3">
-            <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
-              City
-            </label>
-            <div className="mt-2">
-              <input
-                type="text"
-                name="city"
-                id="city"
-                value={updatedAboutData.city}
-                onChange={handleChageInValue}
-                autoComplete="address-level2"
-                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
+            <div className="col-span-5 md:col-span-3">
+              <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
+                City
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="city"
+                  id="city"
+                  value={updatedAboutData.city}
+                  onChange={handleChageInValue}
+                  autoComplete="address-level2"
+                  className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="col-span-5 md:col-span-3">
-            <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">
-              State / Province
-            </label>
-            <div className="mt-2">
-              <input
-                type="text"
-                name="State"
-                id="region"
-                value={updatedAboutData.state}
-                onChange={handleChageInValue}
-                autoComplete="address-level1"
-                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
+            <div className="col-span-5 md:col-span-3">
+              <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">
+                State / Province
+              </label>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  name="State"
+                  id="region"
+                  value={updatedAboutData.state}
+                  onChange={handleChageInValue}
+                  autoComplete="address-level1"
+                  className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
             </div>
-          </div>
 
             <div className="mt-10 border col-span-3">
               <button
@@ -196,6 +208,15 @@ export default function UpdateAboutForCF({ objForProfile , setModalData ,setData
             </div>
 
           </div>
+          <Backdrop
+            sx={{ color: 'blue', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={openBackDrop}
+          >
+            <div className=' flex flex-row'>
+              <CircularProgress color="inherit" />
+              <span className='mx-3 my-auto'>{'Upadting .......'}</span>
+            </div>
+          </Backdrop>
         </div>
       </div>)}
     </>

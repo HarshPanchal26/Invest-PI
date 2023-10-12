@@ -14,5 +14,19 @@ const controllerForFeed = async(req ,res)=>{
         })        
     }
 }
+const controllerForSingleFeed = async(req ,res)=>{
+    try {
+        const posts = await ServiceForThoughts.fetchSingleThought(req.body.id);
+        res.status(201).json({
+            fetched : true,
+            data : posts
+        })
+    } catch (error) {
+        res.status(201).json({
+            fetched : false,
+            data : error.message
+        })        
+    }
+}
 
-module.exports = controllerForFeed;
+module.exports = {controllerForFeed , controllerForSingleFeed};

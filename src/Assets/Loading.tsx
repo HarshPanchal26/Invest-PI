@@ -1,9 +1,12 @@
 import React from 'react'
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Loading() {
   return (
-    <div className='flex border border-red-600 h-screen  mx-auto justify-center '>
-        <b className='my-auto text-red-700 text-3xl'>{'Loading from Main'}</b>
+    <div className='h-full w-full'>
+      <div className='flex flex-col justify-center items-center my-1/2 mx-1/2 h-full'>
+          <CircularProgress />
+      </div>
     </div>
   )
 }

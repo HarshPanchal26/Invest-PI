@@ -109,6 +109,7 @@ type ContextTypeForProduct = {
    thoughts : [],
    companies : [],
    investments : [],
+   products : [],
    profileImage : string,
    coverImage: string
 }
@@ -123,6 +124,7 @@ type ContextTypeForCF = {
    categories : string,
    followers : string,
    following :  string,
+   link : string,
    headquarters : string, 
    city : string,
    state : string,
@@ -154,10 +156,81 @@ type ContextTypeForIndividual = {
     investorType : string,
     interest : [],
     thoughts : [],
+    investments : [],
     companies : [],
     profileImage : string,
     coverImage : string
 }
+
+
+type ContextTypeForThoughts = {
+    author : string,
+    authorprofile : string,
+    authortype : string,
+    comments : Array<string>,
+    createdAt : string,
+    isMedia : string,
+    likes : string,
+    link : string,
+    rid : string,
+    tag : Array<string>,
+    thoughts : string,
+    username : string,
+    _id: string
+}
+
+//  Type For FAQs 
+
+
+type TypeForAnswer = {
+    text: string,
+    urls?: string[]
+  }
+  
+  type TypeForQueAns = {
+    que: string,
+    key ?: string
+    ans: TypeForAnswer
+  }
+
+  type TypeForOtherDetails = {
+      startDate : string,
+      buisnessMode : string,
+      url : string,
+      avgSixMonthSale : string,
+      avgSixMonthViews : string,
+      avgSixMonthCustomer : string,
+      avgYearSale : string,
+      avgYearViews : string,
+      avgYearCustomer : string,
+      targetAudiences  : string
+  }
+  
+  type TypeForFAQs = {
+    Business: Array<TypeForQueAns>,
+    Performance: Array<TypeForQueAns>,
+    Market: Array<TypeForQueAns>,
+    Financials: Array<TypeForQueAns>,
+    Audience : Array<TypeForQueAns>,
+    Equity : Array<TypeForQueAns>
+  }
+
+  type TypeForDetailsAboutBusiness = {
+    startDate : string,
+    buisnessMode : string,
+    url : string,
+    avgSixMonthSale : string,
+    avgSixMonthViews : string,
+    avgSixMonthCustomer : string,
+    avgYearSale : string,
+    avgYearViews : string,
+    avgYearCustomer : string,
+    targetAudiences  : string,
+    seekingFund : number,
+    currentValuation : number,
+    offeredEquity : number,     
+  }
+
 
 export type {
     TypeForStartUpsData
@@ -169,5 +242,10 @@ export type {
     TypeForCompany,
     ContextTypeForProduct,
     ContextTypeForIndividual,
-    ContextTypeForCF
+    ContextTypeForCF,
+    ContextTypeForThoughts,
+    TypeForFAQs,
+    TypeForQueAns,
+    TypeForAnswer,
+    TypeForDetailsAboutBusiness
 }

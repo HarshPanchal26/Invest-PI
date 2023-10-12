@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const navigationForSideBar = [
     { name: 'Home', href: '/feed', icon: <HomeIcon /> },
-    { name: 'Network', href: '/network', icon: <UsersIcon /> },
+    { name: 'People', href: '/people', icon: <UsersIcon /> },
     { name: 'Post', href: '/post', icon: <PlusIcon /> },
     { name: 'Tie-ups', href: '/tieups', icon: <LinkIcon /> },
     { name: 'Rais-Fund', href: '/raisefund', icon: <CurrencyDollarIcon /> },
@@ -15,7 +15,7 @@ export default function SideBar() {
 
     return (
         // fixed top-0 left-0 border
-        <div className='md:flex w-fit md:flex-col h-full hidden shadow-md bg-gray-200'>
+        <div className='flex w-full md:flex-col h-full shadow-md bg-gray-200'>
             <div className='flex flex-col flex-1 my-1'>
                 <div className='p-5 cursor-pointer'>
                     <Logo />

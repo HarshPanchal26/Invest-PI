@@ -46,20 +46,21 @@ export default function Profile() {
     useEffect(() => {
         if (contextForDashBord.isAutorizedUser) {
             if (stateForProfilePage.objForProfile == null || stateForProfilePage.objForProfile?.USERNAME !== username) {
+                console.log("Updated Username " , username , stateForProfilePage)
                 checkUser(username);
             }
         } else {
             contextForDashBord.checkAuthorization();
         }
-    }, []);
+    }, [username]);
     return (
         <>
 
             {contextForDashBord.USER.USERNAME === username &&
             <ProfileComplitionBar objForProfile={stateForProfilePage.objForProfile} setStateForProfilePage={setStateForProfilePage}/>}
-            <div className='bg-white h-auto flex flex-row  md:mx-5 '>
+            <div className='bg-white h-auto flex flex-row  xl:mx-5 '>
 
-                <div className="bg-white shadow-lg overflow-hidden md:w-2/3 w-full">
+                <div className="bg-white shadow-lg overflow-hidden xl:w-2/3 w-full">
                     <div className=' my-5 overflow-auto h-auto'>
                         {
                             stateForProfilePage.loader && (
@@ -79,7 +80,7 @@ export default function Profile() {
                     </div>
 
                 </div>
-                <div className='md:w-1/3 md:flex hidden flex-col items-center mx-5'>
+                <div className='xl:w-1/3 xl:flex hidden flex-col items-center mx-5'>
 
                     <Suggestions />
                 </div>

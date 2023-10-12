@@ -3,36 +3,36 @@ const ServiceForUpdate = require('../services/serviceForUpdate')
 const ServiceForFirebase = require('../services/serviceForFirebase')
 
 async function controllerForAbout(req, res) {
-    const reqObject = req.body;
+    const data = req.body;
     const { uid, type } = res.locals;
     const { Schema, Collection } = findSchemaAndCollection(type);
     try {
         if (type === 'CF') {
 
             let ObjectForUpdate = {
-                about: reqObject.about,
-                headquarters: reqObject.headquarters,
-                link: reqObject.link,
-                city: reqObject.city,
-                state: reqObject.state,
-                country: reqObject.country,
+                about: data.about,
+                headquarters: data.headquarters,
+                link: data.link,
+                city: data.city,
+                state: data.state,
+                country: data.country,
             }
             await ServiceForUpdate.updateAbout(Schema, Collection, uid, ObjectForUpdate);
 
         } else if (type === 'company') {
 
             let ObjectForUpdate = {
-                about: reqObject.about,
-                headquarters: reqObject.headquarters,
-                link: reqObject.link,
-                city: reqObject.city,
-                state: reqObject.state,
-                country: reqObject.country,
+                about: data.about,
+                headquarters: data.headquarters,
+                link: data.link,
+                city: data.city,
+                state: data.state,
+                country: data.country,
             }
             await ServiceForUpdate.updateAbout(Schema, Collection, uid, ObjectForUpdate);
         } else {
             let ObjectForUpdate = {
-                about: reqObject.about,
+                about: data.about,
             }
             await ServiceForUpdate.updateAbout(Schema, Collection, uid, ObjectForUpdate);
         }
@@ -53,36 +53,42 @@ async function controllerForAbout(req, res) {
 const controllerForMain = async (req, res) => {
     try {
         const { uid, type } = res.locals;
-        const reqObject = req.body;
+        const {data, status} = req.body;
         const { Schema, Collection } = findSchemaAndCollection(type);
-
+        let ObjectForUpdate = null;
+        console.log("Status" , req.body)
         if(type === 'CF'){
-
-            let ObjectForUpdate = {
-                name: reqObject.name,
-                username: reqObject.username,
-                bio: reqObject.bio,
+            console.log(data)   
+            ObjectForUpdate = {
+                name: data.firmname,
+                username: data.username,
+                bio: data.bio,
             }
-            await ServiceForUpdate.updateMain(Schema, Collection, uid, ObjectForUpdate);
 
         }else if(type === 'company'){
-            let ObjectForUpdate = {
-                name: reqObject.name,
-                username: reqObject.username,
-                bio: reqObject.bio,
+             ObjectForUpdate = {
+                name: data.name,
+                username: data.username,
+                bio: data.bio,
             }
-            await ServiceForUpdate.updateMain(Schema, Collection, uid, ObjectForUpdate);
 
         }else {
-            let ObjectForUpdate = {
-                username: reqObject.username,
-                firstName : reqObject.firstname,
-                lastName : reqObject.lastname,
-                bio : reqObject.bio,
-                email : reqObject.email,
+             ObjectForUpdate = {
+                username: data.username,
+                firstName : data.firstname,
+                lastName : data.lastname,
+                bio : data.bio,
+                email : data.email,
             }
+        }
+        if(ObjectForUpdate !== null){
             await ServiceForUpdate.updateMain(Schema, Collection, uid, ObjectForUpdate);
-            await ServiceForUpdate.updateCommanData(uid, {username: reqObject.username});
+            // await ServiceForUpdate.updateCommanData(uid, {username: data.username});
+        }else{
+            res.status(401).json({
+                updated: false,
+                message: 'Internal Server Error , Please try after some time or rech out at help cneter'
+            })
         }
         res.status(201).json({
             updated: true,
@@ -109,7 +115,7 @@ const controllerForProfileImage = async (req, res) => {
     const { uid, type } = res.locals;
     const { Schema, Collection } = findSchemaAndCollection(type);
     if (!req.file) {
-        return res.status(400).json({ error: 'No file uploaded' });
+        return res.status(400).json({ error: 'No file For Uplaod' });
     }
     try {
         let createdAt = new Date().getTime();

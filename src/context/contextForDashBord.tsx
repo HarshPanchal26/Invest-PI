@@ -16,6 +16,7 @@ type TypeForAuthorizationState = {
   valueForProvider: any | null,
   userType: string | null
 }
+
 export const ContextForDashBord = createContext<null | any>(null);
 
 export function ContextProviderForDashBord({ children }: child) {
@@ -26,19 +27,28 @@ export function ContextProviderForDashBord({ children }: child) {
     userType: null,
   })
 
+  const [arrayForPosts ,setArrayForPosts] = useState<Array<Object> | null>()
+
+  const fetchThoughtsForUser = async()=>{
+    const res = await axios.post('/feed/fetchposts');
+    console.log("res" , res.data.data)
+    setArrayForPosts(res.data.data);
+  }
+
   const checkAuthorization = () => {
     return new Promise(async(resolve , reject)=>{
     try {
       let res = await axios.get('/api/authorization')
-      console.log("Data" , res.data.user)
+      console.log("Response====>" , res)
       if (res.data.user) {
         let Obj: any = null;
         if (res.data.user.type === 'product') {
-          Obj = GenerateObjForProducts(res.data.user);
+          Obj = GenerateObjForProducts(res.data.user ,res.data.thoughts ,res.data.product);
         } else if (res.data.user.type === 'CF') {
-          Obj = GenerateObjForCF(res.data.user);
+          Obj = GenerateObjForCF(res.data.user , res.data.thoughts);
         } else if (res.data.user.type === 'individual') {
-          Obj = GenerateObjForIndividual(res.data.user);
+          console.log("Obj..." , res.data.thoughts)
+          Obj = GenerateObjForIndividual(res.data.user , res.data.thoughts);
         } else {
           alert("Somthig is wrong inside Context Area ")
         }
@@ -71,7 +81,7 @@ export function ContextProviderForDashBord({ children }: child) {
 
       if (ObjForVisitedUser.length > 0) {
         const res = ObjForVisitedUser.filter((item: any) => item.USERNAME === username);
-        resolve(res);
+        resolve(res[0]);
         return;
       }
       try {
@@ -80,11 +90,11 @@ export function ContextProviderForDashBord({ children }: child) {
         if (res.data.user) {
           let Obj: any = null;
           if (res.data.user.type === 'product') {
-            Obj = GenerateObjForProducts(res.data.user);
+            Obj = GenerateObjForProducts(res.data.user , res.data.thoughts , res.data.product);
           } else if (res.data.user.type === 'CF') {
-            Obj = GenerateObjForCF(res.data.user);
+            Obj = GenerateObjForCF(res.data.user , res.data.thoughts);
           } else if (res.data.user.type === 'individual') {
-            Obj = GenerateObjForIndividual(res.data.user);
+            Obj = GenerateObjForIndividual(res.data.user , res.data.thoughts);
           } else {
             alert("Something is wrong inside Context Area Else");
           }
@@ -105,8 +115,10 @@ export function ContextProviderForDashBord({ children }: child) {
   const ObjForContextData = {
     checkAuthorization: checkAuthorization,  // function
     checkForVisitedAccount: checkForVisitedAccount,
+    fetchThoughtsForUser : fetchThoughtsForUser,
     USER: objForAuthorizationState.valueForProvider,//Provide user data 
     isAutorizedUser: objForAuthorizationState.isAutorizedUser,  /// value
+    POSTS : arrayForPosts
   }
 
   useEffect(() => {

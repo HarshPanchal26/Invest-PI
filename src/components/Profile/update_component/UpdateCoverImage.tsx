@@ -63,7 +63,7 @@ export default function UpdateCoverImage({ objForProfile , closeModal}: PropsTyp
   }, [objForProfile]);
 
   return (
-    <div className='flex flex-col w-full'>
+    <div className='flex flex-col w-full md:min-w-[500px]'>
       <div
         className="flex h-60 border-b bg-slate-200 w-full my-3"
         // style={{

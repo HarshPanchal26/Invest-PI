@@ -1,10 +1,21 @@
 import { ContextTypeForProduct ,
     ContextTypeForIndividual , 
-    ContextTypeForCF} from '../type';
+    ContextTypeForCF , ContextTypeForThoughts} from '../type';
 import {decodeTextFromDisplay} from '../../utils/factory/FormatText'
 
-const GenerateObjForIndividual = (Obj : ContextTypeForIndividual)=>{
-   console.log("Data For Individual" ,Obj )
+const GenerateObjForIndividual = (Obj : ContextTypeForIndividual , ArrayForThoughts : Array<ContextTypeForThoughts>)=>{
+
+   const ARRAYOFTHOUGHTS : ContextTypeForThoughts[]   = []; 
+   
+   for(let i=0;i<ArrayForThoughts.length; i++){
+      let item = ArrayForThoughts[i];
+      console.log("item" ,item);
+      item.author =  Obj.firstName + " " + Obj.lastName;
+      item.authorprofile = Obj.profileImage;
+      item.username = Obj.username;
+      console.log("item" , item);
+      ARRAYOFTHOUGHTS.push(item);
+   }
    return {
       USERNAME: Obj.username,
       FIRST_NAME: Obj.firstName,
@@ -24,14 +35,27 @@ const GenerateObjForIndividual = (Obj : ContextTypeForIndividual)=>{
       INTEREST: Obj.interest,
       THOUGHTS: Obj.thoughts,
       COMPANIES: Obj.companies,
+      INVESTMENTS: Obj.investments,
       PROFILEIMAGE: Obj.profileImage,
-      COVERIMAGE: Obj.coverImage
+      COVERIMAGE: Obj.coverImage,
+      ARRAYOFTHOUGHTS : ARRAYOFTHOUGHTS
    }
 }
 
 
-const GenerateObjForProducts = (Obj: ContextTypeForProduct) => {
-   return {
+const GenerateObjForProducts = (Obj: ContextTypeForProduct , ArrayForThoughts : ContextTypeForThoughts[] , product : any) => {
+   
+   const ARRAYOFTHOUGHTS : ContextTypeForThoughts[]   = []; 
+   
+   for(let i=0;i<ArrayForThoughts.length; i++){
+      let item = ArrayForThoughts[i];
+      item.author =  Obj.companyname;
+      item.authorprofile = Obj.profileImage;
+      item.username = Obj.username;
+      ARRAYOFTHOUGHTS.push(item);
+   }
+
+   return  {
       USERNAME: Obj.username,
       COMPANYNAME: Obj.companyname,
       EMAIL: Obj.email,
@@ -52,14 +76,25 @@ const GenerateObjForProducts = (Obj: ContextTypeForProduct) => {
       INTEREST: Obj.interest,
       THOUGHTS: Obj.thoughts,
       COMPANIES: Obj.companies,
+      PRODUCTS : Obj.products,
       INVESTMENTS: Obj.investments,
       PROFILEIMAGE: Obj.profileImage,
-      COVERIMAGE: Obj.coverImage
+      COVERIMAGE: Obj.coverImage,
+      ARRAYOFTHOUGHTS : ARRAYOFTHOUGHTS,
+      PRODUCTINSIDE : product
    }
 }
 
-const GenerateObjForCF = (Obj : ContextTypeForCF)=>{
-   console.log("Data for CF " , Obj)
+const GenerateObjForCF = (Obj : ContextTypeForCF , ArrayForThoughts : ContextTypeForThoughts[])=>{
+   const ARRAYOFTHOUGHTS : ContextTypeForThoughts[]   = []; 
+   
+   for(let i=0;i<ArrayForThoughts.length; i++){
+      let item = ArrayForThoughts[i];
+      item.author =  Obj.firmname;
+      item.authorprofile = Obj.profileImage;
+      item.username = Obj.username;
+      ARRAYOFTHOUGHTS.push(item);
+   }   
    return {
       USERNAME: Obj.username,
       FIRMNAME: Obj.firmname,
@@ -75,12 +110,15 @@ const GenerateObjForCF = (Obj : ContextTypeForCF)=>{
       STATE: Obj.state,
       COUNTRY: Obj.country,
       TYPE: Obj.type,
+      LINK: Obj.link,
       INTEREST: Obj.interest,
       THOUGHTS: Obj.thoughts,
       COMPANIES: Obj.companies,
       INVESTMENTS: Obj.investments,
       PROFILEIMAGE: Obj.profileImage,
-      COVERIMAGE: Obj.coverImage
+      COVERIMAGE: Obj.coverImage,
+      ARRAYOFTHOUGHTS : ARRAYOFTHOUGHTS
+
    }
 }
 

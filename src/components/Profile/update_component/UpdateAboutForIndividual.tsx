@@ -5,14 +5,15 @@ import { ContextForDashBord } from '../../../context/contextForDashBord';
 import {formatTextForDisplay} from '../../../utils/factory/FormatText'
 
 type TypeForProps = {
-  objForProfile : any, 
+  objForProfile: any,
+  closeModal : React.Dispatch<SetStateAction<{open : boolean , child : null | string}>>
 }
 
 type TypeForUpdatedIndividualData = {
     about: '',
 }
 
-export default function UpdateAboutForIndividual({ objForProfile} :TypeForProps) {
+export default function UpdateAboutForIndividual({ objForProfile , closeModal} :TypeForProps) {
 
   const contextForDashBord =useContext(ContextForDashBord);  
 
@@ -36,9 +37,14 @@ export default function UpdateAboutForIndividual({ objForProfile} :TypeForProps)
         const res = await axios.post('/profile/update/about' , updatedAboutData);
         console.log("res" , res)
         contextForDashBord.USER.ABOUT = updatedAboutData.about;
+        closeModal({
+          open : false,
+          child : null
+        })
     } catch (error : any) {
         console.log("updated error"  ,error)
         setError(`${error.message}`)
+        
     }
   }
 
