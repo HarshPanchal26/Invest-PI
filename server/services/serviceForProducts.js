@@ -1,10 +1,11 @@
 const { mongoose } = require('../config/database');
 const { SchemaForPitches } = require('../models/PitchModels');
 const { SchemaForMyProduct } = require('../models/ProductModels');
-const ServiceForFirebase = require('./serviceForFirebase')
+const ServiceForFirebase = require('./serviceForFirebase');
+const { findSchemaAndCollection } = require('./servicesForAuthentication');
 
-// const dbForUser = mongoose.connection.useDb('users');
 const dbForOthers = mongoose.connection.useDb('others');
+const dbForUser = mongoose.connection.useDb('users');
 
 const createProduct = (Obj) => {
     return new Promise(async (resolve, reject) => {
@@ -97,41 +98,69 @@ const createMediaForProduct = (condition, file, object) => {
     })
 }
 
-const createPitchForProduct = (rid , object) => {
-    const {faqs , additionalDetails , desireInvestor} = object;
-    const {Audience , Business ,Financials ,Market , Performance , Equity} = faqs;
+const createPitchForProduct = (rid, object) => {
+    const { faqs, additionalDetails, desireInvestor } = object;
+    const { Audience, Business, Financials, Market, Performance, Equity } = faqs;
 
     let ObjectForFaqs = {
-        Financials : JSON.parse(JSON.stringify(Financials)),
-        Business : JSON.parse(JSON.stringify(Business)),
-        Audience : JSON.parse(JSON.stringify(Audience)),
-        Market : JSON.parse(JSON.stringify(Market)),
-        Performance : JSON.parse(JSON.stringify(Performance)),
-        Equity : JSON.parse(JSON.stringify(Equity)),
+        Financials: JSON.parse(JSON.stringify(Financials)),
+        Business: JSON.parse(JSON.stringify(Business)),
+        Audience: JSON.parse(JSON.stringify(Audience)),
+        Market: JSON.parse(JSON.stringify(Market)),
+        Performance: JSON.parse(JSON.stringify(Performance)),
+        Equity: JSON.parse(JSON.stringify(Equity)),
     }
 
-    const ArrayFordesireInvestor =[];
+    const ArrayFordesireInvestor = [];
 
-    for(let i=0;i<desireInvestor.length;i++){
+    for (let i = 0; i < desireInvestor.length; i++) {
         ArrayFordesireInvestor.push(desireInvestor[i]._id)
     }
 
     let FinalObject = {
-        rid : rid,
+        rid: rid,
         ...additionalDetails,
-        faqs : {
+        faqs: {
             ...ObjectForFaqs
         },
-        desirePepole : [...ArrayFordesireInvestor]
+        desirePepole: [...ArrayFordesireInvestor]
     }
-    
-    console.log("ObjectForPitch" , FinalObject)
-    return new Promise(async(resolve, reject) => {
+
+    console.log("ObjectForPitch", FinalObject)
+    return new Promise(async (resolve, reject) => {
         try {
-            const ModelForPitch = dbForOthers.model('Pitch', SchemaForPitches , 'pitch');
+            const ModelForPitch = dbForOthers.model('Pitch', SchemaForPitches, 'pitch');
             const result = await ModelForPitch.create(FinalObject);
             resolve(result);
         } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+const addPepoleForOrganisation = (data, SchemaForPerson , SchemaForOrganisation) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const ModelForOrg = dbForUser.model('users', SchemaForOrganisation.Schema, SchemaForOrganisation.Collection);
+            const ModelForPerson = dbForUser.model('users', SchemaForPerson.Schema, SchemaForPerson.Collection);
+            const res1 = await ModelForOrg.updateOne({ rid: data.idOfOrganisation }, {
+                    // `people${[data.position]}`: { perosn: data.idOfPerson, position: data.position }
+                    // `people${[data.position]}` = data.idOfPerson
+                    $set : {
+                        [`people.${data.position}`] : data.idOfPerson
+                    }
+                
+            })
+            console.log("res1 " , res1 , SchemaForOrganisation.Collection)
+            const res2 = await ModelForPerson.updateOne({ rid: data.idOfPerson }, {
+                $push: {
+                    'companies': { company: data.idOfOrganisation, position: data.position }
+                }
+            })
+            console.log("res2 " , res2 )
+            resolve({ res1, res2 })
+        } catch (error) {
+            console.log("error in add person ", error);
             reject(error);
         }
     })
@@ -142,7 +171,8 @@ module.exports = {
     retriveProduct,
     createUSPForProduct,
     createMediaForProduct,
-    createPitchForProduct
+    createPitchForProduct,
+    addPepoleForOrganisation
 }
 
 

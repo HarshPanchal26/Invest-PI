@@ -30,8 +30,7 @@ const createUser = (objForData, objForSignIn) => {
             const additionalData = await addUserDetails({ rid: res._id, ...objForData }, Schema, Collection.trim())
             responceObj.dataStorage = additionalData._id;
             if(Collection === 'user-as-company'){
-                const createProduct  = await ServiceForProducts.createProduct({rid: res._id});
-                console.log("createProduct==>" , createProduct)
+                await ServiceForProducts.createProduct({rid: res._id});
                 responceObj.productStorge = true;
             }
             resolve(responceObj)

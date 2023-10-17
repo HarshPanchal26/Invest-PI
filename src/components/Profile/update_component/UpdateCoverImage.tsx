@@ -74,6 +74,7 @@ export default function UpdateCoverImage({ objForProfile , closeModal}: PropsTyp
       >
         <img src={urlForProfile} alt='coverImage' className='h-full w-full'/>
       </div>
+      {objForProfile.USERTYPE !== 'VISITOR' && (
       <div className="text-black p-3 flex flex-row border-t-2 gap-6">
 
         <div>
@@ -111,7 +112,7 @@ export default function UpdateCoverImage({ objForProfile , closeModal}: PropsTyp
         </div>
 
 
-      </div>
+      </div>)}
     </div>
   )
 }

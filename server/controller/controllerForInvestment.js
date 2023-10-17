@@ -5,12 +5,13 @@ const controllerForNewInvestment = async (req, res) => {
         const { investmentData, extarData } = req.body
 
         let ObjectToInsert = {
+            recipient : res.locals.uid,
             dateofInvestment: investmentData.dateofInvestment,
             typeOfInvestment: investmentData.typeOfInvestment,
             allInvestor: [],
             leadInvestors: [],
             raisedAmount: parseFloat(investmentData.raisedAmount, 10),
-            lastValuation: parseFloat(investmentData.lastValuation, 10),
+            lastValuationofFundee: parseFloat(investmentData.lastValuation, 10),
             milestones: extarData.milestones,
             growth: extarData.growth
         }
@@ -26,8 +27,7 @@ const controllerForNewInvestment = async (req, res) => {
             ObjectToInsert.leadInvestors.push(arrayForleadInvestors[i]._id);
         }
 
-        console.log("ObjectToInsert" , ObjectToInsert)
-        const result = await ServiceForInvestment.addNewInvestment(ObjectToInsert, res.locals.uid);
+        const result = await ServiceForInvestment.createNewInvestment(ObjectToInsert);
         res.status(201).json({
             investment: result
         })

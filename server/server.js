@@ -15,6 +15,7 @@ const ThoughtsRoute = require('./routes/ThoughtsRoute');
 const InvestmentRoute = require('./routes/InvestmentRoute');
 const RouteForProduct = require('./routes/ProductRoutes');
 const controllerForProfile = require('./controller/controllerForProfile');
+const http = require('http')
 
 app.use(bodyparser.json());
 app.use(
@@ -22,6 +23,24 @@ app.use(
         extended: true,
     }))
 app.use(cookieparser());
+
+const server = http.createServer(app);
+const socketIOInstance = require('socket.io');
+const io = socketIOInstance(server, {
+    transports: process.env.WEBSOCKET_TRANSPORT || ['polling'],
+    cors: { origin: process.env.ALLOWED_ORIGINS || '*' },
+});
+
+io.on('connection' , (socket)=>{
+    console.log("I am a new client" , socket)
+
+    socket.on('error', (error) => {
+        console.error('WebSocket error:', error);
+    });
+})
+
+// require('./socketio.js')(io);
+
 
 app.get('/', (req, res) => {
     res.send("I am MAIN Route")

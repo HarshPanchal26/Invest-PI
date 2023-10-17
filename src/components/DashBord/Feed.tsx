@@ -7,26 +7,28 @@ import axios from "axios";
 
 export default function Feed() {
 
-  const [loader, setLoader] = useState<boolean>(true);  
-  const [thoughts , SetThoughts] = useState([]);
+  const [loader, setLoader] = useState<boolean>(true);
+  const [thoughts, SetThoughts] = useState([]);
   const contextForDashBord = useContext(ContextForDashBord);
 
-  const fetchData = async()=>{
-    const res = await axios.post('/feed/fetchposts');
+  const fetchData = async () => {
+    console.log("Hey I again triggered")
+    const res = await axios.get('feed/thoughts/all');
     SetThoughts(res.data.data);
     setLoader(false);
     contextForDashBord.POSTS = [...res.data.data];
-    console.log("contextForDashBord.POSTS" , contextForDashBord.POSTS);
-}
+    console.log("contextForDashBord.POSTS" ,contextForDashBord.POSTS) 
+  }
 
   React.useEffect(() => {
-    console.log("isAutorizedUser " ,contextForDashBord.isAutorizedUser)
-    if (contextForDashBord.isAutorizedUser) {
-      fetchData()
-    } else {
-      console.log('Not Authenticated')
+    if(!contextForDashBord.isAutorizedUser) {
       contextForDashBord.checkAuthorization();
     }
+    if (contextForDashBord.isAutorizedUser && contextForDashBord.POSTS.length === 0) {
+      fetchData()
+    }else{
+      SetThoughts(contextForDashBord.POSTS);
+    } 
   }, [contextForDashBord])
 
   if (!loader) {

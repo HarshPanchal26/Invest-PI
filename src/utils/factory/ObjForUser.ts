@@ -3,17 +3,19 @@ import { ContextTypeForProduct ,
     ContextTypeForCF , ContextTypeForThoughts} from '../type';
 import {decodeTextFromDisplay} from '../../utils/factory/FormatText'
 
-const GenerateObjForIndividual = (Obj : ContextTypeForIndividual , ArrayForThoughts : Array<ContextTypeForThoughts>)=>{
+// Once Vsisted Account will being stored here until page gat refresh.
+const ObjForVisitedUser : Array<Object>  = [];
+
+
+const GenerateObjForIndividual = (Obj : ContextTypeForIndividual , ArrayForThoughts : Array<ContextTypeForThoughts> , USERTYPE : 'VISITOR' | 'USERS')=>{
 
    const ARRAYOFTHOUGHTS : ContextTypeForThoughts[]   = []; 
    
    for(let i=0;i<ArrayForThoughts.length; i++){
       let item = ArrayForThoughts[i];
-      console.log("item" ,item);
       item.author =  Obj.firstName + " " + Obj.lastName;
       item.authorprofile = Obj.profileImage;
       item.username = Obj.username;
-      console.log("item" , item);
       ARRAYOFTHOUGHTS.push(item);
    }
    return {
@@ -38,12 +40,13 @@ const GenerateObjForIndividual = (Obj : ContextTypeForIndividual , ArrayForThoug
       INVESTMENTS: Obj.investments,
       PROFILEIMAGE: Obj.profileImage,
       COVERIMAGE: Obj.coverImage,
-      ARRAYOFTHOUGHTS : ARRAYOFTHOUGHTS
+      ARRAYOFTHOUGHTS : ARRAYOFTHOUGHTS,
+      USERTYPE :USERTYPE
    }
 }
 
 
-const GenerateObjForProducts = (Obj: ContextTypeForProduct , ArrayForThoughts : ContextTypeForThoughts[] , product : any) => {
+const GenerateObjForProducts = (Obj: ContextTypeForProduct , ArrayForThoughts : ContextTypeForThoughts[] , product : any , USERTYPE : 'VISITOR' | 'USERS') => {
    
    const ARRAYOFTHOUGHTS : ContextTypeForThoughts[]   = []; 
    
@@ -76,16 +79,20 @@ const GenerateObjForProducts = (Obj: ContextTypeForProduct , ArrayForThoughts : 
       INTEREST: Obj.interest,
       THOUGHTS: Obj.thoughts,
       COMPANIES: Obj.companies,
-      PRODUCTS : Obj.products,
+      PEOPLE : Obj.people,
+      INVESTOR : Obj.investors,
+      PRODUCTINSIDE: product,  
       INVESTMENTS: Obj.investments,
+      FUNDINGROUNDS  : Obj.fundingRounds || [], 
       PROFILEIMAGE: Obj.profileImage,
       COVERIMAGE: Obj.coverImage,
       ARRAYOFTHOUGHTS : ARRAYOFTHOUGHTS,
-      PRODUCTINSIDE : product
+      USERTYPE :USERTYPE
+      // PRODUCTS : Obj.products,
    }
 }
 
-const GenerateObjForCF = (Obj : ContextTypeForCF , ArrayForThoughts : ContextTypeForThoughts[])=>{
+const GenerateObjForCF = (Obj : ContextTypeForCF , ArrayForThoughts : ContextTypeForThoughts[] , USERTYPE : 'VISITOR' | 'USERS')=>{
    const ARRAYOFTHOUGHTS : ContextTypeForThoughts[]   = []; 
    
    for(let i=0;i<ArrayForThoughts.length; i++){
@@ -117,13 +124,12 @@ const GenerateObjForCF = (Obj : ContextTypeForCF , ArrayForThoughts : ContextTyp
       INVESTMENTS: Obj.investments,
       PROFILEIMAGE: Obj.profileImage,
       COVERIMAGE: Obj.coverImage,
-      ARRAYOFTHOUGHTS : ARRAYOFTHOUGHTS
-
+      ARRAYOFTHOUGHTS : ARRAYOFTHOUGHTS,
+      USERTYPE :USERTYPE
    }
 }
 
 
-const ObjForVisitedUser : Array<Object>  = [];
 
 
 export {  GenerateObjForProducts , GenerateObjForIndividual,GenerateObjForCF , ObjForVisitedUser };

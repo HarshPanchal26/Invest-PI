@@ -5,25 +5,6 @@ const SchemaForPost = new mongoose.Schema({
         type: String,
         required: true,        
     },
-    username : {
-        type: String,
-        required: false,
-        default : ""                
-    },
-    author : {
-        type: String,
-        required: false,
-        default : ""                        
-    },
-    authortype : {
-        type: String,
-        required: true,                        
-    },
-    authorprofile : {
-        type: String,
-        required: false,
-        default : ""
-    },
     thoughts : {
         type: String,
         required: true,        
@@ -41,7 +22,7 @@ const SchemaForPost = new mongoose.Schema({
     link : {
         type: String,
         required: false,
-        default : ""             
+        default : ''             
     },
     tag : {
         type: Array,
@@ -53,12 +34,27 @@ const SchemaForPost = new mongoose.Schema({
         required: false,
         default : []             
     },
-    createdAt : {
+    createdTime : {
       type : Date,
       require : false,
-      default : new Date()    
+    },
+    createdDate : {
+      type : Date,
+      require : false,
     },
     
+})
+
+SchemaForPost.pre('save' , function (next){
+    if(!this.isNew){
+        return next();
+    }
+
+    const date = new Date();
+    this.createdDate = date.getDate()/date.getMonth()/date.getFullYear();
+    this.createdTime = date.getHours()/date.getMinutes()/date.getSeconds();
+    console.log("date and Time" , this.createdDate , this.createdTime)
+    next();
 })
 
 

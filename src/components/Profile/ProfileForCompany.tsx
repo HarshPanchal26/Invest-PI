@@ -150,6 +150,7 @@ export default function ProfileForCompany({ objForProfile }: any) {
                             backgroundPosition: 'center',
                         }}
                     >
+                        {/* {objForProfile.USERTYPE === 'VISITOR' && ( */}
                         <IconButton
                             aria-label="upload picture"
                             component="span"
@@ -159,6 +160,7 @@ export default function ProfileForCompany({ objForProfile }: any) {
                         >
                             <PencilSquareIcon />
                         </IconButton>
+                        {/* )} */}
                     </div>
                 </header>
                 {/* Profile */}
@@ -189,6 +191,7 @@ export default function ProfileForCompany({ objForProfile }: any) {
                                     </p>
                                 </div>
 
+
                                 <div className='flex my-2 mx-2 flex-row'>
                                     <a href="#" className="text-blue-600 hover:underline mx-4">
                                         <b>{`${dataForProfilePage?.FOLLOWER} followers `} </b>
@@ -203,65 +206,66 @@ export default function ProfileForCompany({ objForProfile }: any) {
                                         {dataForProfilePage?.CITY} ,{dataForProfilePage?.STATE} ,{dataForProfilePage?.COUNTRY}
                                     </p>
                                 </div>
-
-                                <div className='block my-2 mx-6'>
-                                    <Stack direction="row" spacing={1}>
-                                        <Chip icon={<TaskAltIcon />} label="Follow" variant='filled' color='primary' style={{
-                                            padding: '10px'
-                                        }} />
-                                        <Chip icon={<SendIcon />} label="Message" variant="filled" color='primary' style={{
-                                            padding: '10px'
-                                        }} />
-                                    </Stack>
-
-                                </div>
+                                {objForProfile.USERTYPE === 'VISITOR' && (
+                                    <div className='block my-2 mx-6'>
+                                        <Stack direction="row" spacing={1}>
+                                            <Chip icon={<TaskAltIcon />} label="Follow" variant='filled' color='primary' style={{
+                                                padding: '10px'
+                                            }} />
+                                            <Chip icon={<SendIcon />} label="Message" variant="filled" color='primary' style={{
+                                                padding: '10px'
+                                            }} />
+                                        </Stack>
+                                    </div>
+                                )}
                             </div>
-                            <div className='felx flex-col mr-2'>
-                                <div className='my-2'>
-                                    <Button
-                                        id="demo-positioned-button"
-                                        aria-controls={open ? 'demo-positioned-menu' : undefined}
-                                        aria-haspopup="true"
-                                        aria-expanded={open ? 'true' : undefined}
-                                        onClick={handleClick}
-                                    >
-                                        <MoreVertIcon style={{
-                                            "color": "blue"
-                                        }} />
-                                    </Button>
-                                    <Menu
-                                        id="demo-positioned-menu"
-                                        aria-labelledby="demo-positioned-button"
-                                        anchorEl={anchorEl}
-                                        open={open}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'left',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'left',
-                                        }}
-                                    >
-                                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                        <MenuItem onClick={handleClose}>My account</MenuItem>
-                                        <MenuItem onClick={handleClose}>Logout</MenuItem>
-                                    </Menu>
-                                </div>
-                                <div className='my-2'>
-                                    <Button
-                                        id="demo-positioned-button"
-                                        onClick={() => handleOpenForModal('Main')}
-                                    >
-                                        <PencilSquareIcon style={{
-                                            "color": "blue",
-                                            "width": '25px',
-                                            "height": '25px'
-                                        }} />
-                                    </Button>
-                                </div>
-                            </div>
+                            {objForProfile.USERTYPE === 'USERS' && (
+                                <div className='felx flex-col mr-2'>
+                                    <div className='my-2'>
+                                        <Button
+                                            id="demo-positioned-button"
+                                            aria-controls={open ? 'demo-positioned-menu' : undefined}
+                                            aria-haspopup="true"
+                                            aria-expanded={open ? 'true' : undefined}
+                                            onClick={handleClick}
+                                        >
+                                            <MoreVertIcon style={{
+                                                "color": "blue"
+                                            }} />
+                                        </Button>
+                                        <Menu
+                                            id="demo-positioned-menu"
+                                            aria-labelledby="demo-positioned-button"
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            onClose={handleClose}
+                                            anchorOrigin={{
+                                                vertical: 'bottom',
+                                                horizontal: 'left',
+                                            }}
+                                            transformOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'left',
+                                            }}
+                                        >
+                                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                            <MenuItem onClick={handleClose}>My account</MenuItem>
+                                            <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                        </Menu>
+                                    </div>
+                                    <div className='my-2'>
+                                        <Button
+                                            id="demo-positioned-button"
+                                            onClick={() => handleOpenForModal('Main')}
+                                        >
+                                            <PencilSquareIcon style={{
+                                                "color": "blue",
+                                                "width": '25px',
+                                                "height": '25px'
+                                            }} />
+                                        </Button>
+                                    </div>
+                                </div>)}
                         </div>
                     </section>
                     <div className='my-3 flex flex-col'>
@@ -269,14 +273,15 @@ export default function ProfileForCompany({ objForProfile }: any) {
                         <div className='border mx-2 rounded-md'>
                             <div className="flex flex-row justify-between">
                                 <p className='text-2xl mx-3 font-bold p-2'>{'About'}</p>
-                                <IconButton
-                                    aria-label="upload picture"
-                                    className="h-12 w-12 cursor-pointer bg-black mr-1"
-                                    style={{ color: 'black' }}
-                                    onClick={() => handleOpenForModal('About')}
-                                >
-                                    <PencilSquareIcon />
-                                </IconButton>
+                                {objForProfile.USERTYPE === 'USERS' && (
+                                    <IconButton
+                                        aria-label="upload picture"
+                                        className="h-12 w-12 cursor-pointer bg-black mr-1"
+                                        style={{ color: 'black' }}
+                                        onClick={() => handleOpenForModal('About')}
+                                    >
+                                        <PencilSquareIcon />
+                                    </IconButton>)}
                             </div>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <Tabs value={valueForAbout} onChange={handleChangeForAboutSection} aria-label="basic tabs example">
@@ -370,21 +375,19 @@ export default function ProfileForCompany({ objForProfile }: any) {
                         <div className='border rounded-md mx-2 my-3'>
                             <div className="flex flex-row justify-between">
                                 <p className='text-2xl mx-3 font-bold p-2'>{'Products'}</p>
-                                <IconButton
-                                    aria-label="upload picture"
-                                    className="h-16 w-16 cursor-pointer bg-black mr-1"
-                                    style={{ color: 'black' }}
-                                    onClick={() => handleOpenForModal('Products')}
-                                >
-                                    <AddIcon />
-                                </IconButton>
+                                {objForProfile.USERTYPE === 'USERS' && (
+                                    <IconButton
+                                        aria-label="upload picture"
+                                        className="h-16 w-16 cursor-pointer bg-black mr-1"
+                                        style={{ color: 'black' }}
+                                        onClick={() => handleOpenForModal('Products')}
+                                    >
+                                        <AddIcon />
+                                    </IconButton>)}
                             </div>
                             <section className="flex flex-col py-4  border-gray-200">
-                                {/* <p className='felx text-left my-3 mx-3 p-3 bg-slate-50 rounded-md'>
-                                    {dataForProfilePage?.ABOUT}
-                                </p> */}
                                 <div className='flex my-3 mx-3 p-3 bg-slate-50 rounded-md'>
-                                    {objForProfile?.PRODUCTS.length === 0 && (
+                                    {objForProfile?.PRODUCTINSIDE.length === 0 && (
                                         <NoData />
                                     )}
                                 </div>
@@ -394,14 +397,15 @@ export default function ProfileForCompany({ objForProfile }: any) {
                         <div className='border mx-2 rounded-md my-4'>
                             <div className="flex flex-row justify-between">
                                 <p className='text-2xl mx-3 font-bold p-2'>{'Activity'}</p>
-                                <IconButton
-                                    aria-label="upload picture"
-                                    className="h-12 w-12 cursor-pointer bg-black mr-1"
-                                    style={{ color: 'black' }}
-                                    onClick={() => handleOpenForModal('Activity')}
-                                >
-                                    <PencilSquareIcon />
-                                </IconButton>
+                                {objForProfile.USERTYPE === 'USERS' && (
+                                    <IconButton
+                                        aria-label="upload picture"
+                                        className="h-12 w-12 cursor-pointer bg-black mr-1"
+                                        style={{ color: 'black' }}
+                                        onClick={() => handleOpenForModal('Activity')}
+                                    >
+                                        <PencilSquareIcon />
+                                    </IconButton>)}
                             </div>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">

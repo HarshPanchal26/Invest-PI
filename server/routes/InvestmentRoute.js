@@ -4,6 +4,7 @@ const { controllerForNewInvestment } = require('../controller/controllerForInves
 
 const router = experess.Router();
 
+// router.post('/new' , isAutorized , controllerForNewInvestment);
 router.post('/new' , isAutorized , controllerForNewInvestment);
 
 module.exports = router;

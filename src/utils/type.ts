@@ -108,10 +108,13 @@ type ContextTypeForProduct = {
    interest : [],
    thoughts : [],
    companies : [],
+   people : {},
+   investors : []
    investments : [],
    products : [],
    profileImage : string,
-   coverImage: string
+   coverImage: string,
+   fundingRounds : []
 }
 
 type ContextTypeForCF = {

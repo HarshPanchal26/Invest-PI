@@ -176,6 +176,8 @@ export default function QueForFundigRoundDetails({ handleNext, setObjForNewInves
             let user = atChar[atChar.length - 1];
             if (atChar[atChar.length - 1] && atChar[atChar.length - 1].match(regex)) {
                 if (!suggestionMenuForTag) {
+                    let elem = document.getElementById(id)
+                    console.log("elem" , id , elem)
                     document.getElementById(id)?.classList.remove('hidden');
                     setSuggestionMenuForaTag(true)
                 }
@@ -356,7 +358,10 @@ export default function QueForFundigRoundDetails({ handleNext, setObjForNewInves
                                         )
                                     })}
                                 </div>)}
-                            <div className="absolute top-full left-0 mt-2 w-full h-[250px] overflow-auto border border-gray-300 bg-white rounded-lg shadow-lg z-10 hidden" id='suggestion-modal-for-lead'>
+                            <div
+                                id='suggestion-modal-for-lead'
+                                className="absolute top-full left-0 mt-2 w-full h-[250px] overflow-auto border border-gray-300 bg-white rounded-lg shadow-lg z-10 hidden"
+                            >
                                 {profileForLeadInvestor && (<ul className="divide-y divide-gray-100 rounded-lg bg-white">
                                     {profileForLeadInvestor?.map((item: TypeForInvestorProfile, index) => {
                                         return (
@@ -413,7 +418,7 @@ export default function QueForFundigRoundDetails({ handleNext, setObjForNewInves
                                 value={objForNewInvestment.raisedAmount}
                             />
                             <p className="mt-1 text-sm leading-6 text-gray-600">
-                               Amount You entered will be count in form of US Dollar <b>$</b> .
+                                Amount You entered will be count in form of US Dollar <b>$</b> .
                             </p>
                             {errorMessage.raisedAmount && <p id='raisedAmount_id' className='block mx-auto text-red-600 w-full'>{errorMessage.raisedAmount}</p>}
 
@@ -560,4 +565,3 @@ export default function QueForFundigRoundDetails({ handleNext, setObjForNewInves
         </main>
     )
 }
-

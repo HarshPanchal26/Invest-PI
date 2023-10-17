@@ -20,7 +20,8 @@ router.post('/update/main', isAutorized, controllerForMain);
 router.post('/update/profileimage', isAutorized, upload.single('profile'), controllerForProfileImage);
 router.post('/update/coverimage', isAutorized, upload.single('cover'), controllerForCoverImage);
 router.post('/update/activity', isAutorized, controllerForAbout);
-router.get('/tag', isAutorized, controllerForProfile.controllerForSerchPepole)
+router.get('/tag', isAutorized, controllerForProfile.controllerForTagPepole)
+router.get('/search', isAutorized, controllerForProfile.controllerForSerchPepole)
 router.post('/view', isAutorized, controllerForProfile.controllerForMultipleProfile)
 
 module.exports = router;

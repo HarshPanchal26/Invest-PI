@@ -23,6 +23,7 @@ export const convertText = (text: string | undefined) : string => {
       const Ptag = document.createElement('p') as HTMLInputElement
       Ptag.innerHTML = text
       document.body.appendChild(Ptag);
+      console.log("Ptag.innerText" ,Ptag.innerText)
       return Ptag.innerText;
     } else {
       return '';

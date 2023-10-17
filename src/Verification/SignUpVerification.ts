@@ -1,9 +1,10 @@
 import {verifyAllFeilds , checkEmail , checkPasswordMatch} from './VerificationFunctions';
 
 type SignUpType ={
-    Email : string,
-    Password : string,
-    CPassword : string
+    email: string,
+    username : string,
+    password: string,
+    cPassword: string
 }
 
 type responceType = {
@@ -14,9 +15,9 @@ type responceType = {
 export const verifyDataForSignUp = (Obj : SignUpType) =>{
         return new Promise(async(resolve , reject)=>{
             try {
-                  await checkEmail(Obj.Email)
+                  await checkEmail(Obj.email)
                   await verifyAllFeilds(Obj);
-                  await checkPasswordMatch(Obj.Password , Obj.CPassword)
+                  await checkPasswordMatch(Obj.password , Obj.cPassword)
                   resolve({
                     type : 'None',
                     message : `Everything is Ohk`,

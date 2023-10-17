@@ -120,7 +120,12 @@ export default function UpdateAboutForCompany({ objForProfile , closeModal }: Pr
   }
 
   useEffect(() => {
-    console.log("Updated Data ", objForProfile)
+    if(objForProfile.USERTYPE === 'VISITOR'){
+      closeModal({
+        child : null,
+        open : false
+      })
+    }
     let ObjForSpecialization: any = ArrayForInvestorInterest
       .filter((item) => item.type === objForProfile.INDUSTRY);
 

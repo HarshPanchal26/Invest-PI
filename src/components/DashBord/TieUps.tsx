@@ -23,6 +23,11 @@ export default function TieUps() {
           return (
             <>
               <div className='flex flex-col xl:w-[45%] md:w-4/5 w-full rounded-lg shadow-md cursor-pointer' key={index}>
+              <div className='w-full  hidden md:block'>
+                  <p className='text-sm text-gray-500 font-bold mt-2 text-left'>
+                    Publish On {`12/10/2032`}
+                  </p>
+                </div>
                 <section className='flex md:flex-row flex-col'>
                   <div className='md:w-4/5 w-full p-1 border-r '>
                     <div className='flex flex-row p-4 border-b'>
@@ -66,11 +71,6 @@ export default function TieUps() {
                     </div>
                   </div>
                 </section>
-                <div className='w-full  hidden md:block'>
-                <p className='text-sm text-gray-500 font-bold mt-2 text-left'>
-                 Publish On {`12/10/2032`}
-                </p>
-                </div>
               </div>
             </>
           )

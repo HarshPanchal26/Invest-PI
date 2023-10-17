@@ -40,7 +40,7 @@ type StateTypeForModal = {
 // }   
 
 type props = {
-    objForProfile : any
+    objForProfile: any
 }
 
 function CustomTabPanel(props: TabPanelProps) {
@@ -138,7 +138,7 @@ export default function ProfileForCF({ objForProfile }: props) {
     }, [objForProfile])
     return (
         <>
-        <BackButton/>
+            <BackButton />
             <div className="bg-white overflow-hidden w-auto border">
                 {/* Header */}
                 <header className="h-auto">
@@ -171,7 +171,7 @@ export default function ProfileForCF({ objForProfile }: props) {
                                 <IconButton onClick={() => handleOpenForModal('Profile')}>
                                     <Avatar
                                         alt="Remy Sharp"
-                                        src={dataForProfilePage?.PROFILEIMAGE} 
+                                        src={dataForProfilePage?.PROFILEIMAGE}
                                         sx={{ width: 160, height: 160 }}
                                         className="rounded-full w-40 h-40 border-4 border-white shadow-lg"
                                     />
@@ -205,65 +205,67 @@ export default function ProfileForCF({ objForProfile }: props) {
                                         {dataForProfilePage?.CITY} ,{dataForProfilePage?.STATE} ,{dataForProfilePage?.COUNTRY}
                                     </p>
                                 </div>
-
-                                <div className='block my-2 mx-6'>
-                                    <Stack direction="row" spacing={1}>
-                                        <Chip icon={<TaskAltIcon />} label="Follow" variant='filled' color='primary' style={{
-                                            padding: '10px'
-                                        }} />
-                                        <Chip icon={<SendIcon />} label="Message" variant="filled" color='primary' style={{
-                                            padding: '10px'
-                                        }} />
-                                    </Stack>
-
-                                </div>
+                                {objForProfile.USERTYPE !== 'USERS' && (
+                                    <div className='block my-2 mx-6'>
+                                        <Stack direction="row" spacing={1}>
+                                            <Chip icon={<TaskAltIcon />} label="Follow" variant='filled' color='primary' style={{
+                                                padding: '10px'
+                                            }} />
+                                            <Chip icon={<SendIcon />} label="Message" variant="filled" color='primary' style={{
+                                                padding: '10px'
+                                            }} />
+                                        </Stack>
+                                    </div>
+                                )}
                             </div>
-                            <div className='felx flex-col mr-2'>
-                                <div className='my-2'>
-                                    <Button
-                                        id="demo-positioned-button"
-                                        aria-controls={open ? 'demo-positioned-menu' : undefined}
-                                        aria-haspopup="true"
-                                        aria-expanded={open ? 'true' : undefined}
-                                        onClick={handleClick}
-                                    >
-                                        <MoreVertIcon style={{
-                                            "color": "blue"
-                                        }} />
-                                    </Button>
-                                    <Menu
-                                        id="demo-positioned-menu"
-                                        aria-labelledby="demo-positioned-button"
-                                        anchorEl={anchorEl}
-                                        open={open}
-                                        onClose={handleClose}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'left',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'left',
-                                        }}
-                                    >
-                                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                        <MenuItem onClick={handleClose}>My account</MenuItem>
-                                        <MenuItem onClick={handleClose}>Logout</MenuItem>
-                                    </Menu>
+                            {objForProfile.USERTYPE === 'USERS' && (
+                                <div className='felx flex-col mr-2'>
+                                    <div className='my-2'>
+                                        <Button
+                                            id="demo-positioned-button"
+                                            aria-controls={open ? 'demo-positioned-menu' : undefined}
+                                            aria-haspopup="true"
+                                            aria-expanded={open ? 'true' : undefined}
+                                            onClick={handleClick}
+                                        >
+                                            <MoreVertIcon style={{
+                                                "color": "blue"
+                                            }} />
+                                        </Button>
+                                        <Menu
+                                            id="demo-positioned-menu"
+                                            aria-labelledby="demo-positioned-button"
+                                            anchorEl={anchorEl}
+                                            open={open}
+                                            onClose={handleClose}
+                                            anchorOrigin={{
+                                                vertical: 'bottom',
+                                                horizontal: 'left',
+                                            }}
+                                            transformOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'left',
+                                            }}
+                                        >
+                                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                            <MenuItem onClick={handleClose}>My account</MenuItem>
+                                            <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                        </Menu>
+                                    </div>
+                                    <div className='my-2'>
+                                        <Button
+                                            id="demo-positioned-button"
+                                            onClick={() => handleOpenForModal('Main')}
+                                        >
+                                            <PencilSquareIcon style={{
+                                                "color": "blue",
+                                                "width": '25px',
+                                                "height": '25px'
+                                            }} />
+                                        </Button>
+                                    </div>
                                 </div>
-                                <div className='my-2'>
-                                    <Button
-                                        id="demo-positioned-button"
-                                        onClick={() => handleOpenForModal('Main')}
-                                    >
-                                        <PencilSquareIcon style={{
-                                            "color": "blue",
-                                            "width": '25px',
-                                            "height": '25px'
-                                        }} />
-                                    </Button>
-                                </div>
-                            </div>
+                            )}
                         </div>
                     </section>
                     {/* main content */}
@@ -272,6 +274,7 @@ export default function ProfileForCF({ objForProfile }: props) {
                         <div className='border mx-2 rounded-md'>
                             <div className="flex flex-row justify-between">
                                 <p className='text-2xl mx-3 font-bold p-2'>{'About'}</p>
+                                {objForProfile.USERTYPE === 'USERS' && (
                                 <IconButton
                                     aria-label="upload picture"
                                     className="h-12 w-12 cursor-pointer bg-black mr-1"
@@ -280,6 +283,7 @@ export default function ProfileForCF({ objForProfile }: props) {
                                 >
                                     <PencilSquareIcon />
                                 </IconButton>
+                                )}
                             </div>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <Tabs value={valueForAbout} onChange={handleChangeForAboutSection} aria-label="basic tabs example">
@@ -301,7 +305,7 @@ export default function ProfileForCF({ objForProfile }: props) {
                                     </div>
                                     <div className="mt-6 border-t border-gray-100">
                                         <dl className="divide-y divide-gray-100">
-                                        
+
                                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                 <dt className="text-sm font-medium leading-6 text-gray-900">Firm Name </dt>
                                                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{dataForProfilePage?.FIRMNAME}</dd>
@@ -322,7 +326,7 @@ export default function ProfileForCF({ objForProfile }: props) {
                                                     {dataForProfilePage?.LINK}
                                                 </dd>
                                             </div>
-                                          
+
                                         </dl>
                                     </div>
                                 </div>
@@ -333,6 +337,7 @@ export default function ProfileForCF({ objForProfile }: props) {
                         <div className='border mx-2 rounded-md my-4'>
                             <div className="flex flex-row justify-between">
                                 <p className='text-2xl mx-3 font-bold p-2'>{'Activity'}</p>
+                                {objForProfile.USERTYPE === 'USERS' && (
                                 <IconButton
                                     aria-label="upload picture"
                                     className="h-12 w-12 cursor-pointer bg-black mr-1"
@@ -341,6 +346,7 @@ export default function ProfileForCF({ objForProfile }: props) {
                                 >
                                     <PencilSquareIcon />
                                 </IconButton>
+                                )}
                             </div>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -350,16 +356,16 @@ export default function ProfileForCF({ objForProfile }: props) {
                                 </Tabs>
                             </Box>
                             <CustomTabPanel value={value} index={0}>
-                                <Post ArrayOfthoughts={objForProfile.ARRAYOFTHOUGHTS}/>
+                                <Post ArrayOfthoughts={objForProfile.ARRAYOFTHOUGHTS} />
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>
                                 {objForProfile?.COMPANIES.length === 0 && (
-                                    <NoData/>
+                                    <NoData />
                                 )}
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={2}>
                                 {objForProfile?.INVESTMENTS.length === 0 && (
-                                    <NoData/>
+                                    <NoData />
                                 )}
                             </CustomTabPanel>
                         </div>
@@ -388,15 +394,15 @@ export default function ProfileForCF({ objForProfile }: props) {
                                 <CloseIcon />
                             </IconButton>
                         </div>
-                    </div>  
-                    {modalData.child === 'Profile' && <UpdateProfileImage objForProfile={objForProfile} closeModal={setModalData}/>}
-                    {modalData.child === 'Main' && <UpdateMainForCF objForProfile={objForProfile} closeModal={setModalData}/>}
-                    {modalData.child === 'Cover' && <UpdateCoverImage objForProfile={objForProfile} closeModal={setModalData}/>}
-                    {modalData.child === 'About' && <UpdateAboutForCF 
-                                                        objForProfile={objForProfile} 
-                                                        closeModal={setModalData}
-                                                        />
-                                                    }
+                    </div>
+                    {modalData.child === 'Profile' && <UpdateProfileImage objForProfile={objForProfile} closeModal={setModalData} />}
+                    {modalData.child === 'Main' && <UpdateMainForCF objForProfile={objForProfile} closeModal={setModalData} />}
+                    {modalData.child === 'Cover' && <UpdateCoverImage objForProfile={objForProfile} closeModal={setModalData} />}
+                    {modalData.child === 'About' && <UpdateAboutForCF
+                        objForProfile={objForProfile}
+                        closeModal={setModalData}
+                    />
+                    }
                     {modalData.child === 'Activity' && <UpdatActivityForCompany />}
                 </div>
             </Modal>

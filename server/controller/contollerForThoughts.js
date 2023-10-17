@@ -14,13 +14,9 @@ const controllerForCreateThoughts = async (req, res) => {
 
   const ObjectForPost = {
     rid: uid,
-    username: metaData.username,
-    author: metaData.author,
-    authortype: type,
-    thoughts: metaData.thoughts,
+    thoughts: metaData.thoughts ,
     isMedia: metaData.isMedia,
-    link: "",
-    createdAt : createdAt
+    link: '',
   }
 
   try {

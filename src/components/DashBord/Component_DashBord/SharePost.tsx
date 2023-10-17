@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useRef, useContext, useEffect } from 'react'
 import { Avatar, Modal, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
@@ -38,6 +38,9 @@ export default function SharePost() {
         uploadedFile: null
     })
 
+    const [originalText , setOriginalText] = useState<string>('');
+    const [converedText , setConveredText] = useState<string>('');
+
     const location = useNavigate();
     const formData = new FormData();
 
@@ -59,13 +62,29 @@ export default function SharePost() {
         location(-1);
     }
     const handleChageForPost = (event: any) => {
-        if (event.target.value.split(' ').join().length >= 501) {
-            setErroMessage('You Only can share your thought within 500 words')
-        } else {
-            if (errorMessage) {
-                setErroMessage(null);
-            }
-        }
+        const inputText = event.target.value;
+            setOriginalText(inputText)
+            const lines = inputText.split('\n');
+            const convertedLines = lines.map((line: any, index: number) => {
+                if (line) {
+                    return (
+                        `<p key=${index}>${line}</p>`
+                    )
+                }
+                else {
+                    console.log("Space", line)
+                    return (
+                        `<p key=${index}>${line}&nbsp;</p>`
+                    )
+                }
+            })
+            let mergedLine: string = '';
+
+            convertedLines.map((item: any) => {
+                mergedLine += item
+            })
+            console.log("mergedLine" , mergedLine)
+            setConveredText(mergedLine)
     }
 
     const handleFileSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,14 +110,11 @@ export default function SharePost() {
         let content = document.querySelector('textarea')?.value;
         const regex = /^(?![ ]+$).+/;
         if (content && regex.test(content)) {
-            let formatedText = formatTextForDisplay(content);
-
             let MetaDataForPost: TypeForMetaData = {
-                thoughts: formatedText,
-                // username : contextForDashBord.USER.USERNAME,
-                // author : contextForDashBord.USER.FIRMNAME || contextForDashBord.USER.COMPANYNAME || (contextForDashBord.USER.FIRST_NAME + " " + contextForDashBord.USER.LAST_NAME),
+                thoughts: converedText,
                 isMedia: fileData.uploadedFile ? true : false
             }
+            console.log("MetaDataForPost" , converedText)
             if (fileData.uploadedFile) {
                 formData.append('image', fileData.uploadedFile)
             }
@@ -123,6 +139,10 @@ export default function SharePost() {
         }
 
     }
+
+    useEffect(()=>{
+        console.log(converedText)
+    }, [converedText])
 
     return (
         <Modal
@@ -170,15 +190,15 @@ export default function SharePost() {
                         <div className='max-h-[400px] overflow-auto border-b-2'>
                             <div className='my-2'>
                                 <textarea
-                                    about='content-for-post'
                                     name='post-content'
                                     id='post-content'
                                     className='w-full focus:outline-none my-3 resize-none border-none outline-none p-2 h-auto text-lg'
-                                    placeholder={`Hey Rahul What's in your mind ? `}
-                                    aria-multiline='true'
+                                    placeholder={`Hey,  What's in your mind ? `}
+                                    // onChange={handleChageForPost}
+                                    onChange={handleChageForPost}    
+                                    value={originalText}
                                     maxLength={600}
                                     rows={7}
-                                    onChange={handleChageForPost}
                                 />
                             </div>
                             {/* Image Size */}

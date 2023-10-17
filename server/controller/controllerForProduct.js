@@ -1,10 +1,13 @@
 const { default: axios } = require('axios');
 const ServiceForProducts = require('../services/serviceForProducts');
+const { findAllInRenderedTree } = require('react-dom/test-utils');
+const { findSchemaAndCollection } = require('../services/servicesForAuthentication');
 
 const controllerForProducts = async (req, res) => {
     const { uid, type } = res.locals;
     console.log(type);
     try {
+        
         const data = await ServiceForProducts.createProduct({ rid: uid });
         res.status(201).json({
             data: data
@@ -73,7 +76,7 @@ const contollerForUSPs = async (req, res) => {
 const controllerForPitch = async (req, res) => {
 
     try {
-        const result = await ServiceForProducts.createPitchForProduct(res.locals.uid , req.body);
+        const result = await ServiceForProducts.createPitchForProduct(res.locals.uid, req.body);
         res.status(201).json({
             pitched: true,
             result: result,
@@ -86,6 +89,31 @@ const controllerForPitch = async (req, res) => {
     }
 }
 
+
+const controllerForAddPepole = async (req, res) => {
+    const { profielObj, position } = req.body;
+    let ObjectForPepole = {
+        idOfPerson: profielObj._id,
+        idOfOrganisation: res.locals.uid,
+        typeOfPerson: profielObj.type,
+        typeOfOrganisation: res.locals.type,
+        position: position
+    }
+    try {
+        const SchemaForPerson = findSchemaAndCollection(profielObj.type);
+        const SchemaForOrganisation = findSchemaAndCollection(res.locals.type );
+
+        const result = await ServiceForProducts.addPepoleForOrganisation(ObjectForPepole , SchemaForPerson , SchemaForOrganisation);
+        res.status(201).json({
+            result
+        })
+    } catch (error) {
+        res.status(401).json({
+            error: error
+        })
+    }
+}
+
 module.exports = {
     controllerForFinancial,
     controllerForMedia,
@@ -93,5 +121,6 @@ module.exports = {
     controllerForPepole,
     controllerForProducts,
     contollerForUSPs,
-    controllerForPitch
+    controllerForPitch,
+    controllerForAddPepole
 }

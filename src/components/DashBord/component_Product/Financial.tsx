@@ -25,9 +25,9 @@ export default function Financial() {
         if (dataForFinance === null) {
             console.log("Financial", contextForDashBord.USER.PRODUCTINSIDE)
             setDataForFinance(contextForDashBord.USER.PRODUCTINSIDE);
-            setDataForInvestors(contextForDashBord.USER.PRODUCTINSIDE.financial.history);
+            setDataForInvestors(contextForDashBord.USER.PRODUCTINSIDE.investments);
         }
-        console.log("Inside of product", contextForDashBord.USER.PRODUCTINSIDE.financial.history);
+        console.log("Inside of product", contextForDashBord.USER.PRODUCTINSIDE.investments);
     }, []);
 
     const handleNewInvestmetns = () => {
@@ -38,26 +38,26 @@ export default function Financial() {
         <div className='p-1 h-full w-full '>
             <div className='flex md:flex-row flex-col md:space-x-4 h-auto w-full gap-y-3'>
                 <div className='p-5 text-center sm:w-full shadow-md'>
-                    Valuation <span className='text-blue-700 ml-3'>
-                        {dataForFinance && dataForFinance.financial.history.length === 0 ? 0 : '$10M'}
+                    Valuation <span className='text-blue-700 ml-3 text-2xl'>
+                        ${dataForFinance && dataForFinance.totalValuation}M
                     </span><span className='mx-3'><ArrowForwardIosIcon /></span>
                 </div>
                 <div className=' p-5 text-center sm:w-full shadow-md'>
-                    Funding Amount <span className='text-blue-700 ml-3'>
-                        {dataForFinance && dataForFinance.financial.history.length === 0 ? 0 : '$10M'}
+                    Funding Amount <span className='text-blue-700 ml-3 text-2xl'>
+                        ${dataForFinance && dataForFinance.totalRaisedFund}M
                     </span><span className='mx-3'><ArrowForwardIosIcon /></span>
                 </div>
                 <div className=' p-5 text-center sm:w-full shadow-md'>
-                    Investor <span className='text-blue-700 ml-3'>
-                        {dataForFinance && dataForFinance.financial.history.length === 0 ? 0 : '$10M'}
+                    Investor <span className='text-blue-700 ml-3 text-2xl'>
+                        {dataForFinance && dataForFinance.totalInvestor}
                     </span><span className='mx-3'><ArrowForwardIosIcon /></span>
                 </div>
-                <div className=' p-5 text-center sm:w-full shadow-md'>
+                {/* <div className=' p-5 text-center sm:w-full shadow-md'>
                     Lead Investor
                     <span className='text-blue-700 ml-3'>
-                        {dataForFinance && dataForFinance.financial.history.length === 0 ? 0 : '$10M'}
+                        {dataForFinance && dataForFinance.investments.length === 0 ? 0 : '$10M'}
                     </span><span className='mx-3'><ArrowForwardIosIcon /></span>
-                </div>
+                </div> */}
             </div>
             {/* Section For Details about Investment and Funding  */}
             <main className='w-full p-3 border-b my-6 flex md:flex-row flex-col gap-2 '>
@@ -72,13 +72,13 @@ export default function Financial() {
                             component="span"
                             className="h-12 w-12 my-2 cursor-pointer bg-black mx-10"
                             style={{ color: 'black' }}
-                        // onClick={() => navigate(-1)}
+                            // onClick={() => navigate(-1)}
                         >
                             <EditIcon />
                         </IconButton>
                     </div>
                     <div className='w-full mt-4'>
-                        {dataForFinance && dataForFinance.financial.history.length === 0 ?
+                        {dataForFinance && dataForFinance.investments.length === 0 ?
                             <NoData /> :
                             <>
                                 {dataForInvestors !== null && (

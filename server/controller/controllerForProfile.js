@@ -27,12 +27,27 @@ const controllerForPerosnalProfile = async (req, res) => {
 }
 
 
-const controllerForSerchPepole = async(req , res)=>{
+const controllerForTagPepole = async(req , res)=>{
     const userToFind = req.query.find;
     let word = userToFind.split('@')[1];
     console.log("userToFind" , word)
     try {   
         const data = await ServiceForProfile.fetchSuggestedPepole(word);
+        res.status(201).json({
+            profiles : data
+        })
+    } catch (error) {
+        res.status(401).json({
+            profiles : null,
+            error : error.message 
+        })
+    }
+}
+
+const controllerForSerchPepole = async(req , res)=>{
+    const userToFind = req.query.find;
+    try {   
+        const data = await ServiceForProfile.fetchSuggestedPepole(userToFind);
         res.status(201).json({
             profiles : data
         })
@@ -61,7 +76,7 @@ const controllerForMultipleProfile = async(req , res)=>{
 
 }
 
-module.exports = { controllerForOthersProfile, controllerForPerosnalProfile , controllerForSerchPepole , controllerForMultipleProfile};
+module.exports = { controllerForOthersProfile, controllerForPerosnalProfile , controllerForSerchPepole , controllerForMultipleProfile , controllerForTagPepole};
 
 
 

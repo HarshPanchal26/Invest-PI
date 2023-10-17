@@ -30,25 +30,26 @@ export function ContextProviderForDashBord({ children }: child) {
   const [arrayForPosts ,setArrayForPosts] = useState<Array<Object> | null>()
 
   const fetchThoughtsForUser = async()=>{
-    const res = await axios.post('/feed/fetchposts');
+    const res = await axios.get('/feed/fetchposts');
     console.log("res" , res.data.data)
     setArrayForPosts(res.data.data);
+    
   }
 
   const checkAuthorization = () => {
     return new Promise(async(resolve , reject)=>{
     try {
       let res = await axios.get('/api/authorization')
-      console.log("Response====>" , res)
+      console.log("resresres" ,res)
       if (res.data.user) {
         let Obj: any = null;
         if (res.data.user.type === 'product') {
-          Obj = GenerateObjForProducts(res.data.user ,res.data.thoughts ,res.data.product);
+          Obj = GenerateObjForProducts(res.data.user ,res.data.thoughts , res.data.product , 'USERS');
         } else if (res.data.user.type === 'CF') {
-          Obj = GenerateObjForCF(res.data.user , res.data.thoughts);
+          Obj = GenerateObjForCF(res.data.user , res.data.thoughts , 'USERS');
         } else if (res.data.user.type === 'individual') {
           console.log("Obj..." , res.data.thoughts)
-          Obj = GenerateObjForIndividual(res.data.user , res.data.thoughts);
+          Obj = GenerateObjForIndividual(res.data.user , res.data.thoughts , 'USERS');
         } else {
           alert("Somthig is wrong inside Context Area ")
         }
@@ -81,25 +82,27 @@ export function ContextProviderForDashBord({ children }: child) {
 
       if (ObjForVisitedUser.length > 0) {
         const res = ObjForVisitedUser.filter((item: any) => item.USERNAME === username);
-        resolve(res[0]);
-        return;
+        if(res.length > 0){
+          resolve(res[0]);
+          return;
+        }
       }
+
       try {
         const res = await axios.post('/profile/users', { username: username });
         console.log(res)
         if (res.data.user) {
           let Obj: any = null;
           if (res.data.user.type === 'product') {
-            Obj = GenerateObjForProducts(res.data.user , res.data.thoughts , res.data.product);
+            Obj = GenerateObjForProducts(res.data.user , res.data.thoughts , res.data.product , 'VISITOR');
           } else if (res.data.user.type === 'CF') {
-            Obj = GenerateObjForCF(res.data.user , res.data.thoughts);
+            Obj = GenerateObjForCF(res.data.user , res.data.thoughts , 'VISITOR');
           } else if (res.data.user.type === 'individual') {
-            Obj = GenerateObjForIndividual(res.data.user , res.data.thoughts);
+            Obj = GenerateObjForIndividual(res.data.user , res.data.thoughts , 'VISITOR');
           } else {
             alert("Something is wrong inside Context Area Else");
           }
           ObjForVisitedUser.push(Obj);
-          console.log("Resultant object is ", ObjForVisitedUser)
           resolve(Obj);
           return;
         }
@@ -118,7 +121,7 @@ export function ContextProviderForDashBord({ children }: child) {
     fetchThoughtsForUser : fetchThoughtsForUser,
     USER: objForAuthorizationState.valueForProvider,//Provide user data 
     isAutorizedUser: objForAuthorizationState.isAutorizedUser,  /// value
-    POSTS : arrayForPosts
+    POSTS : []
   }
 
   useEffect(() => {

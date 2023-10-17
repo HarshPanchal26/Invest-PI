@@ -3,14 +3,11 @@ const { findSchemaAndCollection } = require('../services/servicesForAuthenticati
 const SchemaForCommanUserData = require('../models/signinmodels');
 const ServiceForProducts = require('../services/serviceForProducts');
 const ServiceForThoughts = require('../services/serviceForThoughts');
-const { default: axios } = require('axios');
 
 const fetchProfile = (filter) => {
     return new Promise(async (resolve, reject) => {
         const responceObj = {
             user: null,
-            product: null,
-            thoughts: null,
         }
         try {
             console.log("filter", filter);
@@ -26,7 +23,7 @@ const fetchProfile = (filter) => {
                 let Model = db.model('User', Schema, Collection);
                 const data = await Model.findOne({ rid });
                 responceObj.user = data;
-                const thoughts = await ServiceForThoughts.fetchThoughtsForUser(rid);
+                const thoughts = await ServiceForThoughts.fetchThoughtsForUser(rid); 
                 responceObj.thoughts = thoughts;
                 if (type === 'product') {
                     const product = await ServiceForProducts.retriveProduct(rid);

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContext } from "react"
 import { ContextForDashBord } from '../../context/contextForDashBord'
 import { Avatar } from '@mui/material';
@@ -9,7 +9,7 @@ import Box from '@mui/material/Box'
 import Summary from './component_Product/Summary';
 import Financial from './component_Product/Financial';
 import News from './component_Product/News';
-import PepoleForProducts from './component_Product/PepoleForProducts';
+import PeopleForProducts from './component_Product/PeopleForProducts';
 import VirtualPitch from './component_Product/VirtualPitch';
 import USPs from './component_Product/USPs';
 import Media from './component_Product/Media';
@@ -54,62 +54,78 @@ export default function MyProduct() {
 
     const [value, setValue] = React.useState(0);
 
+    const [verifyedRoute, setVerifyedRoute] = useState<boolean>(false);
+
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
 
-    return (
-        <div className='h-auto w-full'>
-            <div className="grid grid-cols-2 gap-x-6 sm:grid-cols-6 gap-y-0 ">
-                <div className='col-span-1 order-1 mx-auto '>
-                    <Avatar
-                        alt="Remy Sharp"
-                        src={contextForDashBord.USER.PROFILEIMAGE}
-                        sx={{ width: 100, height: 100 }}
-                        className='my-5 mx-2'
-                    />
-                </div>
-                <div className='my-5 md:col-span-4 md:text-left col-span-full md:order-2 order-3 text-center'>
-                    <span className='text-lg  text-slate-500'>Product</span>
-                    <p className='text-3xl font-bold my-2'>HR Cloths</p>
-                </div>
-                <div className='my-5 md:order-3 order-2 cursor-pointer'>
-                    <span className='text-lg  text-slate-500'>Rank</span>
-                    <p className='text-3xl font-bold my-2 underline'>1</p>
-                </div>
-            </div>
-            <div className='w-full h-auto p-1'>
-                <Box sx={{ borderColor: 'divider', marginTop : '2px'}}>
-                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                        <Tab label="Summary" {...a11yProps(0)} />
-                        <Tab label="Financial" {...a11yProps(1)} />
-                        <Tab label="News" {...a11yProps(2)} />
-                        <Tab label="USP" {...a11yProps(3)} />
-                        <Tab label="Media" {...a11yProps(4)} />
-                        <Tab label="Pepole" {...a11yProps(5)} />
-                    </Tabs>
-                </Box>
-                <CustomTabPanel value={value} index={0}>
-                    <Summary />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={1}>
-                    <Financial />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={2}>
-                    <News/>
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={3}>
-                    <USPs/>
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={4}>
-                    <Media/>
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={5}>
-                    <PepoleForProducts/>
-                </CustomTabPanel>
-            </div>
 
-        </div>
+    useEffect(() => {
+        if (contextForDashBord.USER.TYPE === 'product') {
+            setVerifyedRoute(true)
+        }
+    }, [contextForDashBord])
+
+    return (
+        <>
+            {verifyedRoute && (
+                <div className='h-auto w-full'>
+                    <div className="grid grid-cols-2 gap-x-6 sm:grid-cols-6 gap-y-0 ">
+                        <div className='col-span-1 order-1 mx-auto '>
+                            <Avatar
+                                alt="Remy Sharp"
+                                src={contextForDashBord.USER.PROFILEIMAGE}
+                                sx={{ width: 100, height: 100 }}
+                                className='my-5 mx-2'
+                            />
+                        </div>
+                        <div className='my-5 md:col-span-4 md:text-left col-span-full md:order-2 order-3 text-center'>
+                            <span className='text-lg  text-slate-500'>Product</span>
+                            <p className='text-3xl font-bold my-2'>HR Cloths</p>
+                        </div>
+                        <div className='my-5 md:order-3 order-2 cursor-pointer'>
+                            <span className='text-lg  text-slate-500'>Rank</span>
+                            <p className='text-3xl font-bold my-2 underline'>1</p>
+                        </div>
+                    </div>
+                    <div className='w-full h-auto p-1'>
+                        <Box sx={{ borderColor: 'divider', marginTop: '2px' }}>
+                            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                                <Tab label="Summary" {...a11yProps(0)} />
+                                <Tab label="Financial" {...a11yProps(1)} />
+                                <Tab label="News" {...a11yProps(2)} />
+                                <Tab label="USP" {...a11yProps(3)} />
+                                <Tab label="Media" {...a11yProps(4)} />
+                                <Tab label="Pepole" {...a11yProps(5)} />
+                            </Tabs>
+                        </Box>
+                        <CustomTabPanel value={value} index={0}>
+                            <Summary />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={1}>
+                            <Financial />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={2}>
+                            <News />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={3}>
+                            <USPs />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={4}>
+                            <Media />
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={5}>
+                            <PeopleForProducts />
+                        </CustomTabPanel>
+                    </div>
+                </div>)}
+            {!verifyedRoute && (
+                <div className='border border-red-600'>
+                      "You Have to create a accout for your product in oreder to view this page"  
+                </div>
+            )}   
+        </>
     )
 }
 

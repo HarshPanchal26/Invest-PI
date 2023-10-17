@@ -35,5 +35,6 @@ router.post('/create/media', isAutorized, (req, res, next) => {
 
 router.post('/create/pitch' , isAutorized , ProductController.controllerForPitch)
 
+router.post('/add/pepole' , isAutorized , ProductController.controllerForAddPepole)
 
 module.exports = router;

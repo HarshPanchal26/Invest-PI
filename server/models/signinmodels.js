@@ -339,6 +339,16 @@ const SchemaForCompany = new mongoose.Schema({
     require : false,
     default : []
   },
+  people : {
+    type : Object,
+    require : false,
+    default : {}
+  },
+  investors : {
+    type : Array,
+    require : false,
+    default : []    
+  },
   investments : {
     type : Array,
     require : false,

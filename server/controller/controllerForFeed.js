@@ -1,6 +1,6 @@
 const ServiceForThoughts = require('../services/serviceForThoughts')
 
-const controllerForFeed = async(req ,res)=>{
+const controllerForAllFeed = async(req ,res)=>{
     try {
         const posts = await ServiceForThoughts.fetchThoughts();
         res.status(201).json({
@@ -29,4 +29,4 @@ const controllerForSingleFeed = async(req ,res)=>{
     }
 }
 
-module.exports = {controllerForFeed , controllerForSingleFeed};
+module.exports = {controllerForAllFeed , controllerForSingleFeed};

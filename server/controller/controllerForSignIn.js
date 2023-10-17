@@ -2,10 +2,11 @@ const SignInServices = require('../services/servicesForAuthentication')
 
 const ContollerForSignIn = async(req , res)=>{
   const {authenticationData , details} = req.body;
-  const {email , password , type , username } = authenticationData;
+  const {email , password , type , username, name } = authenticationData;
   try {
         const hashpassword = await SignInServices.encryptedPassword(password)
         const signUp = await SignInServices.createUser( details , {
+            name :  name,
             email : email ,
             password : hashpassword ,
             type : type,

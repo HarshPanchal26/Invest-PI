@@ -92,7 +92,11 @@ const SchemaForPitches = new mongoose.Schema({
     offeredEquity :   {
         type: String,
         require: true
-    },   
+    },
+    fundingType : {
+        type: String,
+        require: true
+    },
     faqs: {
         Business: [SchemaForQnA],
         Performance: [SchemaForQnA],

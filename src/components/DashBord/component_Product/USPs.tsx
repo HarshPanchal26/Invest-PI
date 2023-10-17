@@ -108,7 +108,7 @@ export default function USPs() {
                                         </div>
                                         <div className='mt-2'>
                                             <div
-                                                className='mx-auto w-32 h-32 rounded-full hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white cursor-pointer'
+                                                className='mx-auto w-28 h-28 rounded-full hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white cursor-pointer'
                                                 style={{
                                                     backgroundImage: `url('https://cdn5.vectorstock.com/i/1000x1000/60/94/cartoon-glowing-yellow-light-bulb-vector-18016094.jpg')`,
                                                     backgroundSize: 'cover',

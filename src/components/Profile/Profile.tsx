@@ -11,7 +11,7 @@ import ProfileComplitionBar from './profile_component/ProfileComplitionBar';
 type TypeForProfileObj = {
     objForProfile: any,
     loader: boolean
-}   
+}
 
 export default function Profile() {
 
@@ -24,7 +24,6 @@ export default function Profile() {
     })
 
     const checkUser = async (username: string | undefined) => {
-        console.log("Original Username ", username)
         if (username) {
             setStateForProfilePage({
                 objForProfile: null,
@@ -32,7 +31,7 @@ export default function Profile() {
             });
             try {
                 const Obj = await contextForDashBord.checkForVisitedAccount(username);
-                console.log("Username from profile", Obj);
+                console.log("Username from profile New", Obj);
                 setStateForProfilePage({
                     objForProfile: Obj,
                     loader: false
@@ -46,18 +45,21 @@ export default function Profile() {
     useEffect(() => {
         if (contextForDashBord.isAutorizedUser) {
             if (stateForProfilePage.objForProfile == null || stateForProfilePage.objForProfile?.USERNAME !== username) {
-                console.log("Updated Username " , username , stateForProfilePage)
                 checkUser(username);
             }
         } else {
             contextForDashBord.checkAuthorization();
         }
     }, [username]);
+
+    useEffect(() => {
+        console.log("stateForProfilePage", stateForProfilePage.objForProfile)
+    }, [stateForProfilePage])
     return (
         <>
 
             {contextForDashBord.USER.USERNAME === username &&
-            <ProfileComplitionBar objForProfile={stateForProfilePage.objForProfile} setStateForProfilePage={setStateForProfilePage}/>}
+                <ProfileComplitionBar objForProfile={stateForProfilePage.objForProfile} setStateForProfilePage={setStateForProfilePage} />}
             <div className='bg-white h-auto flex flex-row  xl:mx-5 '>
 
                 <div className="bg-white shadow-lg overflow-hidden xl:w-2/3 w-full">

@@ -78,19 +78,27 @@ const SchemaForMyProduct = new mongoose.Schema({
         type: String,
         required: true,
     },
-    financial: {
-        valuationText: {
-            type: String,
-            require: false,
-            default: 'Yet to discover'
-        },
-        productsValue: {
-            type: String,
-            require: false,
-            default: 'Yet to discover'
-        },
-        history: [SchemaForInvesments]
+    valuationText : {
+        type : String,
+        require: false,
+        default: 'Yet To Discover'        
     },
+    totalInvestor : {
+        type : Number,
+        require : false,
+        default : 0   
+    },
+    totalRaisedFund : {
+        type : Number,
+        require : false,
+        default : 0           
+    },
+    totalValuation : {
+        type : Number,
+        require : false,
+        default : 0           
+    },
+    investments : [SchemaForInvesments],
     news: {
         type: Array,
         require: false,
@@ -104,6 +112,24 @@ const SchemaForMyProduct = new mongoose.Schema({
         default: []
     }
 })
+
+
+SchemaForMyProduct.pre('findOneAndUpdate' , function(next){
+
+    const originalInvestments = this._update.$set.investments;
+    
+    // Check if investments is an array
+    if (Array.isArray(originalInvestments)) {
+        const totalInvestor = originalInvestments.reduce((total, investment) => {
+            return total + investment.raisedAmount;
+        }, 0);
+        this._update.$set.totalRaisedFund = totalInvestor;
+    }
+
+    next();
+
+})
+
 
 
 module.exports = { SchemaForMyProduct, SchemaForMedia, SchmaForUSPs }

@@ -142,7 +142,7 @@ export default function ProfileForIndividual({ objForProfile }: any) {
                                 aria-label="upload picture"
                                 component="span"
                                 className="h-12 w-12 my-2 cursor-pointer bg-black"
-                                style={{ color: 'white', zIndex: 10 }}
+                                style={{ color: 'white', zIndex: 5 }}
                                 onClick={() => handleOpenForModal('Cover')}
                             >
                                 <PencilSquareIcon />
@@ -194,7 +194,7 @@ export default function ProfileForIndividual({ objForProfile }: any) {
                                         {dataForProfilePage?.CITY} ,{dataForProfilePage?.STATE} ,{dataForProfilePage?.COUNTRY}
                                     </p>
                                 </div>
-
+                                {objForProfile.USERTYPE !== 'USERS' && (
                                 <div className='block my-2 mx-6'>
                                     <Stack direction="row" spacing={1}>
                                         <Chip icon={<TaskAltIcon />} label="Follow" variant='filled' color='primary' style={{
@@ -204,9 +204,10 @@ export default function ProfileForIndividual({ objForProfile }: any) {
                                             padding: '10px'
                                         }} />
                                     </Stack>
-
                                 </div>
+                                )}
                             </div>
+                            {objForProfile.USERTYPE === 'USERS' && (
                             <div className='felx flex-col mr-2'>
                                 <div className='my-2'>
                                     <Button
@@ -253,6 +254,7 @@ export default function ProfileForIndividual({ objForProfile }: any) {
                                     </Button>
                                 </div>
                             </div>
+                            )}
                         </div>
                     </section>
                     {/* main content */}
@@ -261,6 +263,7 @@ export default function ProfileForIndividual({ objForProfile }: any) {
                         <div className='border mx-2 rounded-md'>
                             <div className="flex flex-row justify-between">
                                 <p className='text-2xl mx-3 font-bold p-2'>{'About'}</p>
+                                {objForProfile.USERTYPE === 'USERS' && (
                                 <IconButton
                                     aria-label="upload picture"
                                     className="h-12 w-12 cursor-pointer bg-black mr-1"
@@ -269,6 +272,7 @@ export default function ProfileForIndividual({ objForProfile }: any) {
                                 >
                                     <PencilSquareIcon />
                                 </IconButton>
+                                )}
                             </div>
                             <section className="flex flex-col py-4  border-gray-200">
                                 <p className='felx text-left my-3 mx-3 p-3 bg-slate-50 rounded-md'>
@@ -281,6 +285,7 @@ export default function ProfileForIndividual({ objForProfile }: any) {
                         <div className='border mx-2 rounded-md my-4'>
                             <div className="flex flex-row justify-between">
                                 <p className='text-2xl mx-3 font-bold p-2'>{'Activity'}</p>
+                                {objForProfile.USERTYPE === 'USERS' && (
                                 <IconButton
                                     aria-label="upload picture"
                                     className="h-12 w-12 cursor-pointer bg-black mr-1"
@@ -289,6 +294,7 @@ export default function ProfileForIndividual({ objForProfile }: any) {
                                 >
                                     <PencilSquareIcon />
                                 </IconButton>
+                                )}    
                             </div>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">

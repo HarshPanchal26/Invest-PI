@@ -4,10 +4,10 @@ import { verifyDataForSignUp } from '../../../Verification/SignUpVerification'
 import axios from 'axios';
 
 type formatForSignInData = {
-  Email: string,
+  email: string,
   username : string,
-  Password: string,
-  CPassword: string
+  password: string,
+  cPassword: string
 }
 
 type typeForProps = {
@@ -24,10 +24,10 @@ type typeForProps = {
 export default function SignInForm({ objForSignInComonent, ArrayForInterest }: typeForProps) {
 
   const [dataForSignIn, setdataForSignIn] = useState<formatForSignInData>({
-    Email: objForSignInComonent.email,
+    email: objForSignInComonent.email,
     username : '',
-    Password: '',
-    CPassword: ''
+    password: '',
+    cPassword: ''
   })
 
   const [error, setError] = useState<string | null>(null);
@@ -46,8 +46,9 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
               username : dataForSignIn.username
             },
             authenticationData: {
-              email: dataForSignIn.Email,
-              password: dataForSignIn.Password,
+              name : (objForSignInComonent.firstName + " " +objForSignInComonent.lastName) || objForSignInComonent.companyname || objForSignInComonent.firmname , 
+              email: dataForSignIn.email,
+              password: dataForSignIn.password,
               username : dataForSignIn.username,
               type: typeOfUser
             }
@@ -109,7 +110,7 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
                 type="email"
                 autoComplete="email"
                 required
-                value={dataForSignIn.Email}
+                value={dataForSignIn.email}
                 onChange={handleChageInInputs}
                 disabled
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-5 "
@@ -151,7 +152,7 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
             <div className="mt-2">
               <input
                 id="password"
-                name="Password"
+                name="password"
                 type="password"
                 autoComplete="current-password"
                 required
@@ -170,7 +171,7 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
             <div className="mt-2">
               <input
                 id="cpassword"
-                name="CPassword"
+                name="cPassword"
                 type="password"
                 autoComplete="current-password"
                 required
