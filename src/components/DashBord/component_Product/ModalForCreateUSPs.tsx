@@ -50,7 +50,7 @@ export default function ModalForCreateUSPs({ objForUpdateUsp, closeModal, dataFo
     const handleUSPCreation = async () => {
         setLoader(true);
         try {
-            const res = await axios.post('/product/create/usp', updateData);
+            const res = await axios.post('/api/product/create/usp', updateData);
             console.log("res For Usp", res);
             if (dataForUSPs !== null) {
                 let newArray = [...dataForUSPs];

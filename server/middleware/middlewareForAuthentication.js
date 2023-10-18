@@ -85,6 +85,7 @@ const isAutorized = (req, res, next) => {
                 }
             })
         } catch (error) {
+            console.log("error in Authorization " , error)
             res.status(401).json({
                 authorized: false,
                 message: error.message

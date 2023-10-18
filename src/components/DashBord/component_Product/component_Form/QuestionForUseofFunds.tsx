@@ -93,7 +93,7 @@ export default function QuestionForUseofFunds({ setDrawerOpen, setObjForNewInves
                 extarData: { growth: growthElem.value, milestones: milestonesElem.value }
             }
             try {
-                await axios.post('/investments/new', Obj)
+                await axios.post('/api/investments/new', Obj)
                 setLoader(false);
                 setDrawerOpen(false);
             } catch (error: any) {

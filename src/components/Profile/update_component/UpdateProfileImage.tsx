@@ -41,7 +41,7 @@ export default function UpdateProfileImage({ objForProfile, closeModal }: PropsT
     error && setError(null);
     console.log("uploadedFile=>", uploadedFile)
     try {
-      const res = await axios.post('/profile/update/profileimage', uploadedFile, {
+      const res = await axios.post('/api/profile/update/profileimage', uploadedFile, {
         headers: {
           'Content-Type': 'multipart/form-data', // Important for file uploads
         },

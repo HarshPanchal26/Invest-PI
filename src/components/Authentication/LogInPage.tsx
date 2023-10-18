@@ -19,8 +19,9 @@ export default function LogInPage() {
 
 
   const checkAutorization = () => {
+    console.log("Hello I am form Login Authority")
     try {
-      axios.get('/login/authorization')
+      axios.get('/api/login/authorization')
       .then((result) => {
         if (result.data.authorized) {
           window.location.href = '/feed'
@@ -51,7 +52,7 @@ export default function LogInPage() {
       const res: any = await verifyDataForLogIn(loginData);
       console.log("res form login" , res)
       if(res?.Verified){
-       axios.post('/login/user' , loginData)
+       axios.post('/api/login/user' , loginData)
         .then((res)=>{
           window.location.href = '/feed' 
           console.log("Res" , res);
@@ -62,6 +63,7 @@ export default function LogInPage() {
         setError(res?.message)
       } 
     } catch (error : any) {
+      console.log("error Form Login" , error)
       setError(error?.message)
     }
   }

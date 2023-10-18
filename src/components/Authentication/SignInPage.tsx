@@ -15,7 +15,7 @@ export default function SignInPage() {
   const [userType, setUserType] = useState<String | null>(null);
 
   const checkAutorization = async () => {
-    await axios.get('/signin/authorization').then((result) => {
+    await axios.get('/api/signin/authorization').then((result) => {
       console.log("res", result)
       if (result.data.authorization) {
         window.location.href = '/feed'

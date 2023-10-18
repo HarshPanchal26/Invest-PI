@@ -84,7 +84,7 @@ export default function QueForPitchSection7({ setDrawerOpen, arryForDesireInvest
     const fetchPepole = (user: String) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const array = await axios.get(`/profile/tag?find=${user}`);
+                const array = await axios.get(`/api/profile/tag?find=${user}`);
                 console.log("array", array)
                 resolve(array)
             } catch (error: any) {
@@ -119,7 +119,7 @@ export default function QueForPitchSection7({ setDrawerOpen, arryForDesireInvest
 
         console.log("ObjToSend", ObjToSend)
         try {
-            const res = await axios.post('/product/create/pitch', ObjToSend);
+            const res = await axios.post('/api/product/create/pitch', ObjToSend);
             console.log("res", res);
             setDrawerOpen(false);
         } catch (error) {

@@ -13,7 +13,7 @@ export default function Feed() {
 
   const fetchData = async () => {
     console.log("Hey I again triggered")
-    const res = await axios.get('feed/thoughts/all');
+    const res = await axios.get('/api/feed/thoughts/all');
     SetThoughts(res.data.data);
     setLoader(false);
     contextForDashBord.POSTS = [...res.data.data];

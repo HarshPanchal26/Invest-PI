@@ -14,6 +14,7 @@
     "@mui/core": "5.0.0-alpha.54",
     "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.2",
+    "@snowpack/plugin-webpack": "^3.0.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -22,7 +23,9 @@
     "@types/node": "^16.18.39",
     "@types/react": "^18.2.17",
     "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.1.0",
     "axios": "^1.4.0",
+    "dns": "^0.2.2",
     "fs": "0.0.1-security",
     "gsap": "^3.12.2",
     "heroicons": "^2.0.18",
@@ -40,13 +43,15 @@
     "socket.io-client": "^4.7.2",
     "tinymce": "^6.7.0",
     "typescript": "^4.9.5",
+    "vite": "^4.4.11",
+    "vite-tsconfig-paths": "^4.2.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \" set PORT=3000 && react-scripts start\" \"npm run server-run\" ",
+    "start": "concurrently \"vite\" \"npm run server-run\" ",
     "server-run": "nodemon server/server.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build": "vite build",
+    "test": "vite test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -68,7 +73,10 @@
     ]
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.0",
+    "cors": "^2.8.5",
+    "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3"
   }
 }

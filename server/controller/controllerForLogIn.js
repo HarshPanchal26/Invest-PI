@@ -10,6 +10,7 @@ const controllerForLogIn = async (req, res) => {
   try {
     Model.findOne({ email: email })
       .then(async (user) => {
+        console.log("user" , user)
         if (user) {
           console.log("new", user.get('password'));
           let hashedPassword = await encryptedPassword(password);
@@ -18,6 +19,7 @@ const controllerForLogIn = async (req, res) => {
           if (user._doc.password === hashedPassword && email === user._doc.email) {
             createSession({ uid: user._doc._id, type: user._doc.type })
               .then((token) => {
+                console.log("Token has been created" , token)
                 res.cookie('access_token', token, {
                   httpOnly: true,
                   secure: true,

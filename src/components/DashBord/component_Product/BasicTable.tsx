@@ -50,7 +50,7 @@ export default function BasicTable({ dataofInvestor, setDataForInvestors }: Type
     console.log("arrayOFId", arrayOFId)
 
     try {
-      const res = await axios.post('/profile/view', { array: arrayOFId, field: '_id' });
+      const res = await axios.post('/api/profile/view', { array: arrayOFId, field: '_id' });
       console.log(res);
       setDatForInvestorsProfile(res.data.profiles)
     } catch (error) {

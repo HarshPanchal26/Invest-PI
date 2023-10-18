@@ -99,7 +99,7 @@ export default function UpdateAboutForCompany({ objForProfile , closeModal }: Pr
     setBackDrop(true);
     try {
       // await VerificationForAboutDataOfCF(updatedAboutData);                
-      const res = await axios.post('/profile/update/about', updatedAboutData);
+      const res = await axios.post('/api/profile/update/about', updatedAboutData);
       console.log("res", res)
       await contextForDashBord.checkAuthorization();
       contextForDashBord.USER.ABOUT = updatedAboutData.about;

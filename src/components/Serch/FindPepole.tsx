@@ -42,7 +42,7 @@ export default function FindPepole({ question, setState, State, limit }: Props) 
     const fetchPepole = (user: String) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const array = await axios.get(`/profile/tag?find=${user}`);
+                const array = await axios.get(`/api/profile/tag?find=${user}`);
                 console.log("array", array)
                 resolve(array)
             } catch (error: any) {

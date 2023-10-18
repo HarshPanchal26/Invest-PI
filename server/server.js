@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyparser = require('body-parser');
 const app = express();
+const cors = require('cors');
 const cookieparser = require('cookie-parser');
 const port = 5000;
 const { connectionWithAtlas } = require('./config/database');
@@ -15,7 +16,46 @@ const ThoughtsRoute = require('./routes/ThoughtsRoute');
 const InvestmentRoute = require('./routes/InvestmentRoute');
 const RouteForProduct = require('./routes/ProductRoutes');
 const controllerForProfile = require('./controller/controllerForProfile');
-const http = require('http')
+const { Try } = require('@mui/icons-material');
+// const {ServerSocket} = require('./socketio.js')
+
+// const io = require('./socketio.js')(httpSever)
+
+// /*Start Socket */
+// new ServerSocket(httpSever);
+
+// /*Server Handling */
+
+const httpSever = require('http').createServer(app);
+const io = require('socket.io')(httpSever, {
+    path: 'http://localhost:3000',
+    serveClient: false,
+    pingInterval: 10000,
+    pingTimeout: 5000,
+    cookie: false,
+    cors: {
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST']
+    }
+})
+
+try {
+    io.on('connection', (socket) => {
+        console.log('user connected');
+        socket.on('disconnect', function () {
+            console.log('user disconnected');
+        });
+    })
+} catch (error) {
+    console.log("Error while connection is ", error)
+}
+
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}))
+
 
 app.use(bodyparser.json());
 app.use(
@@ -23,24 +63,6 @@ app.use(
         extended: true,
     }))
 app.use(cookieparser());
-
-const server = http.createServer(app);
-const socketIOInstance = require('socket.io');
-const io = socketIOInstance(server, {
-    transports: process.env.WEBSOCKET_TRANSPORT || ['polling'],
-    cors: { origin: process.env.ALLOWED_ORIGINS || '*' },
-});
-
-io.on('connection' , (socket)=>{
-    console.log("I am a new client" , socket)
-
-    socket.on('error', (error) => {
-        console.error('WebSocket error:', error);
-    });
-})
-
-// require('./socketio.js')(io);
-
 
 app.get('/', (req, res) => {
     res.send("I am MAIN Route")
@@ -54,7 +76,7 @@ app.use('/profile', ProfileRoute)
 app.use('/thoughts', ThoughtsRoute)
 app.use('/product', RouteForProduct)
 app.use('/investments', InvestmentRoute)
-app.get('/api/authorization', isAutorized, controllerForProfile.controllerForPerosnalProfile)
+app.get('/check/authorization', isAutorized, controllerForProfile.controllerForPerosnalProfile)
 
 app.get('*', (_req, res) => {
     res.send("Inavlid request")

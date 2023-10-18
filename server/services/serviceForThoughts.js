@@ -101,7 +101,7 @@ const modifiRetrivedThoughts = (object)=>{
                 username : user.username,
                 author : user.name
             }
-            console.log("user object" ,ObjectToReturn)
+            // console.log("user object" ,ObjectToReturn)
             
             resolve(ObjectToReturn);            
         } catch (error) {
