@@ -3,6 +3,7 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const app = express();
 const cookieparser = require('cookie-parser');
+const cors = require('cors')
 const port = 5000;
 const { connectionWithAtlas } = require('./config/database');
 const { isAutorized } = require('./middleware/middlewareForAuthentication');
@@ -15,8 +16,9 @@ const ThoughtsRoute = require('./routes/ThoughtsRoute');
 const InvestmentRoute = require('./routes/InvestmentRoute');
 const RouteForProduct = require('./routes/ProductRoutes');
 const controllerForProfile = require('./controller/controllerForProfile');
-const http = require('http')
+const {ServerSocket} = require('./socketio.js')
 
+app.use(cors());
 app.use(bodyparser.json());
 app.use(
     bodyparser.urlencoded({
@@ -24,20 +26,54 @@ app.use(
     }))
 app.use(cookieparser());
 
-const server = http.createServer(app);
-const socketIOInstance = require('socket.io');
-const io = socketIOInstance(server, {
-    transports: process.env.WEBSOCKET_TRANSPORT || ['polling'],
-    cors: { origin: process.env.ALLOWED_ORIGINS || '*' },
-});
 
-io.on('connection' , (socket)=>{
-    console.log("I am a new client" , socket)
+// const socketIO = require('socket.io')(httpSever, {
+//     transports: ['websocket'],
+//     serveClient: false,
+//     pingInterval: 10000,
+//     pingTimeout: 5000,
+//     cookie: false,
+//     cors: {
+//         origin: "*"
+//     }
+// });
 
-    socket.on('error', (error) => {
-        console.error('WebSocket error:', error);
-    });
-})
+// //Add this before the app.get() block
+// socketIO.on('connection', (socket) => {
+//     console.log(`⚡: ${socket.id} user just connected!`);
+//     socket.on("connect_error", (e) => {
+//         console.log(e);
+//      });
+//     socket.on('disconnect', () => {
+//         console.log('🔥: A user disconnected');
+//     });
+// });
+
+// const httpSever = require('http').createServer(app);
+// const io = require('socket.io')(httpSever, {
+//     // path: 'http://localhost:3000',
+//     serveClient: false,
+//     pingInterval: 10000,
+//     pingTimeout: 5000,
+//     cookie: false,
+//     cors: {
+//         origin: 'http://localhost:3000',
+//         methods: ['GET', 'POST']
+//     }
+// })
+
+// try {
+//     io.on('connection', (socket) => {
+//         console.log('user connected');
+//         socket.on('disconnect', function () {
+//             console.log('user disconnected');
+//         });
+//     })
+// } catch (error) {
+//     console.log("Error while connection is ", error)
+// }
+
+
 
 // require('./socketio.js')(io);
 
@@ -63,9 +99,11 @@ app.post('*', (_req, res) => {
     res.send("Inavlid request")
 })
 
-app.listen(port, () => {
+const httpSever = app.listen(port, () => {
     console.log(`Connnected with express server ${port}`)
     connectionWithAtlas()
 })
+
+new ServerSocket(httpSever)
 
 module.exports = app;
