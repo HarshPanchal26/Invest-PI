@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import SuggestedPeople from './Component_DashBord/SuggestedPeople';
+import SuggestedPeople from './People/components/SuggestedPeople';
 import Suggestions from './Component_DashBord/Suggestions';
 import BackButton from '../../Assets/BackButton';
 

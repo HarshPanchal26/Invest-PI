@@ -1,61 +1,61 @@
 const mongoose = require('mongoose');
 
 const SchemaForPost = new mongoose.Schema({
-    rid : {
+    rid: {
         type: String,
-        required: true,        
+        required: true,
     },
-    thoughts : {
+    thoughts: {
         type: String,
-        required: true,        
+        required: true,
     },
-    likes : {
+    likes: {
         type: Number,
         required: false,
-        default : 0        
+        default: 0
     },
-    isMedia : {
+    isMedia: {
         type: Boolean,
         required: false,
-        default : false             
+        default: false
     },
-    link : {
+    link: {
         type: String,
         required: false,
-        default : ''             
+        default: ''
     },
-    tag : {
+    tag: {
         type: Array,
         required: false,
-        default : []             
+        default: []
     },
-    comments : {
+    comments: {
         type: Array,
         required: false,
-        default : []             
+        default: []
     },
-    createdTime : {
-      type : Date,
-      require : false,
+    createdTime: {
+        type: String,
+        require: false,
     },
-    createdDate : {
-      type : Date,
-      require : false,
+    createdDate: {
+        type: String,
+        require: false,
     },
-    
+
 })
 
-SchemaForPost.pre('save' , function (next){
-    if(!this.isNew){
+SchemaForPost.pre('save', function (next) {
+    if (!this.isNew) {
         return next();
     }
 
     const date = new Date();
-    this.createdDate = date.getDate()/date.getMonth()/date.getFullYear();
-    this.createdTime = date.getHours()/date.getMinutes()/date.getSeconds();
-    console.log("date and Time" , this.createdDate , this.createdTime)
+    this.createdDate = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+    this.createdTime = date.getHours() + "/" + date.getMinutes() + "/" + date.getSeconds();
+    console.log("date and Time ====>",this.createdDate , this.createdTime)
     next();
 })
 
 
-module.exports = {SchemaForPost}
+module.exports = { SchemaForPost }

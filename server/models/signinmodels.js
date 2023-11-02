@@ -370,8 +370,13 @@ const SchemaForCompany = new mongoose.Schema({
     require : false,
     default : 'NA'
   },
+  fundingRounds :{
+    type : Array,
+    require : false,
+    default : []
+  },
 
-})
+} , { minimize: false })
 
 // Schema for common data (authentication and authorization)
 const SchemaForCommanUserData = new mongoose.Schema({

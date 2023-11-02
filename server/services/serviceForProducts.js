@@ -45,6 +45,48 @@ const retriveProduct = (id) => {
     })
 }
 
+const retriveProductwithInestments = (id) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const Model = dbForOthers.model('Product', SchemaForMyProduct, 'products');
+            const result = await Model.aggregate([
+                {
+                    $match: {
+                        rid: '6508555957122e89e90a03e6'
+                    }
+                },
+                {
+                    $lookup: {
+                        from: 'investments',
+                        localField: 'rid',
+                        foreignField: 'recipient',
+                        as: 'investmentDetails'
+                    }
+                },
+                {
+                    $group: {
+                        _id: '$_id',
+                        rid: { $first: "$rid" },
+                        news: { $push: "$news" }, // Use $push to collect all 'news' values into an array
+                        people: { $first: "$people" }, // You can use $first for non-array fields if needed
+                        usp: { $first: "$usp" },
+                        media: { $first: "$media" },
+                        totalValuation: { $first: "$totalValuation" },
+                        totalInvestor: { $first: "$totalInvestor" },
+                        totalRaisedFund: { $first: "$totalRaisedFund" },
+                        investments: { $first: "$investmentDetails" }
+                    }
+                }
+            ])
+            console.log("INVESTMENTS " , result)
+            resolve(result[0]);
+        } catch (error) {
+            console.log("Error" , error)
+            reject(error)
+        }
+    })
+}
+
 const createUSPForProduct = (condition, object) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -138,26 +180,24 @@ const createPitchForProduct = (rid, object) => {
     })
 }
 
-const addPepoleForOrganisation = (data, SchemaForPerson , SchemaForOrganisation) => {
+const addPepoleForOrganisation = (data, SchemaForPerson, SchemaForOrganisation) => {
     return new Promise(async (resolve, reject) => {
         try {
             const ModelForOrg = dbForUser.model('users', SchemaForOrganisation.Schema, SchemaForOrganisation.Collection);
             const ModelForPerson = dbForUser.model('users', SchemaForPerson.Schema, SchemaForPerson.Collection);
             const res1 = await ModelForOrg.updateOne({ rid: data.idOfOrganisation }, {
-                    // `people${[data.position]}`: { perosn: data.idOfPerson, position: data.position }
-                    // `people${[data.position]}` = data.idOfPerson
-                    $set : {
-                        [`people.${data.position}`] : data.idOfPerson
-                    }
-                
+                $set: {
+                    [`people.${data.position}`]: data.idOfPerson
+                }
+
             })
-            console.log("res1 " , res1 , SchemaForOrganisation.Collection)
+            console.log("res1 ", res1, SchemaForOrganisation.Collection)
             const res2 = await ModelForPerson.updateOne({ rid: data.idOfPerson }, {
                 $push: {
                     'companies': { company: data.idOfOrganisation, position: data.position }
                 }
             })
-            console.log("res2 " , res2 )
+            console.log("res2 ", res2)
             resolve({ res1, res2 })
         } catch (error) {
             console.log("error in add person ", error);
@@ -166,9 +206,12 @@ const addPepoleForOrganisation = (data, SchemaForPerson , SchemaForOrganisation)
     })
 }
 
+
+
 module.exports = {
     createProduct,
     retriveProduct,
+    retriveProductwithInestments,
     createUSPForProduct,
     createMediaForProduct,
     createPitchForProduct,
@@ -177,13 +220,3 @@ module.exports = {
 
 
 
-
-
-// $push: {
-//     "media": {
-//         $each: [
-//             updatedObject
-//         ],
-//         $position: object.id
-//     }
-// },

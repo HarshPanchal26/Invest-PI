@@ -74,7 +74,6 @@ const contollerForUSPs = async (req, res) => {
 }
 
 const controllerForPitch = async (req, res) => {
-
     try {
         const result = await ServiceForProducts.createPitchForProduct(res.locals.uid, req.body);
         res.status(201).json({
@@ -114,6 +113,24 @@ const controllerForAddPepole = async (req, res) => {
     }
 }
 
+const controllerForRetriveProduvtWithInvestments = async(req , res)=>{
+    const id = req.query.id;
+    try {
+        const result = await ServiceForProducts.retriveProductwithInestments(id);
+        res.status(201).json({
+            product : result,
+            message : ''
+        })
+        console.log("result result" ,result)
+    } catch (error) {
+        console.log("Error in fetching whole Product" , error)
+        res.status(201).json({
+            product : null,
+            message : error.message
+        })
+    }
+}
+
 module.exports = {
     controllerForFinancial,
     controllerForMedia,
@@ -122,5 +139,6 @@ module.exports = {
     controllerForProducts,
     contollerForUSPs,
     controllerForPitch,
-    controllerForAddPepole
+    controllerForAddPepole,
+    controllerForRetriveProduvtWithInvestments
 }

@@ -23,52 +23,10 @@ export default defineConfig({
                 rewrite: (path) => path.replace(/^\/api/, ''), // Optionally rewrite the path
             },
         },
+        // Add this line to handle client-side routing
         open: true,
         host: "localhost",
-        port: 3000
+        port: 8080
     }
 
 })
-
-
-
-
-
-
-
-// import { defineConfig } from 'vite';
-// import react from '@vitejs/plugin-react';
-// import path from 'path';
-// import webpackPlugin from '@snowpack/plugin-webpack';
-// import tailwindcss from 'tailwindcss';
-
-// export default defineConfig({
-//   plugins: [
-//     react(),
-//     webpackPlugin({
-//       extendConfig: (config) => {
-//         // Add Tailwind CSS as a PostCSS plugin
-//         config.module.rules.push({
-//           test: /\.css$/,
-//           use: [
-//             {
-//               loader: 'postcss-loader',
-//               options: {
-//                 postcssOptions: {
-//                   plugins: [tailwindcss],
-//                 },
-//               },
-//             },
-//           ],
-//         });
-//       },
-//     }),
-//   ],
-//   build: {
-//     rollupOptions: {
-//       input: {
-//         main: path.resolve(__dirname, 'index.html'),
-//       },
-//     },
-//   },
-// });

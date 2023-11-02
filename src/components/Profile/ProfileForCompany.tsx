@@ -21,7 +21,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add'
 import BackButton from '../../Assets/BackButton';
 import UpdateMainForCompany from './update_component/UpdateMainForCompany';
-import Post from '../DashBord/Component_DashBord/Post';
+import Post from '../DashBord/Home/components/Post';
 import NoData from '../../Assets/NoData';
 import UpdateAndCreateProdcts from './update_component/UpdateAndCreateProdcts';
 

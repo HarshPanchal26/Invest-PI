@@ -19,7 +19,7 @@ import UpdateProfileImage from './update_component/UpdateProfileImage';
 import UpdateMainForIndividual from './update_component/UpdateMainForIndividual';
 import UpdateAboutForIndividual from './update_component/UpdateAboutForIndividual';
 import { ContextForDashBord } from '../../context/contextForDashBord';
-import Post from '../DashBord/Component_DashBord/Post';
+import Post from '../DashBord/Home/components/Post';
 import BackButton from '../../Assets/BackButton';
 import NoData from '../../Assets/NoData';
 

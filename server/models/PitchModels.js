@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// const ServicesForPitches = require('../services/serviceForPitches');
 
 const SchemaForQnA = new mongoose.Schema({
     que: {
@@ -18,20 +19,20 @@ const SchemaForQnA = new mongoose.Schema({
 })
 
 const SchemForPitchEngagement = new mongoose.Schema({
-    interests : {
-        type : Number,  
-        require : false,
-        default : 0
+    interests: {
+        type: Number,
+        require: false,
+        default: 0
     },
-    views :  {
-        type : Number,  
-        require : false,
-        default : 0
+    views: {
+        type: Number,
+        require: false,
+        default: 0
     },
-    getFunded : {
-        type : Boolean,  
-        require : false,
-        default : false
+    counter: {
+        type: Number,
+        require: false,
+        default: 0
     }
 })
 
@@ -41,11 +42,15 @@ const SchemaForPitches = new mongoose.Schema({
         require: true,
         unique: true,
     },
-    startDate:  {
+    localname :  {
+        type: String,
+        require: true,
+    },
+    startDate: {
         type: String,
         require: true
     },
-    buisnessMode:  {
+    buisnessMode: {
         type: String,
         require: true
     },
@@ -53,47 +58,51 @@ const SchemaForPitches = new mongoose.Schema({
         type: String,
         require: true
     },
-    avgSixMonthSale:  {
+    avgSixMonthSale: {
         type: String,
         require: true
     },
-    avgSixMonthViews:  {
+    avgSixMonthViews: {
         type: String,
         require: true
     },
-    avgSixMonthCustomer:  {
+    avgSixMonthCustomer: {
         type: String,
         require: true
     },
-    avgYearSale:  {
+    avgYearSale: {
         type: String,
         require: true
     },
-    avgYearViews:  {
+    avgYearViews: {
         type: String,
         require: true
     },
-    avgYearCustomer:  {
+    avgYearCustomer: {
         type: String,
         require: true
     },
-    targetAudiences:  {
+    targetAudiences: {
         type: String,
         require: true
     },
-    seekingFund :  {
-        type: String,
+    seekingFund: {
+        type: Number,
         require: true
     },
-    currentValuation :   {
-        type: String,
+    currentValuation: {
+        type: Number,
         require: true
     },
-    offeredEquity :   {
-        type: String,
+    offeredEquity: {
+        type: Number,
         require: true
     },
-    fundingType : {
+    maximumOffer: {
+        type: Number,
+        require: true
+    },
+    fundingType: {
         type: String,
         require: true
     },
@@ -103,18 +112,71 @@ const SchemaForPitches = new mongoose.Schema({
         Market: [SchemaForQnA],
         Financials: [SchemaForQnA],
         Audience: [SchemaForQnA],
-        Equity : [SchemaForQnA]
+        Equity: [SchemaForQnA]
     },
-    engagement : [SchemForPitchEngagement],
-    desirePepole : {
-        type : Array,
-        require : false,
-        default : []
+    engagement: {
+        interests: {
+            type: Number,
+            require: false,
+            default: 0
+        },
+        views: {
+            type: Number,
+            require: false,
+            default: 0
+        },
+        counter: {
+            type: Number,
+            require: false,
+            default: 0
+        }
+    },
+    desirePepole: {
+        type: Array,
+        require: false,
+        default: []
+    },
+    getFunded: {
+        type: Boolean,
+        require: false,
+        default: false
     }
-    
+
 })
 
-module.exports = { SchemaForPitches  , SchemaForQnA}
+const SchemaForCounterOffer = new mongoose.Schema({
+    pitchId: {
+        type: String,
+        require: true
+    },
+    offerBy: {
+        type: String,
+        require: true
+    },
+    offerTo: {
+        type: String,
+        require: true
+    },
+    counterAmount: {
+        type: String,
+        require: true
+    },
+    counterEquity: {
+        type: String,
+        require: true
+    },
+    accept: {
+        type: Boolean,
+        require: false,
+        default: false,
+    },
+    reject: {
+        type: Boolean,
+        require: false,
+        default: false,
+    }
+})
 
-// 6513c723aa2cb125478f1a2f
-// 65142e9770a95f7d9a410af1
+
+
+module.exports = { SchemaForQnA, SchemaForCounterOffer, SchemaForPitches }

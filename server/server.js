@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const bodyparser = require('body-parser');
 const app = express();
-const cors = require('cors');
 const cookieparser = require('cookie-parser');
+const cors = require('cors')
 const port = 5000;
 const { connectionWithAtlas } = require('./config/database');
 const { isAutorized } = require('./middleware/middlewareForAuthentication');
@@ -13,56 +13,33 @@ const FeedRoute = require('./routes/FeedRoute');
 const LogoutRoute = require('./routes/LogoutRoute');
 const ProfileRoute = require('./routes/ProfileRoute');
 const ThoughtsRoute = require('./routes/ThoughtsRoute');
+const NotificationRoutes = require('./routes/NotificationRoutes');
 const InvestmentRoute = require('./routes/InvestmentRoute');
+const PitchRoute = require('./routes/PitchRoute');
 const RouteForProduct = require('./routes/ProductRoutes');
 const controllerForProfile = require('./controller/controllerForProfile');
-const { Try } = require('@mui/icons-material');
-// const {ServerSocket} = require('./socketio.js')
+const { ServerSocket } = require('./socketio.js')
+const path = require('path')
 
-// const io = require('./socketio.js')(httpSever)
-
-// /*Start Socket */
-// new ServerSocket(httpSever);
-
-// /*Server Handling */
-
-const httpSever = require('http').createServer(app);
-const io = require('socket.io')(httpSever, {
-    path: 'http://localhost:3000',
-    serveClient: false,
-    pingInterval: 10000,
-    pingTimeout: 5000,
-    cookie: false,
-    cors: {
-        origin: 'http://localhost:3000',
-        methods: ['GET', 'POST']
-    }
-})
-
-try {
-    io.on('connection', (socket) => {
-        console.log('user connected');
-        socket.on('disconnect', function () {
-            console.log('user disconnected');
-        });
-    })
-} catch (error) {
-    console.log("Error while connection is ", error)
-}
-
-
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true
-}))
-
-
+app.use(cors());
 app.use(bodyparser.json());
 app.use(
     bodyparser.urlencoded({
         extended: true,
     }))
 app.use(cookieparser());
+
+const httpSever = app.listen(port, () => {
+    console.log(`Connnected with express server ${port}`)
+    connectionWithAtlas()
+})
+
+const io = new ServerSocket(httpSever);
+app.set('io' , io)
+
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../index.html'));
+// });
 
 app.get('/', (req, res) => {
     res.send("I am MAIN Route")
@@ -76,8 +53,9 @@ app.use('/profile', ProfileRoute)
 app.use('/thoughts', ThoughtsRoute)
 app.use('/product', RouteForProduct)
 app.use('/investments', InvestmentRoute)
+app.use('/pitches', PitchRoute)
+app.use('/n'  , isAutorized , NotificationRoutes);
 app.get('/check/authorization', isAutorized, controllerForProfile.controllerForPerosnalProfile)
-
 app.get('*', (_req, res) => {
     res.send("Inavlid request")
 })
@@ -85,9 +63,5 @@ app.post('*', (_req, res) => {
     res.send("Inavlid request")
 })
 
-app.listen(port, () => {
-    console.log(`Connnected with express server ${port}`)
-    connectionWithAtlas()
-})
 
-module.exports = app;
+module.exports = {app , io};

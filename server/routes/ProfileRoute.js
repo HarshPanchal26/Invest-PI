@@ -23,6 +23,8 @@ router.post('/update/activity', isAutorized, controllerForAbout);
 router.get('/tag', isAutorized, controllerForProfile.controllerForTagPepole)
 router.get('/search', isAutorized, controllerForProfile.controllerForSerchPepole)
 router.post('/view', isAutorized, controllerForProfile.controllerForMultipleProfile)
+router.get('/filter', isAutorized, controllerForProfile.controllerForProfileById)
+router.get('/users/suggestions', isAutorized, controllerForProfile.controllerForProfileByCategory)
 
 module.exports = router;
 

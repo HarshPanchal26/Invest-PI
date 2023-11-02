@@ -19,8 +19,9 @@ import UpdateMainForCF from './update_component/UpdateMainForCF';
 import CloseIcon from '@mui/icons-material/Close';
 import UpdateProfileImage from './update_component/UpdateProfileImage';
 import UpdateCoverImage from './update_component/UpdateCoverImage';
+// import BackButton from '../../../Assets/BackButton';
 import BackButton from '../../Assets/BackButton';
-import Post from '../DashBord/Component_DashBord/Post';
+import Post from '../DashBord/Home/components/Post';
 import NoData from '../../Assets/NoData';
 
 interface TabPanelProps {

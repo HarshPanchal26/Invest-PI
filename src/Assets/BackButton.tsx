@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export default function BackButton() {
     const navigate = useNavigate();
     return (
-        <div className='w-full text-left'>
+        <div className='w-full text-left '>
             <IconButton
                 aria-label="upload picture"
                 component="span"

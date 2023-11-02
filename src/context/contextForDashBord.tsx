@@ -7,14 +7,13 @@ import {
   GenerateObjForCF, ObjForVisitedUser
 }
   from "../utils/factory/ObjForUser";
-import {Manager , ManagerOptions , io} from 'socket.io-client'
 
 type child = {
   children: React.ReactNode
 }
 type TypeForAuthorizationState = {
   isAutorizedUser: boolean,
-  valueForProvider: any | null,
+  userData: any | null,
   userType: string | null
 }
 
@@ -22,18 +21,24 @@ export const ContextForDashBord = createContext<null | any>(null);
 
 export function ContextProviderForDashBord({ children }: child) {
   const [loader, setLoader] = useState<boolean>(true);
-  const [objForAuthorizationState, setObjForAuthorizationState] = useState<TypeForAuthorizationState>({
+  const [StateForUser, setStateForUser] = useState<TypeForAuthorizationState>({
     isAutorizedUser: false,
-    valueForProvider: null,
+    userData: null,
     userType: null,
   })
 
+  const [ArrayForNewThoughts, setArrayForNewThoughts] = useState<[]>([]);
+  const [ArrayForMyPiches , setArrayForMyPiches] = useState<[]>([]);
   const [arrayForPosts, setArrayForPosts] = useState<Array<Object> | null>()
 
   const fetchThoughtsForUser = async () => {
     const res = await axios.get('/api/feed/fetchposts');
-    console.log("res", res.data.data)
     setArrayForPosts(res.data.data);
+  }
+
+  const fetchDataForMainFeed = async () => {
+    const res = await axios.get('/api/feed/thoughts/all');
+    setArrayForNewThoughts(res.data.newthoughts)
   }
 
   const checkAuthorization = () => {
@@ -48,32 +53,21 @@ export function ContextProviderForDashBord({ children }: child) {
           } else if (res.data.user.type === 'CF') {
             Obj = GenerateObjForCF(res.data.user, res.data.thoughts, 'USERS');
           } else if (res.data.user.type === 'individual') {
-            console.log("Obj...", res.data.thoughts)
             Obj = GenerateObjForIndividual(res.data.user, res.data.thoughts, 'USERS');
           } else {
             alert("Somthig is wrong inside Context Area ")
           }
-          // const socket = io('http://localhost:5000', {
-          //   transports: ['websocket'],
-          //   autoConnect: false, // Disable auto-connect for now
-          //   reconnection: true, // Enable reconnection
-          //   reconnectionAttempts: 3, // Number of reconnection attempts
-          //   reconnectionDelay: 1000, // Delay between reconnection attempts in milliseconds
-          //   reconnectionDelayMax: 5000, // Maximum delay between reconnection attempts
-          // });
-          // console.log("socket" , socket)  
-          // socket.connect();
-          setObjForAuthorizationState({
-            ...objForAuthorizationState,
+          setStateForUser({
+            ...StateForUser,
             isAutorizedUser: true,
-            valueForProvider: Obj
+            userData: Obj
           })
         }
         setLoader(false)
-        resolve(objForAuthorizationState.valueForProvider)
+        resolve(StateForUser.userData)
       } catch (error: any) {
-        setObjForAuthorizationState({
-          ...objForAuthorizationState,
+        setStateForUser({
+          ...StateForUser,
           isAutorizedUser: true,
         })
         reject(error.message)
@@ -100,7 +94,7 @@ export function ContextProviderForDashBord({ children }: child) {
 
       try {
         const res = await axios.post('/api/profile/users', { username: username });
-        console.log(res)
+        console.log("New Profile foe visit", res);
         if (res.data.user) {
           let Obj: any = null;
           if (res.data.user.type === 'product') {
@@ -117,28 +111,39 @@ export function ContextProviderForDashBord({ children }: child) {
           return;
         }
       } catch (error: any) {
-        console.log("Error from Context ", error)
-        reject(`Error is ==>${error.message}`);
+        reject(error)
       }
     })
 
   };
 
 
+
   const ObjForContextData = {
+    USER: StateForUser.userData,//Provide user data 
+    isAutorizedUser: StateForUser.isAutorizedUser,  /// value
+    POSTS: ArrayForNewThoughts,
+    MYPITCHES : ArrayForMyPiches,
     checkAuthorization: checkAuthorization,  // function
     checkForVisitedAccount: checkForVisitedAccount,
     fetchThoughtsForUser: fetchThoughtsForUser,
-    USER: objForAuthorizationState.valueForProvider,//Provide user data 
-    isAutorizedUser: objForAuthorizationState.isAutorizedUser,  /// value
-    POSTS: []
+    setArrayForNewThoughts : setArrayForNewThoughts,
+    setArrayForMyPiches :setArrayForMyPiches,
   }
 
   useEffect(() => {
     if (!ObjForContextData.isAutorizedUser) {
       checkAuthorization();
     }
-  }, []);
+    // if (ArrayForNewThoughts.length === 0 && ObjForContextData.isAutorizedUser) {
+    //   fetchDataForMainFeed()
+    // }
+  }, [ObjForContextData.isAutorizedUser]);
+
+
+  useEffect(() => {
+    console.log("ArrayForNewThoughts", ArrayForNewThoughts, ObjForContextData.POSTS)
+  }, [ArrayForNewThoughts, ObjForContextData.POSTS])
 
   return (
     <ContextForDashBord.Provider value={ObjForContextData}>

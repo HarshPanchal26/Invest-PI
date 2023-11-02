@@ -1,5 +1,4 @@
 const ServiceForProfile = require('../services/serviceForProfile');
-
 const controllerForOthersProfile = async (req, res) => {
     const { username } = req.body;
     try {
@@ -27,56 +26,92 @@ const controllerForPerosnalProfile = async (req, res) => {
 }
 
 
-const controllerForTagPepole = async(req , res)=>{
+const controllerForTagPepole = async (req, res) => {
     const userToFind = req.query.find;
     let word = userToFind.split('@')[1];
-    console.log("userToFind" , word)
-    try {   
+    console.log("userToFind", word)
+    try {
         const data = await ServiceForProfile.fetchSuggestedPepole(word);
         res.status(201).json({
-            profiles : data
+            profiles: data
         })
     } catch (error) {
         res.status(401).json({
-            profiles : null,
-            error : error.message 
+            profiles: null,
+            error: error.message
         })
     }
 }
 
-const controllerForSerchPepole = async(req , res)=>{
+const controllerForSerchPepole = async (req, res) => {
     const userToFind = req.query.find;
-    try {   
+    try {
         const data = await ServiceForProfile.fetchSuggestedPepole(userToFind);
         res.status(201).json({
-            profiles : data
+            profiles: data
         })
     } catch (error) {
         res.status(401).json({
-            profiles : null,
-            error : error.message 
+            profiles: null,
+            error: error.message
         })
     }
 }
 
 
-const controllerForMultipleProfile = async(req , res)=>{
-    const {array , field} = req.body;
-    try {   
-        const data = await ServiceForProfile.fetchMultipleProfile(array , field);
+const controllerForMultipleProfile = async (req, res) => {
+    const { array, field } = req.body;
+    try {
+        const data = await ServiceForProfile.fetchMultipleProfile(array, field);
         res.status(201).json({
-            profiles : data
+            profiles: data
         })
     } catch (error) {
         res.status(401).json({
-            profiles : null,
-            error : error.message 
+            profiles: null,
+            error: error.message
         })
     }
 
 }
 
-module.exports = { controllerForOthersProfile, controllerForPerosnalProfile , controllerForSerchPepole , controllerForMultipleProfile , controllerForTagPepole};
+const controllerForProfileById = async (req, res) => {
+    const userToFind = req.query.find;
+    try {
+        const data = await ServiceForProfile.fetchProfileByCustomFilter({ _id: userToFind });
+        res.status(201).json(data);
+    } catch (error) {
+        console.log("Error insde controller ", error)
+        res.status(401).json({
+            data: error.message
+        })
+    }
+
+}
+
+const controllerForProfileByCategory = async (req, res) => {
+    const category = req.query.category;
+    try {
+        const data = await ServiceForProfile.fetchProfileByCategoryandFilters(category);
+        res.status(201).json(data);
+    } catch (error) {
+        console.log("Error insde controller ", error)
+        res.status(401).json({
+            data: error.message
+        })
+    }
+
+}
+
+module.exports = {
+    controllerForOthersProfile,
+    controllerForPerosnalProfile,
+    controllerForSerchPepole,
+    controllerForMultipleProfile,
+    controllerForTagPepole,
+    controllerForProfileById,
+    controllerForProfileByCategory
+};
 
 
 

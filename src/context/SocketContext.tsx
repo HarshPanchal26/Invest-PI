@@ -45,7 +45,7 @@ export interface ISocketContextProps {
     SocketDispatch: React.Dispatch<ISocketContextActions>;
 }
 
-const SocketContext = createContext<ISocketContextProps>({
+export const SocketContext = createContext<ISocketContextProps>({
     SocketState: defaultSocketContextState,
     SocketDispatch: () => {}
 });
@@ -53,4 +53,4 @@ const SocketContext = createContext<ISocketContextProps>({
 export const SocketContextConsumer = SocketContext.Consumer;
 export const SocketContextProvider = SocketContext.Provider;
 
-export default SocketContext;
+// export default SocketContext;

@@ -68,7 +68,6 @@ const isAutorized = (req, res, next) => {
     console.log("headers is Authorized ==>", req.cookies['access_token']);
     let token = req.cookies['access_token'];
     if (token) {
-
         try {
             jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
                 if (err) {

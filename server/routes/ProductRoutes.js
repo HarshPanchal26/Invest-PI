@@ -37,4 +37,6 @@ router.post('/create/pitch' , isAutorized , ProductController.controllerForPitch
 
 router.post('/add/pepole' , isAutorized , ProductController.controllerForAddPepole)
 
+router.get('/fetch/all' , isAutorized , ProductController.controllerForRetriveProduvtWithInvestments)
+
 module.exports = router;

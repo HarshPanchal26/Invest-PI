@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const { findSchemaAndCollection } = require('../services/servicesForAuthentication');
-const SchemaForCommanUserData = require('../models/signinmodels');
+const { SchemaForCommanUserData, SchemaForCompany } = require('../models/signinmodels');
 const ServiceForProducts = require('../services/serviceForProducts');
 const ServiceForThoughts = require('../services/serviceForThoughts');
+const db = mongoose.connection.useDb('users');
 
 const fetchProfile = (filter) => {
     return new Promise(async (resolve, reject) => {
@@ -10,8 +11,6 @@ const fetchProfile = (filter) => {
             user: null,
         }
         try {
-            console.log("filter", filter);
-            const db = mongoose.connection.useDb('users');
             const Model = db.model('Users', SchemaForCommanUserData, 'common-users-storage');
             const result = await Model.findOne(filter);
             if (result == null) {
@@ -23,7 +22,7 @@ const fetchProfile = (filter) => {
                 let Model = db.model('User', Schema, Collection);
                 const data = await Model.findOne({ rid });
                 responceObj.user = data;
-                const thoughts = await ServiceForThoughts.fetchThoughtsForUser(rid); 
+                const thoughts = await ServiceForThoughts.fetchThoughtsForUser(rid);
                 responceObj.thoughts = thoughts;
                 if (type === 'product') {
                     const product = await ServiceForProducts.retriveProduct(rid);
@@ -41,7 +40,7 @@ const fetchProfile = (filter) => {
 
 const fetchSuggestedPepole = (userToFind) => {
     const dbForUser = mongoose.connection.useDb('users');
-    const ModelForSuggestion = dbForUser.model('users', SchemaForCommanUserData.SchemaForCommanUserData, 'common-users-storage');
+    const ModelForSuggestion = dbForUser.model('users', SchemaForCommanUserData, 'common-users-storage');
     const searchPattern = new RegExp(userToFind, 'i');
     return new Promise((resolve, reject) => {
         try {
@@ -65,7 +64,6 @@ const fetchSuggestedPepole = (userToFind) => {
                 }
 
             ]);
-            // console.log(resultantArray);
             resolve(resultantArray);
         } catch (error) {
             reject(error);
@@ -73,12 +71,11 @@ const fetchSuggestedPepole = (userToFind) => {
     })
 }
 
-
 const fetchMultipleProfile = (array, field) => {
     return new Promise(async (resolve, reject) => {
         try {
             const dbForUser = mongoose.connection.useDb('users');
-            const ModelForMultipleProfile = dbForUser.model('users', SchemaForCommanUserData.SchemaForCommanUserData, 'common-users-storage');
+            const ModelForMultipleProfile = dbForUser.model('users', SchemaForCommanUserData, 'common-users-storage');
             const result = await ModelForMultipleProfile.find(
                 {
                     [field]: {
@@ -103,4 +100,56 @@ const fetchMultipleProfile = (array, field) => {
     })
 }
 
-module.exports = { fetchProfile, fetchSuggestedPepole, fetchMultipleProfile };
+const fetchProfileByCustomFilter = (filter) => {
+    return new Promise(async (resolve, rejects) => {
+        try {
+            const db = mongoose.connection.useDb('users');
+            const Model = db.model('Users', SchemaForCommanUserData, 'common-users-storage');
+            const result = await Model.findOne(filter, {
+                _id: 1,
+                name: 1,
+                username: 1,
+                profileImage: 1,
+                type: 1
+            });
+            resolve(result)
+        } catch (error) {
+            console.log("Error in this ID", filter)
+            rejects(error)
+        }
+    })
+
+}
+
+const fetchProductprofile = (filterObj) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const Model = db.model('Product', SchemaForCompany, 'user-as-company');
+            const org = await Model.findOne(filterObj);
+            resolve(org)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const fetchProfileByCategoryandFilters = (category) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            const Model = db.model('Users', SchemaForCompany, 'common-users-storage');
+            const res = await Model.find({type : category});
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+module.exports = {
+    fetchProfile,
+    fetchSuggestedPepole,
+    fetchMultipleProfile,
+    fetchProfileByCustomFilter,
+    fetchProductprofile,
+    fetchProfileByCategoryandFilters
+};

@@ -12,6 +12,9 @@ import Loading from '../../../Assets/Loading';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import { generateSchemaForSuggestion } from '../../../utils/factory/SuggestedUser';
+import NotificationBar from '../../Notifications/NotificationBar';
+import Badge from '@mui/material/Badge';
+import { NotificationContext } from '../../../context/NotificationContext'
 
 const navigationForSideBar = [
   { name: 'Home', href: '/feed', icon: <HomeIcon />, current: false, inMobile: true },
@@ -46,13 +49,11 @@ type TypeForInvestorProfile = {
 export default function NavbarForDashBord() {
 
   const contextForDashBord = useContext(ContextForDashBord);
+  const notificationContext = useContext(NotificationContext);
   const navigate = useNavigate();
 
 
   let debounceTimeOut: undefined | NodeJS.Timeout;
-
-
-  const [stateForNotification, setStateForNotification] = useState([]);
 
   const [fetchedPeople, setFetchPeople] = useState<Array<TypeForInvestorProfile>>([]);
 
@@ -125,19 +126,19 @@ export default function NavbarForDashBord() {
       }
     }
     if (task === 'Profile') {
-      navigate(`/profile/${contextForDashBord.USER?.USERNAME}`)
+      navigate(`/profile/${contextForDashBord.USER?.USERNAME}/`)
     }
   }
 
   const hanldeNavigation = (username: string) => {
     document.getElementById('search-modal')?.classList.add('hidden');
-    setOpenSearchBar(false); 
-    navigate(`/profile/${username}`)
+    setOpenSearchBar(false);
+    navigate(`/profile/${username}/`)
   }
 
-  useEffect(() => {
-    console.log("fetchedPeople", fetchedPeople)
-  }, [fetchedPeople])
+  // useEffect(() => {
+  //   console.log("Count", notificationContext?.TotalNewNotification)
+  // }, [notificationContext?.TotalNewNotification])
 
   return (
     <>
@@ -245,7 +246,7 @@ export default function NavbarForDashBord() {
                         <p className='text-gray-900 text-center text-lg xl:block hidden w-auto'>{item.name}</p>
                       </NavLink>
                     ))}
-                    {contextForDashBord.USER.TYPE === 'product' &&  <Menu as="div" className="relative ml-3">
+                    {contextForDashBord.USER.TYPE === 'product' && <Menu as="div" className="relative ml-3">
                       <div>
                         <Menu.Button className="flex max-w-xs items-center text-sm">
                           <span className="sr-only">Open user menu</span>
@@ -310,7 +311,9 @@ export default function NavbarForDashBord() {
                               className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                             >
                               <span className="sr-only">View notifications</span>
-                              <BellIcon className="h-6 w-6" aria-hidden="true" />
+                              <Badge badgeContent={notificationContext?.TotalNewNotification} color="primary">
+                                <BellIcon className="h-6 w-6" aria-hidden="true" />
+                              </Badge>
                             </button>
                           </div>
                           {/* </NavLink> */}
@@ -326,33 +329,12 @@ export default function NavbarForDashBord() {
                         leaveTo="transform opacity-0 scale-95"
                       >
                         <Menu.Items className="
-                        h-96 absolute right-0 z-10 mt-2 w-[500px] origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-auto">
-                          {[1,2,3,4,5,5,7,8,9,10].map((item) => (
-                            <Menu.Item key={1}>
-                              {({ active }) => (
-                                <Link to={''} about='about'>
-                                <div
-                                  className={classNames(
-                                    active ? 'bg-gray-100' : '',
-                                    'flex flex-row px-4 py-2 text-sm text-gray-700 cursor-pointer text-left border-b items-center'
-                                  )}
-                                  // onClick={() => handleClickForAccount(item.value)}
-                                >
-                                  <Avatar
-                                        alt="Remy Sharp"
-                                        src={contextForDashBord.USER.PROFILEIMAGE}
-                                        sx={{ width: 60, height: 60 }}
-                                        className="rounded-full border-4 border-white shadow-lg"
-                                  />
-                                  <div className='text-lg w-full p-2'>
-                                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptates, ipsa!
-                                  </div>
-                                </div>
-                              </Link>
-                              )}
-                            </Menu.Item>
-                          ))} 
+                        h-[600px] absolute right-0 z-10 mt-2 w-[500px] origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-auto">
+
+                          <NotificationBar />
+
                         </Menu.Items>
+
                       </Transition>
                     </Menu>
 

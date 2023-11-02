@@ -98,7 +98,11 @@ const SchemaForMyProduct = new mongoose.Schema({
         require : false,
         default : 0           
     },
-    investments : [SchemaForInvesments],
+    investments : {
+        type: Array,
+        require: false,
+        default: []
+    },
     news: {
         type: Array,
         require: false,

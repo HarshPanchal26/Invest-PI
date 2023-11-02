@@ -46,7 +46,7 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
               username : dataForSignIn.username
             },
             authenticationData: {
-              name : (objForSignInComonent.firstName + " " +objForSignInComonent.lastName) || objForSignInComonent.companyname || objForSignInComonent.firmname , 
+              name :  objForSignInComonent.companyname || objForSignInComonent.firmname || (objForSignInComonent.firstName + " " +objForSignInComonent.lastName), 
               email: dataForSignIn.email,
               password: dataForSignIn.password,
               username : dataForSignIn.username,

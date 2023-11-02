@@ -18,6 +18,8 @@ export default function Profile() {
     const contextForDashBord = useContext(ContextForDashBord);
 
     const { username } = useParams();
+    const decodedUsername = username && decodeURIComponent(username);
+
     const [stateForProfilePage, setStateForProfilePage] = useState<TypeForProfileObj>({
         objForProfile: null,
         loader: true
@@ -45,12 +47,12 @@ export default function Profile() {
     useEffect(() => {
         if (contextForDashBord.isAutorizedUser) {
             if (stateForProfilePage.objForProfile == null || stateForProfilePage.objForProfile?.USERNAME !== username) {
-                checkUser(username);
+                checkUser(decodedUsername);
             }
         } else {
             contextForDashBord.checkAuthorization();
-        }
-    }, [username]);
+        }   
+    }, [username , decodedUsername]);
 
     useEffect(() => {
         console.log("stateForProfilePage", stateForProfilePage.objForProfile)

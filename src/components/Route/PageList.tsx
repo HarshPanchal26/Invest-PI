@@ -1,6 +1,5 @@
 import { ReactElement, lazy } from 'react'
 import type { UserRole } from "./type.router"
-import ViewProducts from '../DashBord/ViewProducts'
 
 export interface IPageMeta {
     path: string
@@ -33,22 +32,22 @@ const Registration = lazy(
     () => import('../Authentication/SignInPage')
 )
 const FeedPage = lazy(
-    ()=> import('../DashBord/Feed')
+    ()=> import('../DashBord/Home/Feed')
 )
-const Impression = lazy(
-    ()=> import('../DashBord/Impression')
-)
+// const Impression = lazy(
+//     ()=> import('../DashBord/Impression')
+// )
 const People = lazy(
-    ()=> import('../DashBord/People')
+    ()=> import('../DashBord/People/People')
 )
 const DashBordForPitch = lazy(
-    ()=> import('../DashBord/component_Product/DashBordForPitch')
+    ()=> import('../DashBord/RaiseFund/DashBordForPitch')
 )
-const ViewPitch = lazy(
-    ()=> import('../DashBord/component_Product/ViewPitch')
+const ViewPitchPage = lazy(
+    ()=> import('../DashBord/RaiseFund/pitch_componnets/ViewPitch')
 )
 const TieUps = lazy(
-    ()=> import('../DashBord/TieUps')
+    ()=> import('../DashBord/TieUps/DashBordForTieUps')
 )
 const TrendingProducts = lazy(
     ()=> import('../DashBord/TrendingProducts')
@@ -58,15 +57,18 @@ const Profile = lazy(
 )
 
 const SharePost = lazy(
-    ()=>import('../DashBord/Component_DashBord/SharePost')
+    ()=>import('../DashBord/Home/components/SharePost')
 )
 
 const MyProduct = lazy(
-    ()=>import('../DashBord/MyProduct')
+    ()=>import('../DashBord/RaiseFund/MyProduct')
 )
 
-const ViewProduct = lazy(
-    ()=>import('../DashBord/ViewProducts')
+const MyInvestments = lazy(
+    ()=>import('../DashBord/TieUps/components/MyInvestments')
+)
+const InvestmentsRequests = lazy(
+    ()=>import('../DashBord/TieUps/components/InvestmentsRequests')
 )
 
 const UserConnection = lazy(
@@ -105,7 +107,8 @@ const accountType = {
 }
 
 const profile = {
-    path: '/profile/:username',
+    // path: `/profile/:${encodeURIComponent('username')}`,
+    path: `/profile/:username/`,
     component: <Profile/>,
     title: 'Types of Account ',
     description: 'Choose your account preference ',
@@ -163,9 +166,20 @@ const tieups = {
     fullPageWidth : true,
     requiredRole : 'all' as UserRole
 }
-const impression = {
-    path :'/impression',
-    component: <Impression />,
+
+const myInvestments = {
+    path :'/tieups/myinvestments',
+    component: <MyInvestments />,
+    title: 'Types of Account ',
+    description: 'Choose your account preference ',
+    exact : true,
+    fullPageWidth : true,
+    requiredRole : 'all' as UserRole
+
+}
+const investmentsRequests = {
+    path :'/tieups/requests',
+    component: <InvestmentsRequests />,
     title: 'Types of Account ',
     description: 'Choose your account preference ',
     exact : true,
@@ -184,8 +198,8 @@ const dashBordForPitch = {
 }
 
 const viewPitch = {
-    path :'/product/pitch/1',
-    component: < ViewPitch/>,
+    path :'/pitch/:id',
+    component: <ViewPitchPage CompanyData={null} PitchData={null} ProductData={null}/>,
     title: 'My Pitch ',
     description: 'Page for creating yout Pitch',
     exact : true,
@@ -202,18 +216,18 @@ const myProduct = {
     fullPageWidth : true,
     requiredRole : 'all' as UserRole
 }
-const viewProduct = {
-    path :'view/product/:id',
-    component: <ViewProduct/>,
-    title: 'Create My prdouct',
-    description: 'Page for Create Your Pitch',
-    exact : true,
-    fullPageWidth : true,
-    requiredRole : 'all' as UserRole
-}
+// const viewProduct = {
+//     path :'view/product/:id',
+//     component: <ViewProduct/>,
+//     title: 'Create My prdouct',
+//     description: 'Page for Create Your Pitch',
+//     exact : true,
+//     fullPageWidth : true,
+//     requiredRole : 'all' as UserRole
+// }
 
 const userConnection = {
-    path :'/connection/:username',
+    path :`/connection/:username`,
     component: <UserConnection />,
     title: 'Connection of Users',
     description: 'Connection of Users',
@@ -245,12 +259,12 @@ export const DashBordPages : IPageMeta[]=[
     network, 
     dashBordForPitch,
     viewPitch,
-    impression,
+    // impression,
     sharePost,
     userConnection,
     trendingProducts,
     myProduct,
-    viewProduct  
+    // viewProduct  
 ]
 
 export const ProfilePages : IPageMeta[]=[
@@ -258,7 +272,9 @@ export const ProfilePages : IPageMeta[]=[
 ]
 
 export const TieUpsPage  :  IPageMeta[]=[
-    tieups
+    tieups,
+    myInvestments,
+    investmentsRequests
 ]
 
 
