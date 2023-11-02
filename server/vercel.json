@@ -4,7 +4,9 @@
    "builds": [
       { "src": "./server.js", "use": "@vercel/node" }
    ],
-   "routes": [
-      { "src": "/(.*)", "handle": "./server.js" }
+   "rewrites": [
+      { "source": "/(.*)", "destination": "server/server.js" }
    ]
 }
+
+

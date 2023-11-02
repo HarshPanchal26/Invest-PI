@@ -142,3 +142,17 @@ module.exports = {
     controllerForAddPepole,
     controllerForRetriveProduvtWithInvestments
 }
+
+
+
+
+// {
+//    "version": 2,
+//    "name": "Investi-PI",
+//    "builds": [
+//       { "src": "server.js", "use": "@vercel/node" }
+//    ],
+//    "routes": [
+//       { "src": "/(.*)", "dest": "/server.js" }
+//    ]
+// }
