@@ -192,15 +192,18 @@ export default function NavbarForDashBord() {
                             <li
                               onClick={() => hanldeNavigation(item.username)}
                               key={index}
-                              className="flex justify-between gap-x-6 cursor-pointer" >
-                              <div className="flex gap-x-4 w-full p-3">
-                                <Avatar alt="Remy Sharp"
-                                  src={item.profileImage}
-                                  sx={{ width: 40, height: 40 }}
-                                  className='my-2 mx-2' />
-                                <div className="min-w-0 flex-grow">
-                                  <p className="text-sm font-semibold leading-6 text-gray-900">{item.name}</p>
-                                  <p className="mt-1 truncate text-xs leading-5 text-gray-500">{item.username}</p>
+                              className="cursor-pointer">
+                              <div className="flex flex-row justify-between w-full p-3">
+                                <div className='flex flex-row gap-x-6'>
+                                  <Avatar alt="Remy Sharp"
+                                    src={item.profileImage}
+                                    sx={{ width: 50, height: 50 }}
+                                    className='my-2 mx-2'
+                                  />
+                                  <div className="min-w-0 flex-grow p-1 text-left">
+                                    <p className="text-lg font-semibold leading-6 text-gray-900">{item.name}</p>
+                                    <p className="mt-1 truncate text-xs leading-5 text-gray-500">@{item.username}</p>
+                                  </div>
                                 </div>
                                 <div className="hidden sm:flex sm:flex-col sm:items-end">
                                   <div className="mt-1 flex items-center gap-x-1.5">

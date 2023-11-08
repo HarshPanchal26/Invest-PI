@@ -14,18 +14,19 @@ type Props = {
 }
 
 type TypeForEquity = {
-    seekingFund : number,
-    purposesForFunding : string,
-    currentValuation : number,
-    reasonForValuation : string,
-    offeredEquity : number,
-    maximunofferedEquity : number,
-    reasonForEquityOffer  : string,
-    exitstrategy :string,
-    ROI : string     
+    seekingFund: number,
+    purposesForFunding: string,
+    currentValuation: number,
+    reasonForValuation: string,
+    offeredEquity: number,
+    maximunofferedEquity: number,
+    reasonForEquityOffer: string,
+    exitstrategy: string,
+    ROI: string,
+    fundingType : string
 }
 
-    export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjForAllQnA , objForDetailsAboutBusiness , setObjForDetailsAboutBusiness}: Props) {
+export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjForAllQnA, objForDetailsAboutBusiness, setObjForDetailsAboutBusiness }: Props) {
 
     const [arrayForEquity, setArrayForEquity] = useState<Array<TypeForQueAns>>([
         {
@@ -66,15 +67,16 @@ type TypeForEquity = {
     ]);
 
     const [objForAdditionalData, setObjForAdditionalData] = useState<TypeForEquity>({
-        seekingFund : 0,
-        purposesForFunding : '',
-        currentValuation : 0,
-        reasonForValuation : '',
-        offeredEquity : 0,
-        maximunofferedEquity : 0,
-        reasonForEquityOffer  : '',
-        exitstrategy :'',
-        ROI : ''     
+        seekingFund: 0,
+        purposesForFunding: '',
+        currentValuation: 0,
+        reasonForValuation: '',
+        offeredEquity: 0,
+        maximunofferedEquity: 0,
+        reasonForEquityOffer: '',
+        exitstrategy: '',
+        ROI: '',
+        fundingType : ''
     })
 
     const handleInputChangeForLargeQuestions = (event: any, index: number) => {
@@ -108,26 +110,27 @@ type TypeForEquity = {
         setArrayForEquity(newArray)
     };
 
-    const handleInputChange = (event : any)=>{
-        const {name , value} = event.target;
+    const handleInputChange = (event: any) => {
+        const { name, value } = event.target;
         setObjForAdditionalData({
             ...objForAdditionalData,
-            [name] : value
-        })   
+            [name]: value
+        })
     }
 
     const handleNextButton = async () => {
         setObjForDetailsAboutBusiness({
             ...objForDetailsAboutBusiness,
-            currentValuation : objForAdditionalData.currentValuation,
-            seekingFund : objForAdditionalData.seekingFund,
-            offeredEquity : objForAdditionalData.offeredEquity,
-            maximunofferedEquity : objForAdditionalData.maximunofferedEquity
+            currentValuation: objForAdditionalData.currentValuation,
+            seekingFund: objForAdditionalData.seekingFund,
+            offeredEquity: objForAdditionalData.offeredEquity,
+            maximunofferedEquity: objForAdditionalData.maximunofferedEquity,
+            fundingType : objForAdditionalData.fundingType
         })
 
         setObjForAllQnA({
             ...objForAllQnA,
-            Equity : [...arrayForEquity]
+            Equity: [...arrayForEquity]
         })
 
         handleNext();
@@ -138,15 +141,16 @@ type TypeForEquity = {
         if (objForAllQnA.Equity.length > 0) {
             setObjForAdditionalData({
                 ...objForAdditionalData,
-                seekingFund : objForDetailsAboutBusiness.seekingFund,
-                purposesForFunding : convertText(objForAllQnA.Equity[0].ans.text),
-                currentValuation : objForDetailsAboutBusiness.currentValuation,
-                reasonForValuation : convertText(objForAllQnA.Equity[1].ans.text),
-                offeredEquity : objForDetailsAboutBusiness.offeredEquity,
-                maximunofferedEquity : objForDetailsAboutBusiness.maximunofferedEquity,
-                reasonForEquityOffer  : convertText(objForAllQnA.Equity[2].ans.text),
-                exitstrategy :convertText(objForAllQnA.Equity[3].ans.text),
-                ROI : convertText(objForAllQnA.Equity[4].ans.text)     
+                seekingFund: objForDetailsAboutBusiness.seekingFund,
+                purposesForFunding: convertText(objForAllQnA.Equity[0].ans.text),
+                currentValuation: objForDetailsAboutBusiness.currentValuation,
+                reasonForValuation: convertText(objForAllQnA.Equity[1].ans.text),
+                offeredEquity: objForDetailsAboutBusiness.offeredEquity,
+                maximunofferedEquity: objForDetailsAboutBusiness.maximunofferedEquity,
+                reasonForEquityOffer: convertText(objForAllQnA.Equity[2].ans.text),
+                exitstrategy: convertText(objForAllQnA.Equity[3].ans.text),
+                ROI: convertText(objForAllQnA.Equity[4].ans.text),
+                fundingType : objForDetailsAboutBusiness.fundingType
             })
             setArrayForEquity(objForAllQnA.Equity);
         }
@@ -160,6 +164,31 @@ type TypeForEquity = {
                 {/* {errorMessage.otherError && <p className='block mx-auto text-red-600 w-full'>{errorMessage.otherError}</p>} */}
 
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:w-4/5 md:p-3">
+                    <div className="col-span-5 md:col-span-3">
+                        <label htmlFor="fundingType" className="block  font-medium leading-6 text-gray-900">
+                            What type of funding round are you looking for ?
+                        </label>
+                        <div className="mt-2">
+                            <select
+                                id="typeOfInvestment"
+                                name="fundingType"
+                                autoComplete="fundingType"
+                                onChange={handleInputChange}
+                                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                value={objForAdditionalData.fundingType}
+                            >
+                                <option value={''}>{'None'}</option>
+                                <option value={'preseed'} >{'Pre-Seed'}</option>
+                                <option value={'seed'} >{'Seed'}</option>
+                                <option value={'series A'} >{'Series A'}</option>
+                                <option value={'series B'} >{'Series B'}</option>
+                                <option value={'series C'} >{'Series C'}</option>
+
+                            </select>
+
+                        </div>
+                    </div>
+
                     <div className="col-span-5">
                         <label htmlFor="milestones" className="block font-medium leading-6 text-gray-900">
                             How much funding are you seeking for your business?
@@ -354,7 +383,7 @@ type TypeForEquity = {
                                 id='ROI'
                                 rows={10}
                                 cols={50}
-                                onChange={(e) => handleInputChangeForLargeQuestions(e,4)}
+                                onChange={(e) => handleInputChangeForLargeQuestions(e, 4)}
                                 value={objForAdditionalData.ROI}
                                 className="block p-5 w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />

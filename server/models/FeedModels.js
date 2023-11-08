@@ -36,11 +36,11 @@ const SchemaForPost = new mongoose.Schema({
     },
     createdTime: {
         type: String,
-        require: false,
+        required: false,
     },
     createdDate: {
         type: String,
-        require: false,
+        required: false,
     },
 
 })

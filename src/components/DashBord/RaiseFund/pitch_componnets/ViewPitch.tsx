@@ -90,13 +90,14 @@ export default function ViewPitch({ PitchData = null, CompanyData = null, Produc
                     FetchedObjFromLocalStotage.COMPANYDATA = GObjForCompany
                 }
                 if (!isInLocalStore || FetchedObjFromLocalStotage?.PRODUCTDATA === null) {
-                    const resForProducts = await axios.get(`/api/product/fetch/all?id=${pitchId}`);
-                    const GObjProducts = GenerateProductObjDataForPitch(resForProducts.data.product);
-                    FetchedObjFromLocalStotage.PRODUCTDATA = GObjProducts
+                    const resForProducts = await axios.get(`/api/product/fetch/all?id=${FetchedObjFromLocalStotage.PITCHDATA?.rid}`);
+                    const GObjForProducts = GenerateProductObjDataForPitch(resForProducts.data.product);
+                    console.log("Product Inside" , GObjForProducts)
+                    FetchedObjFromLocalStotage.PRODUCTDATA = GObjForProducts
                     setArrayForPitchData({
                         COMPANYDATA: FetchedObjFromLocalStotage.COMPANYDATA,
                         PITCHDATA: FetchedObjFromLocalStotage.PITCHDATA,
-                        PRODUCTDATA: GObjProducts
+                        PRODUCTDATA: GObjForProducts
                     });
                 }
 

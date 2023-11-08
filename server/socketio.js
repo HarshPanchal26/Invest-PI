@@ -149,6 +149,11 @@ class ServerSocket {
         const { original_id } = this.findUserSocketId(OfferMakees_custom_id);
         this.io.to(original_id).emit('action-on-counterOffer', idOfCounterOfferNotoficationDocumens)        
     }
+
+    triggerNotificatioinForResultOfClaimInvestor = (CompanyID ,Accepter_id , idOfInvetsmentDoc)=>{
+        const { original_id } = this.findUserSocketId(CompanyID);
+        this.io.to(original_id).emit('action-on-claimInvestor', idOfInvetsmentDoc , Accepter_id)        
+    }
     
     triggerNotificationForNewPost = (custom_id) => {
         const { original_id } = this.findUserSocketId(custom_id)

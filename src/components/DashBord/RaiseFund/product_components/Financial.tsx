@@ -41,8 +41,11 @@ export default function Financial() {
             setDataForFinance(contextForDashBord.USER.PRODUCTINSIDE);
             findDataForInvestments()
         }
-
     }, []);
+
+    useEffect(()=>{
+        console.log('Updated Data ', dataForInvestments)
+    } , [dataForInvestments])
 
     const handleNewInvestmetns = () => {
         setDrawerOpen(true);
@@ -50,19 +53,19 @@ export default function Financial() {
 
     return (
         <div className='p-1 h-full w-full '>
-            <div className='flex md:flex-row flex-col md:space-x-4 h-auto w-full gap-y-3'>
-                <div className='p-5 text-center sm:w-full shadow-md'>
-                    Valuation <span className='text-blue-700 ml-3 text-2xl'>
+            <div className='flex md:flex-row flex-col md:space-x-4 h-auto w-full gap-y-3 '>
+                <div className='p-5 text-center sm:w-full shadow-md bg-slate-200 rounded-lg text-lg'>
+                    Valuation <span className='text-blue-700 ml-3 text-2xl font-bold'>
                         ${dataForFinance && dataForFinance.totalValuation}M
                     </span><span className='mx-3'><ArrowForwardIosIcon /></span>
                 </div>
-                <div className=' p-5 text-center sm:w-full shadow-md'>
-                    Funding Amount <span className='text-blue-700 ml-3 text-2xl'>
+                <div className=' p-5 text-center sm:w-full shadow-md bg-slate-200 rounded-lg'>
+                    Funding Amount <span className='text-blue-700 ml-3 text-2xl font-bold'>
                         ${dataForFinance && dataForFinance.totalRaisedFund}M
                     </span><span className='mx-3'><ArrowForwardIosIcon /></span>
                 </div>
-                <div className=' p-5 text-center sm:w-full shadow-md'>
-                    Investor <span className='text-blue-700 ml-3 text-2xl'>
+                <div className=' p-5 text-center sm:w-full shadow-md bg-slate-200 rounded-lg'>
+                    Investor <span className='text-blue-700 ml-3 text-2xl font-bold'>
                         {dataForFinance && dataForFinance.totalInvestor}
                     </span><span className='mx-3'><ArrowForwardIosIcon /></span>
                 </div>
@@ -86,7 +89,7 @@ export default function Financial() {
                             component="span"
                             className="h-12 w-12 my-2 cursor-pointer bg-black mx-10"
                             style={{ color: 'black' }}
-                        // onClick={() => navigate(-1)}
+                            // onClick={() => navigate(-1)}
                         >
                             <EditIcon />
                         </IconButton>

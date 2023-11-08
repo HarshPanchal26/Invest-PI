@@ -21,7 +21,10 @@ const controllerForProfile = require('./controller/controllerForProfile');
 const { ServerSocket } = require('./socketio.js')
 const path = require('path')
 
-app.use(cors());
+app.use(cors({
+    origin : 'https://piserver.vercel.app',
+}));
+
 app.use(bodyparser.json());
 app.use(
     bodyparser.urlencoded({
@@ -36,10 +39,6 @@ const httpSever = app.listen(port, () => {
 
 const io = new ServerSocket(httpSever);
 app.set('io' , io)
-
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../index.html'));
-// });
 
 app.get('/', (req, res) => {
     res.send("I am MAIN Route")
@@ -64,4 +63,4 @@ app.post('*', (_req, res) => {
 })
 
 
-module.exports = {app , io};
+module.exports = {app};

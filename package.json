@@ -2,7 +2,7 @@
   "name": "invest-pi",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "https://piserver.onrender.com/",
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^40.0.0",
     "@ckeditor/ckeditor5-react": "^6.1.0",
@@ -48,7 +48,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently \"vite\" \"npm run server-run\" ",
+    "start": "vite",
     "server-run": "nodemon server/server.js",
     "build": "vite build",
     "test": "vite test",

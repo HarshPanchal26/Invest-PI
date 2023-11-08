@@ -3,38 +3,38 @@ const SchemaForInvestments = new mongoose.Schema({
 
     recipient: {
         type: String,
-        require: false
+        required: false
     },
     dateofInvestment: {
         type: String,
-        require: false
+        required: false
     },
     typeOfInvestment: {
         type: String,
-        require: false
+        required: false
     },
     allInvestor: {
         type: Array,
-        require: false
+        required: false
     },
     leadInvestors: {
         type: Array,
-        require: false
+        required: false
     },
     raisedAmount: {
         type: Number,
-        require: false
+        required: false
     },
     lastValuationofFundee: {
         type: Number,
-        require: false
+        required: false
     },
     approval : {
         type : Object,
-        require : false
+        required : false
     }
 
-})
+},{minimize: false})
 
 
 SchemaForInvestments.pre('save', function (next) {
@@ -42,8 +42,8 @@ SchemaForInvestments.pre('save', function (next) {
         return next();
     }
     let ObjForApproval = {};
-    for (let i = 0; i < this.allInvestor; i++) {
-        ObjForApproval.investors[i] = false
+    for (let i = 0; i < this.allInvestor.length; i++) {
+        ObjForApproval.investors[i] = false  
     }
     this.approval = ObjForApproval;
     console.log("Created Obj from pre function", ObjForApproval);

@@ -24,7 +24,7 @@ export default function News() {
                     component="span"
                     className="h-12 w-12 my-2 cursor-pointer bg-black mx-10"
                     style={{ color: 'black' }}
-                // onClick={() => navigate(-1)}
+                    // onClick={() => navigate(-1)}
                 >
                     <EditIcon />
                 </IconButton>

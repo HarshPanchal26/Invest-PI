@@ -21,12 +21,12 @@ const SchemaForIndividuals = new mongoose.Schema({
   },
   bio : {
     type : String,
-    require : false,
+    required : false,
     default  : 'NA'
   },
   about : {
     type : String,
-    require : false,
+    required : false,
     default  : 'NA'
   },
   email: {
@@ -40,12 +40,12 @@ const SchemaForIndividuals = new mongoose.Schema({
   },
   followers : {
     type : Number,
-    require : false,
+    required : false,
     default : 0
   },
   following : {
     type : Number,
-    require : false,
+    required : false,
     default : 0
   },
   phone: {
@@ -54,7 +54,7 @@ const SchemaForIndividuals = new mongoose.Schema({
   },
   badges : {
     type : Array,
-    require : false,
+    required : false,
     default  : []
   },
   city: {
@@ -84,29 +84,29 @@ const SchemaForIndividuals = new mongoose.Schema({
   },
   thoughts : {
     type : Array,
-    require : false,
+    required : false,
     default : []
   },
   companies :{
     type : Array,
-    require : false,
+    required : false,
     default : []
   },
   investments : {
     type : Array,
-    require : false,
+    required : false,
     default : []
   },
   profileImage : {
     type : String,
-    require : false,
+    required : false,
     default : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'        
 
   },
   coverImage : {
     type : String,
     default  : 'NA',
-    require : false,
+    required : false,
   },
 
 })
@@ -146,12 +146,12 @@ const SchemaForCF = new mongoose.Schema({
   },
   followers : {
     type : Number,
-    require : false,
+    required : false,
     default : 0
   },
   following : {
     type : Number,
-    require : false,
+    required : false,
     default : 0
   },
   categories: {
@@ -160,7 +160,7 @@ const SchemaForCF = new mongoose.Schema({
   },
   badges : {
     type : Array,
-    require : false,
+    required : false,
     default  : []
   },
   headquarters : {
@@ -194,43 +194,43 @@ const SchemaForCF = new mongoose.Schema({
   },
   thoughts : {
     type : Array,
-    require : false,
+    required : false,
     default : []
   },
   companies :{
     type : Array,
-    require : false,
+    required : false,
     default : []
   },
   investments : {
     type : Array,
-    require : false,
+    required : false,
     default : []
   },
   profileImage : {
     type : String,
-    require : false,
+    required : false,
     default : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'        
 
   },
   coverImage : {
     type : String,
-    require : false,
+    required : false,
     default  : 'NA'
   },
   people : {
     type : Array,   
-    require : false,
+    required : false,
     default  : []
   },
   createdAt : {
     type : Date,
-    require : false,
+    required : false,
     default : new Date()    
   },
   lastUpdated : {
     type : Date,
-    require : false,
+    required : false,
     default : new Date()
   }
 
@@ -271,12 +271,12 @@ const SchemaForCompany = new mongoose.Schema({
   },
   followers : {
     type : Number,
-    require : false,
+    required : false,
     default : 0
   },
   following : {
     type : Number,
-    require : false,
+    required : false,
     default : 0
   },
   size: {
@@ -326,53 +326,53 @@ const SchemaForCompany = new mongoose.Schema({
   },
   badges : {
     type : [],
-    require : false,
+    required : false,
     default : []
   },
   thoughts : {
     type : Array,
-    require : false,
+    required : false,
     default : []
   },
   companies :{
     type : Array,
-    require : false,
+    required : false,
     default : []
   },
   people : {
     type : Object,
-    require : false,
+    required : false,
     default : {}
   },
   investors : {
     type : Array,
-    require : false,
+    required : false,
     default : []    
   },
   investments : {
     type : Array,
-    require : false,
+    required : false,
     default : []
   },
   products : {
     type : Array,
-    require : false,
+    required : false,
     default : []    
   },
   profileImage : {
     type : String,
-    require : false,
+    required : false,
     default : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'        
 
   },
   coverImage : {
     type : String,
-    require : false,
+    required : false,
     default : 'NA'
   },
   fundingRounds :{
     type : Array,
-    require : false,
+    required : false,
     default : []
   },
 

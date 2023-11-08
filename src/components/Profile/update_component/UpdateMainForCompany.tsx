@@ -44,7 +44,7 @@ export default function UpdateMainForCompany({ objForProfile ,  closeModal} :Pro
       }               
     //   await VerificationForMainDataOfCF(TrimedObject);
         const updated = await axios.post('/api/profile/update/main' , {data : TrimedObject});
-        console.log("updated" ,updated)
+        console.log("updated" ,contextForDashBord.USER)
         const User = contextForDashBord.USER;
         User.COMPANYNAME = TrimedObject.name;
         User.USERNAME = TrimedObject.username;

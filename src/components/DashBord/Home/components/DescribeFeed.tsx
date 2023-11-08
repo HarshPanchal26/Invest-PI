@@ -1,13 +1,13 @@
 import React, { useEffect, useContext, useState } from 'react'
-import BackButton from '../../Assets/BackButton'
+import BackButton from '../../../../Assets/BackButton'
 import { Avatar, IconButton } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 import CommentIcon from '@mui/icons-material/Comment';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { decodeTextFromDisplay } from '../../utils/factory/FormatText';
+import { decodeTextFromDisplay } from '../../../../utils/factory/FormatText';
 import { useParams } from 'react-router-dom';
-import { ContextForDashBord } from '../../context/contextForDashBord';
+import { ContextForDashBord } from '../../../../context/contextForDashBord';
 
 
 type TypeForProfileObj = {

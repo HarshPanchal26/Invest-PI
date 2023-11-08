@@ -98,7 +98,7 @@ export default function BasicTable({ dataForInvestments, setDataForInvestments }
             >
               <TableCell component="th" scope='row'>
                 {dataForInvestorsProfile !== null && (
-                  <div className='flex flex-col flex-wrap w-[300px] h-full '>
+                  <div className='flex md:flex-row flex-col flex-wrap w-[500px] h-full '>
                     {
                       item.leadInvestors.map((item: any) => {
                         let Obj: any = findUserThroughId(item)
@@ -137,10 +137,10 @@ export default function BasicTable({ dataForInvestments, setDataForInvestments }
                   </>
                 }
               </TableCell>
-              <TableCell align="right">{item.typeOfInvestment}</TableCell>
-              <TableCell align="right">${item.raisedAmount}M</TableCell>
-              <TableCell align="right">{item.allInvestor.length}</TableCell>
-              <TableCell align="right">{item.dateofInvestment}</TableCell>
+              <TableCell align="right"><span className='font-bold text-lg'>{item.typeOfInvestment}</span></TableCell>
+              <TableCell align="right"><span className='font-bold text-lg text-blue-700'>${item.raisedAmount}M</span></TableCell>
+              <TableCell align="right"><span className='font-bold text-lg'>{item.allInvestor.length}</span></TableCell>
+              <TableCell align="right"><span className='font-bold text-lg'>{item.dateofInvestment}</span></TableCell>
               {/* <TableCell component="th" scope="row">
                 {
                   item.allInvestor.map((item: any) => {

@@ -57,6 +57,15 @@ export default function Profile() {
     useEffect(() => {
         console.log("stateForProfilePage", stateForProfilePage.objForProfile)
     }, [stateForProfilePage])
+
+    useEffect(()=>{
+        if(stateForProfilePage.objForProfile !== null){
+            setStateForProfilePage({
+                ...stateForProfilePage,
+                objForProfile : contextForDashBord.USER
+            })
+        }
+    } , [contextForDashBord.USER])
     return (
         <>
 

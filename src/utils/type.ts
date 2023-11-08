@@ -232,6 +232,7 @@ type TypeForDetailsAboutBusiness = {
     seekingFund: number,
     currentValuation: number,
     offeredEquity: number,
+    fundingType : string ,
     maximunofferedEquity : number
 }
 

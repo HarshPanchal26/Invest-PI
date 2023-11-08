@@ -9,5 +9,6 @@ router.post('/fetch/newinvestments', ControllerForNotification.newInvestmentNoti
 router.post('/fetch/newclaims' , ControllerForNotification.notificationForPositionClaim)
 router.post('/fetch/counter/new' , ControllerForNotification.notificationForCounterOffers)
 router.post('/fetch/counter/results' , ControllerForNotification.notoficationForCounterResults)
+router.post('/fetch/claim/results' , ControllerForNotification.controllerForResultOfClaimInvesttorsAction)
 
 module.exports = router

@@ -11,6 +11,7 @@ import { Backdrop } from '@mui/material';
 import { CircularProgress } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import { Avatar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const styleForModal: any = {
   position: 'absolute' as 'absolute',
@@ -38,6 +39,7 @@ export default function PeopleForProducts() {
   const [dataFatching, setDataFetching] = useState<boolean>(true);
   const [openBackDrop, setBackDrop] = useState<boolean>(false)
 
+  const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState({
     headError: '',
@@ -120,7 +122,7 @@ export default function PeopleForProducts() {
             position: positionEle.value
           }
           newArray.push(newObj);
-          console.log("newArray newArray" ,newArray)
+          console.log("newArray newArray", newArray)
           setPepoleForProduct(newArray)
           setBackDrop(false)
           setOpenModal(false)
@@ -164,7 +166,7 @@ export default function PeopleForProducts() {
         ProfileError: ''
       })
     }
-    if (pepoleForProduct.length === 0 && Object.keys(contextForDashBord.USER.PEOPLE).length !==0) {
+    if (pepoleForProduct.length === 0 && Object.keys(contextForDashBord.USER.PEOPLE).length !== 0) {
       const newArray = Object.keys(contextForDashBord.USER.PEOPLE).map((item) => {
         return {
           _id: contextForDashBord.USER.PEOPLE[item],
@@ -177,14 +179,14 @@ export default function PeopleForProducts() {
       })
       fetchProfileForPeople(newArray); //Function
     }
-    if(Object.keys(contextForDashBord.USER.PEOPLE).length ===0){
-      console.log("Hello I am here")  
+    if (Object.keys(contextForDashBord.USER.PEOPLE).length === 0) {
+      console.log("Hello I am here")
       setStateForNoData(true);
     }
   }, [contextForDashBord]);
 
   return (
-    <main className='w-full h-full p-1'>
+    <main className='w-full h-full p-1 mx-auto'>
       {/* Product Owners */}
       <div className='p-2 my-4'>
         <div className='flex flex-row justify-between border-b'>
@@ -198,26 +200,28 @@ export default function PeopleForProducts() {
             }} />
           </IconButton>
         </div>
-        <div className='md:w-1/2 w-full p-1'>
+        <div className='md:w-full w-full p-1'>
           <ul className="divide-y divide-gray-100">
-            {!stateForNoData  && pepoleForProduct.map((person) => (
+            {!stateForNoData && pepoleForProduct.map((person) => (
               <>
                 {!dataFatching && (
-                  <li key={person.email} className="flex justify-between gap-x-6 py-5">
+                  <li key={person.email} className="flex justify-between gap-x-6 py-5 cursor-pointer" >
                     <div className="flex min-w-0 gap-x-4">
                       <Avatar
                         alt="Remy Sharp"
                         src={person.profileImage}
-                        sx={{ width: 60, height: 60 }}
+                        sx={{ width: 65, height: 65 }}
                         className="rounded-full border-4 border-white shadow-lg"
                       />
-                      <div className="min-w-0 flex-auto">
-                        <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
-                        <p className="mt-1 truncate text-xs leading-5 text-gray-500">{person.username}</p>
+                      <div className="min-w-0 flex-auto" onClick={() => {
+                        navigate(`/profile/${person.username}/`)
+                      }}>
+                        <p className="text-lg font-semibold leading-6 text-gray-900 hover:underline">{person.name}</p>
+                        <p className="mt-1 truncate text-xs leading-5 text-gray-500 text-left hover:underline">@{person.username}</p>
                       </div>
                     </div>
-                    <div className="shrink-0 sm:flex sm:flex-col sm:items-end">
-                      <p className="text-sm leading-6 text-gray-900">{person.position}</p>
+                    <div className="shrink-0 sm:flex sm:flex-col sm:items-end ">
+                      <p className="leading-6 text-blue-700 font-bold text-lg">{person.position}</p>
                       {person.lastSeen ? (
                         <p className="mt-1 text-xs leading-5 text-gray-500">
                           Last seen <time dateTime={person.lastSeenDateTime}>{person.lastSeen}</time>
@@ -243,12 +247,12 @@ export default function PeopleForProducts() {
                 </li>)}
               </>
             ))}
-            {stateForNoData  && <NoData />}
+            {stateForNoData && <NoData />}
           </ul>
         </div>
       </div>
       {/*  Product Investors */}
-      <div className='p-2 my-4'>
+      {/* <div className='p-2 my-4'>
         <p className='text-2xl font-bold mx-2 text-left my-auto p-2'>{'Investors'}</p>
         <div className='md:w-1/2 w-full  p-1'>
           <ul className="divide-y divide-gray-100">
@@ -288,7 +292,7 @@ export default function PeopleForProducts() {
             {stateForNoData && <NoData />}
           </ul>
         </div>
-      </div>
+      </div>   */}
       <Modal
         open={openModal}
         aria-labelledby="modal-modal-title"
@@ -298,7 +302,7 @@ export default function PeopleForProducts() {
         <>
           <div className='xl:w-[600px] w-full bg-white p-4 rounded-xl md:min-h-[500px] md:min-w-[600px]' style={styleForModal}>
             <div className='p-2 text-2xl flex flex-row justify-between '>
-              <p className='my-auto  p-3 bg-gray-200 rounded-md'>{`Add USPs`}</p>
+              <p className='my-auto  p-3 bg-gray-200 rounded-md'>{`Add People`}</p>
               <div className=' mr-0 my-auto bg-gray-200 rounded-full'>
                 <IconButton
                   aria-label="upload picture"
@@ -388,10 +392,3 @@ export default function PeopleForProducts() {
     </main>
   )
 }
-
-
-
-
-//  652a38a81111ff2e46bc346d    CEO
-
-//  652a3ac91111ff2e46bc34a1   CHRO 

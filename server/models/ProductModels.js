@@ -3,35 +3,35 @@ const mongoose = require('mongoose');
 const SchemaForInvesments = new mongoose.Schema({
     dateofInvestment: {
         type: String,
-        require: false
+        required: false
     },
     typeOfInvestment: {
         type: String,
-        require: false
+        required: false
     },
     allInvestor: {
         type: Array,
-        require: false
+        required: false
     },
     leadInvestors: {
         type: Array,
-        require: false
+        required: false
     },
     raisedAmount: {
         type: Number,
-        require: false
+        required: false
     },
     lastValuation: {
         type: Number,
-        require: false
+        required: false
     },
     milestones: {
         type: String,
-        require: false,
+        required: false,
     },
     growth: {
         type: String,
-        require: false,
+        required: false,
     },
 
 })
@@ -39,19 +39,19 @@ const SchemaForInvesments = new mongoose.Schema({
 const SchmaForUSPs = new mongoose.Schema({
     title: {
         type: String,
-        require: false
+        required: false
     },
     aboutUSP: {
         type: String,
-        require: false
+        required: false
     },
     url: {
         type: String,
-        require: false
+        required: false
     },
     likes: {
         type: String,
-        require: false,
+        required: false,
         default: 0,
     }
 })
@@ -59,15 +59,15 @@ const SchmaForUSPs = new mongoose.Schema({
 const SchemaForMedia = new mongoose.Schema({
     imageUrl: {
         type: String,
-        require: false
+        required: false
     },
     title: {
         type: String,
-        require: false
+        required: false
     },
     subtitle: {
         type: String,
-        require: false
+        required: false
     },
 
 })
@@ -80,39 +80,39 @@ const SchemaForMyProduct = new mongoose.Schema({
     },
     valuationText : {
         type : String,
-        require: false,
+        required: false,
         default: 'Yet To Discover'        
     },
     totalInvestor : {
         type : Number,
-        require : false,
+        required : false,
         default : 0   
     },
     totalRaisedFund : {
         type : Number,
-        require : false,
+        required : false,
         default : 0           
     },
     totalValuation : {
         type : Number,
-        require : false,
+        required : false,
         default : 0           
     },
     investments : {
         type: Array,
-        require: false,
+        required: false,
         default: []
     },
     news: {
         type: Array,
-        require: false,
+        required: false,
         default: []
     },
     usp: [SchmaForUSPs],
     media: [SchemaForMedia],
     people: {
         type: Array,
-        require: false,
+        required: false,
         default: []
     }
 })

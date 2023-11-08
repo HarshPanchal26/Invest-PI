@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Avatar, IconButton } from '@mui/material'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -24,6 +24,11 @@ import UpdateMainForCompany from './update_component/UpdateMainForCompany';
 import Post from '../DashBord/Home/components/Post';
 import NoData from '../../Assets/NoData';
 import UpdateAndCreateProdcts from './update_component/UpdateAndCreateProdcts';
+import ViewHighLights from '../DashBord/RaiseFund/pitch_componnets/ViewHighLights';
+import { ContextForDashBord } from '../../context/contextForDashBord';
+import People from '../DashBord/People/People';
+import PeopleForProducts from '../DashBord/RaiseFund/product_components/PeopleForProducts';
+import InvestorsForProducts from './profile_component/InvestorsForProducts';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -99,6 +104,9 @@ export default function ProfileForCompany({ objForProfile }: any) {
         open: false,
         child: null
     });
+
+    const contextForDashBord = useContext(ContextForDashBord)
+
     const handleOpenForModal = (feild: string) => {
         setModalData({
             open: true,
@@ -133,13 +141,13 @@ export default function ProfileForCompany({ objForProfile }: any) {
 
     useEffect(() => {
         setDataForProfilePage(objForProfile);
-        console.log("objForProfile======>", objForProfile)
+        console.log("objForProfile======>", objForProfile?.PRODUCTINSIDE)
     }, [objForProfile])
 
     return (
         <>
             <BackButton />
-            <div className="bg-white overflow-hidden w-auto border">
+            <div className="bg-white overflow-hidden w-auto ">
                 {/* Header */}
                 <header className="h-auto">
                     <div
@@ -176,6 +184,12 @@ export default function ProfileForCompany({ objForProfile }: any) {
                                         className="rounded-full w-40 h-40 border-4 border-white shadow-lg"
                                     />
                                 </IconButton>
+                            </div>
+                            <div className='flex justify-end w-full mt-24'>
+                                {/* <div className='bg-red-500 rounded-full h-fit w-auto p-5'>
+                                    <p className='text-white font-bold text-2xl cursor-pointer'>{'#145'}</p>
+                                </div> */}
+                                <p className='text-red-500 font-bold text-2xl cursor-pointer hover:underline'>{'#1'}</p>
                             </div>
                         </div>
                         <div className="mt-6 flex flex-row border bg-slate-50 rounded-md mx-4 justify-between">
@@ -270,7 +284,7 @@ export default function ProfileForCompany({ objForProfile }: any) {
                     </section>
                     <div className='my-3 flex flex-col'>
                         {/* About Section */}
-                        <div className='border mx-2 rounded-md'>
+                        <div className='mx-2 rounded-md'>
                             <div className="flex flex-row justify-between">
                                 <p className='text-2xl mx-3 font-bold p-2'>{'About'}</p>
                                 {objForProfile.USERTYPE === 'USERS' && (
@@ -331,73 +345,39 @@ export default function ProfileForCompany({ objForProfile }: any) {
                                                     {dataForProfilePage?.LINK}
                                                 </dd>
                                             </div>
-                                            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                                <dt className="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
-                                                <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                                    <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
-                                                        <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                                            <div className="flex w-0 flex-1 items-center">
-                                                                <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                                                                <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                                                    <span className="truncate font-medium">resume_back_end_developer.pdf</span>
-                                                                    <span className="flex-shrink-0 text-gray-400">2.4mb</span>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ml-4 flex-shrink-0">
-                                                                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                                    Download
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                        <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                                            <div className="flex w-0 flex-1 items-center">
-                                                                <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                                                                <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                                                    <span className="truncate font-medium">coverletter_back_end_developer.pdf</span>
-                                                                    <span className="flex-shrink-0 text-gray-400">4.5mb</span>
-                                                                </div>
-                                                            </div>
-                                                            <div className="ml-4 flex-shrink-0">
-                                                                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                                                    {`Download`}
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </dd>
-                                            </div> */}
                                         </dl>
                                     </div>
                                 </div>
                             </CustomTabPanel2>
                         </div>
-                        {/* Products section */}
-                        <div className='border rounded-md mx-2 my-3'>
+                        {/* HighLights section */}
+                        <div className='rounded-md mx-2 my-3'>
                             <div className="flex flex-row justify-between">
-                                <p className='text-2xl mx-3 font-bold p-2'>{'Products'}</p>
-                                {objForProfile.USERTYPE === 'USERS' && (
-                                    <IconButton
-                                        aria-label="upload picture"
-                                        className="h-16 w-16 cursor-pointer bg-black mr-1"
-                                        style={{ color: 'black' }}
-                                        onClick={() => handleOpenForModal('Products')}
-                                    >
-                                        <AddIcon />
-                                    </IconButton>)}
+                                <p className='text-2xl mx-3 font-bold p-2'>{'Highlights'}</p>
                             </div>
                             <section className="flex flex-col py-4  border-gray-200">
                                 <div className='flex my-3 mx-3 p-3 bg-slate-50 rounded-md'>
                                     {objForProfile?.PRODUCTINSIDE.length === 0 && (
                                         <NoData />
                                     )}
+                                    {objForProfile?.PRODUCTINSIDE && (
+                                        <div className='mt-1 mx-auto'>
+                                            <ViewHighLights ArrayForHighlights={[
+                                                { title: 'Valuation', value: `$${objForProfile?.PRODUCTINSIDE.totalValuation}M` },
+                                                { title: 'Raised Fund', value: `$${objForProfile?.PRODUCTINSIDE.totalRaisedFund}M` },
+                                                { title: 'Total Investors', value: objForProfile?.PRODUCTINSIDE.totalInvestor },
+                                                // { title: 'Valuation', value: objForProfile?.PRODUCTINSIDE.totalValuation },
+                                                // { title: 'Bussiness Mode', value: objForProfile?.PRODUCTINSIDE.buisnessMode === 'Both' ? 'Online/offline' : objForProfile?.PRODUCTINSIDE.buisnessMode },
+                                            ]} />
+                                        </div>)}
                                 </div>
                             </section>
                         </div>
                         {/* Activity Section*/}
-                        <div className='border mx-2 rounded-md my-4'>
+                        <div className='mx-2 rounded-md my-4'>
                             <div className="flex flex-row justify-between">
                                 <p className='text-2xl mx-3 font-bold p-2'>{'Activity'}</p>
-                                {objForProfile.USERTYPE === 'USERS' && (
+                                {/* {objForProfile.USERTYPE === 'USERS' && (
                                     <IconButton
                                         aria-label="upload picture"
                                         className="h-12 w-12 cursor-pointer bg-black mr-1"
@@ -405,17 +385,21 @@ export default function ProfileForCompany({ objForProfile }: any) {
                                         onClick={() => handleOpenForModal('Activity')}
                                     >
                                         <PencilSquareIcon />
-                                    </IconButton>)}
+                                    </IconButton>)
+                                } */}
                             </div>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                                     <Tab label="Thoughts" {...a11yProps(0)} />
                                     <Tab label="Companies" {...a11yProps(1)} />
-                                    <Tab label="Investment" {...a11yProps(2)} />
+                                    <Tab label="People" {...a11yProps(2)} />
+                                    {/* <Tab label="Investors" {...a11yProps(3)} /> */}
                                 </Tabs>
                             </Box>
                             <CustomTabPanel value={value} index={0}>
-                                <Post ArrayOfthoughts={objForProfile?.ARRAYOFTHOUGHTS} />
+                                <div className='p-1'>
+                                    <Post ArrayOfthoughts={objForProfile?.ARRAYOFTHOUGHTS} />
+                                </div>
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>
                                 {objForProfile?.COMPANIES.length === 0 && (
@@ -423,9 +407,18 @@ export default function ProfileForCompany({ objForProfile }: any) {
                                 )}
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={2}>
-                                {objForProfile?.INVESTMENTS.length === 0 && (
+                                {/* {objForProfile?.INVESTMENTS.length === 0 && (
+                                    <NoData />
+                                    )} */}
+                                <PeopleForProducts />
+                            </CustomTabPanel>
+                            <CustomTabPanel value={value} index={3}>
+                                {contextForDashBord.USER.INVESTMENTS.length === 0 && (
                                     <NoData />
                                 )}
+                                <div className='p-1'>
+                                    <InvestorsForProducts dataForInvestors={contextForDashBord.USER.INVESTMENTS} />
+                                </div>
                             </CustomTabPanel>
                         </div>
                     </div>

@@ -11,6 +11,7 @@ export interface INotificationContextState {
     notificationForFollow: [] | null,
     notificationForCounter: [] | null,
     notificationForResultOfOffers: [] | null,
+    notificationForClaimResult: [] | null,
 }
 
 export const defaultNotificationState: INotificationContextState = {
@@ -20,7 +21,8 @@ export const defaultNotificationState: INotificationContextState = {
     notificationForNewInterest: null,
     notificationForFollow: null,
     notificationForCounter: null,
-    notificationForResultOfOffers: null
+    notificationForResultOfOffers: null,
+    notificationForClaimResult: null
 }
 
 export type INotificationConetxtAction
@@ -31,7 +33,8 @@ export type INotificationConetxtAction
     | 'NEW_FOLLOWERS'
     | 'NEW_COUNTEROFFER'
     | 'ACCEPTED_OFFERS'
-    | 'RESULTS_FOR_OFFERS';
+    | 'RESULTS_FOR_OFFERS'
+    | 'RESULTS_FOR_CLAIMS';
 
 export type INotificationConetxtPayLoad = ''
 
@@ -63,13 +66,14 @@ export function NotificationContextProvier(props: any) {
     const [StateForNewFollowersNotification, setStateForNewFollowersNotification] = useState<[]>([]);
     const [StateForNewCounterOfferNotification, setStateForNewCounterOfferNotification] = useState<[]>([]);
     const [StateForResultofOffers, setStateForResultofOffers] = useState<[]>([]);
+    const [StateForResulofClaims, setStateForResulofClaims] = useState<[]>([]);
     const [TotalNewNotification, setTotalNewNotification] = useState<number>(0);
 
     async function fetchDataForNoification() {
 
-        if (NotificationState.notificationForNewInvestments && NotificationState.notificationForNewInvestments.length === 0) {
-            await NotificationReducer({ type: 'NEW_INVESTMENTS', payload: '' })
-        }
+        // if (NotificationState.notificationForNewInvestments && NotificationState.notificationForNewInvestments.length === 0) {
+        //     await NotificationReducer({ type: 'NEW_INVESTMENTS', payload: '' })
+        // }
         if (NotificationState.notificationForClaims && NotificationState.notificationForClaims.length === 0) {
             await NotificationReducer({ type: 'NEW_CLAIMS', payload: '' })
         }
@@ -104,7 +108,6 @@ export function NotificationContextProvier(props: any) {
     const fetchNewNotifiocationForNewClaims = async (state: [], payload: {}): Promise<any[]> => {
         try {
             const res = await axios.post('/api/n/fetch/newclaims', payload);
-            console.log("Ras for Claims", res)
             return [...res.data.newData];
         } catch (error) {
             console.log("error", error);
@@ -115,7 +118,6 @@ export function NotificationContextProvier(props: any) {
     const fetchNewNotifiocationForNewInvestments = async (state: [], payload: {}): Promise<any[]> => {
         try {
             const res = await axios.post('/api/n/fetch/newinvestments', payload);
-            console.log("Res is here", res)
             return res.data.newData;
         } catch (error) {
             console.log("New Investments Error", error);
@@ -126,7 +128,6 @@ export function NotificationContextProvier(props: any) {
     const fetchNewNotifiocationForNewCounterOffers = async (state: [], payload: {}): Promise<any[]> => {
         try {
             const res = await axios.post('/api/n/fetch/counter/new', payload);
-            console.log("New Counter Offers", res)
             return res.data.newData;
         } catch (error) {
             console.log("New Investments Error", error);
@@ -136,6 +137,16 @@ export function NotificationContextProvier(props: any) {
     const fechResultsForMadeOffers = async (state: [], payload: {}): Promise<any[]> => {
         try {
             const res = await axios.post('/api/n/fetch/counter/results', payload);
+            return res.data.newData;
+        } catch (error) {
+            console.log("New Investments Error", error);
+        }
+        return state
+    }
+
+    const fetchResultForClaimInvetstor = async (state: [], payload: {}): Promise<any[]> => {
+        try {
+            const res = await axios.post('/api/n/fetch/claim/results', payload);
             console.log("New Result Of Counter Offers", res)
             return res.data.newData;
         } catch (error) {
@@ -185,6 +196,13 @@ export function NotificationContextProvier(props: any) {
                     setStateForResultofOffers(newArray)
                     return;
                 }
+            case 'RESULTS_FOR_CLAIMS':
+                {
+                    let newState: any = await fetchResultForClaimInvetstor(StateForResulofClaims, { id: action.payload })
+                    let newArray: any = [...newState, ...StateForResulofClaims]
+                    setStateForResulofClaims(newArray)
+                    return;
+                }
             case 'NEW_COUNTEROFFER':
                 {
                     let newState: any = await fetchNewNotifiocationForNewCounterOffers(StateForNewCounterOfferNotification, { id: action.payload })
@@ -195,10 +213,8 @@ export function NotificationContextProvier(props: any) {
             default:
                 return;
         }
-
     }
     useEffect(() => {
-        console.log("Again Inside TimeoOut")
         setTimeout(() => {
             fetchDataForNoification();
         }, 2000)
@@ -211,7 +227,8 @@ export function NotificationContextProvier(props: any) {
             StateForNewInterestNotification.length +
             StateForNewFollowersNotification.length +
             StateForNewCounterOfferNotification.length +
-            StateForResultofOffers.length
+            StateForResultofOffers.length + 
+            StateForResulofClaims.length
 
         if (totalNewNotification !== TotalNewNotification) {
             let total = totalNewNotification
@@ -232,10 +249,9 @@ export function NotificationContextProvier(props: any) {
         notificationForNewInterest: StateForNewInterestNotification,
         notificationForFollow: StateForNewFollowersNotification,
         notificationForCounter: StateForNewCounterOfferNotification,
-        notificationForResultOfOffers: StateForResultofOffers
+        notificationForResultOfOffers: StateForResultofOffers,
+        notificationForClaimResult : StateForResulofClaims
     }
-
-
 
     return (
         <NotificationContext.Provider value={{ NotificationState, NotificationReducer, TotalNewNotification }}>
@@ -243,6 +259,3 @@ export function NotificationContextProvier(props: any) {
         </NotificationContext.Provider>
     )
 }
-
-
-

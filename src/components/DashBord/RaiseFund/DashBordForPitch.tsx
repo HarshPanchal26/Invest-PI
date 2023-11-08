@@ -13,6 +13,7 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import axios from 'axios';
 import { Skeleton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import NoData from '../../../Assets/NoData';
 
 export default function DashBordForPitch() {
 
@@ -39,7 +40,7 @@ export default function DashBordForPitch() {
   useEffect(() => {
     if (contextForDashBord.USER.TYPE === 'product') {
       setVerifyedRoute(true);
-      if (contextForDashBord.MYPITCHES.length === 0) {
+      if (contextForDashBord.MYPITCHES.length === 0 && ArrayForMyPitches === null) {
         fetchMyPitches()
       } else {
         setArrayForMyPitches(contextForDashBord.MYPITCHES)
@@ -149,6 +150,9 @@ export default function DashBordForPitch() {
                   </div>
                 )
               })}
+              {ArrayForMyPitches?.length === 0 && (
+                <NoData/>
+              )}
               {
                 ArrayForMyPitches == null && (
                   <>

@@ -2,69 +2,73 @@ import { useEffect, useState } from "react"
 import Logo from "../../Assets/logo"
 import axios from "axios"
 import verifyDataForLogIn from '../../Verification/LoginDataVarification'
+import Loading from "../../Assets/Loading"
+import { CircularProgress } from "@mui/material"
 
 type TypeForLogIn = {
-  email : string,
-  password : string  
+  email: string,
+  password: string
 }
 
 export default function LogInPage() {
 
   const [loader, setLoader] = useState<boolean>(true);
-  const [loginData , setLoginData] = useState<TypeForLogIn>({
-    email : '',
-    password : ''
+  const [LoaderForLogin, setLoaderForLogin] = useState<boolean>(false);
+
+  const [loginData, setLoginData] = useState<TypeForLogIn>({
+    email: '',
+    password: ''
   })
   const [error, setError] = useState<string | null>(null);
 
 
   const checkAutorization = () => {
-    console.log("Hello I am form Login Authority")
     try {
       axios.get('/api/login/authorization')
-      .then((result) => {
-        if (result.data.authorized) {
-          window.location.href = '/feed'
-        } else {
+        .then((result) => {
+          if (result.data.authorized) {
+            window.location.href = '/feed'
+          } else {
+            setLoader(false);
+          }
+        }).catch((error) => {
           setLoader(false);
-        }
-      }).catch((error) => {
-        setLoader(false);
-        console.log("Login Error ", error)
-      })
-    } catch (error : any) {
-      alert(`Error is ${error.message}`)  
+        })
+    } catch (error: any) {
+      alert(`Error is ${error.message}`)
     }
-    
+
   }
 
-  const handlechangeInData=(event : any )=>{
-    const {name , value} = event.target;
+  const handlechangeInData = (event: any) => {
+    const { name, value } = event.target;
+    
     setLoginData({
       ...loginData,
-      [name] : value
-    })      
+      [name]: value
+    })
   }
 
-  const handleLogin = async()=>{
-    error!==null &&  setError(null);
+  const handleLogin = async () => {
+    error !== null && setError(null);
     try {
       const res: any = await verifyDataForLogIn(loginData);
-      console.log("res form login" , res)
-      if(res?.Verified){
-       axios.post('/api/login/user' , loginData)
-        .then((res)=>{
-          window.location.href = '/feed' 
-          console.log("Res" , res);
-        }).catch((error)=>{
-          console.log("Error" , error)
-        })
-      }else{
-        setError(res?.message)
-      } 
-    } catch (error : any) {
-      console.log("error Form Login" , error)
-      setError(error?.message)
+      if (res?.Verified) { 
+        setLoaderForLogin(true);
+        axios.post('/api/login/user', loginData)
+          .then((res) => {
+            window.location.href = '/feed'
+          }).catch((error) => {
+            setError(error.response.data.message)
+            setLoaderForLogin(false);
+          })
+      } else {
+        setError('Please Enter Email and Password properly.')
+        setLoaderForLogin(false);
+      }
+    } catch (error: any) {
+      setError('Please Enter Email and Password properly.')
+      setLoaderForLogin(false);
     }
   }
 
@@ -81,7 +85,7 @@ export default function LogInPage() {
             Login to your account
           </h2>
         </div>
-      {error && <p className=' my-5 border border-red-700 rounded-xl p-1 bg-red-600 block mx-auto text-white w-1/2'>{error}</p>}
+        {error && <p className=' my-5 p-1 text-lg block mx-auto text-red-600 w-1/2'>{error}</p>}
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" action="#" method="POST">
@@ -134,7 +138,8 @@ export default function LogInPage() {
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 onClick={handleLogin}
               >
-                Log In
+                {!LoaderForLogin && 'Log In'}
+                {LoaderForLogin && <CircularProgress color="inherit" />}
               </button>
             </div>
           </form>

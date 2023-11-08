@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
-// const ServicesForPitches = require('../services/serviceForPitches');
+// const ServicesForPitches = required('../services/serviceForPitches');
 
 const SchemaForQnA = new mongoose.Schema({
     que: {
         type: String,
-        require: false,
+        required: false,
     },
     ans: {
         text: {
             type: String,
-            require: false
+            required: false
         },
         urls: {
             type: Array,
-            require: false
+            required: false
         }
     }
 })
@@ -21,17 +21,17 @@ const SchemaForQnA = new mongoose.Schema({
 const SchemForPitchEngagement = new mongoose.Schema({
     interests: {
         type: Number,
-        require: false,
+        required: false,
         default: 0
     },
     views: {
         type: Number,
-        require: false,
+        required: false,
         default: 0
     },
     counter: {
         type: Number,
-        require: false,
+        required: false,
         default: 0
     }
 })
@@ -39,72 +39,72 @@ const SchemForPitchEngagement = new mongoose.Schema({
 const SchemaForPitches = new mongoose.Schema({
     rid: {
         type: String,
-        require: true,
+        required: true,
         unique: true,
     },
     localname :  {
         type: String,
-        require: true,
+        required: false,
     },
     startDate: {
         type: String,
-        require: true
+        required: true
     },
     buisnessMode: {
         type: String,
-        require: true
+        required: true
     },
     url: {
         type: String,
-        require: true
+        required: true
     },
     avgSixMonthSale: {
         type: String,
-        require: true
+        required: true
     },
     avgSixMonthViews: {
         type: String,
-        require: true
+        required: true
     },
     avgSixMonthCustomer: {
         type: String,
-        require: true
+        required: true
     },
     avgYearSale: {
         type: String,
-        require: true
+        required: true
     },
     avgYearViews: {
         type: String,
-        require: true
+        required: true
     },
     avgYearCustomer: {
         type: String,
-        require: true
+        required: true
     },
     targetAudiences: {
         type: String,
-        require: true
+        required: true
     },
     seekingFund: {
         type: Number,
-        require: true
+        required: true
     },
     currentValuation: {
         type: Number,
-        require: true
+        required: true
     },
     offeredEquity: {
         type: Number,
-        require: true
+        required: true
     },
     maximumOffer: {
         type: Number,
-        require: true
+        required: true
     },
     fundingType: {
         type: String,
-        require: true
+        required: true
     },
     faqs: {
         Business: [SchemaForQnA],
@@ -117,28 +117,28 @@ const SchemaForPitches = new mongoose.Schema({
     engagement: {
         interests: {
             type: Number,
-            require: false,
+            required: false,
             default: 0
         },
         views: {
             type: Number,
-            require: false,
+            required: false,
             default: 0
         },
         counter: {
             type: Number,
-            require: false,
+            required: false,
             default: 0
         }
     },
     desirePepole: {
         type: Array,
-        require: false,
+        required: false,
         default: []
     },
     getFunded: {
         type: Boolean,
-        require: false,
+        required: false,
         default: false
     }
 
@@ -147,32 +147,32 @@ const SchemaForPitches = new mongoose.Schema({
 const SchemaForCounterOffer = new mongoose.Schema({
     pitchId: {
         type: String,
-        require: true
+        required: true
     },
     offerBy: {
         type: String,
-        require: true
+        required: true
     },
     offerTo: {
         type: String,
-        require: true
+        required: true
     },
     counterAmount: {
         type: String,
-        require: true
+        required: true
     },
     counterEquity: {
         type: String,
-        require: true
+        required: true
     },
     accept: {
         type: Boolean,
-        require: false,
+        required: false,
         default: false,
     },
     reject: {
         type: Boolean,
-        require: false,
+        required: false,
         default: false,
     }
 })

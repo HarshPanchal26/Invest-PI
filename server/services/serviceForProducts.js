@@ -52,7 +52,7 @@ const retriveProductwithInestments = (id) => {
             const result = await Model.aggregate([
                 {
                     $match: {
-                        rid: '6508555957122e89e90a03e6'
+                        rid: id
                     }
                 },
                 {
@@ -78,7 +78,7 @@ const retriveProductwithInestments = (id) => {
                     }
                 }
             ])
-            console.log("INVESTMENTS " , result)
+            console.log("INVESTMENTS " , result , id)
             resolve(result[0]);
         } catch (error) {
             console.log("Error" , error)
@@ -141,6 +141,8 @@ const createMediaForProduct = (condition, file, object) => {
 }
 
 const createPitchForProduct = (rid, object) => {
+
+    // This is not an idol mehtod for handling data . Soon change it  
     const { faqs, additionalDetails, desireInvestor } = object;
     const { Audience, Business, Financials, Market, Performance, Equity } = faqs;
 
@@ -162,6 +164,7 @@ const createPitchForProduct = (rid, object) => {
     let FinalObject = {
         rid: rid,
         ...additionalDetails,
+        maximumOffer : additionalDetails.maximunofferedEquity,
         faqs: {
             ...ObjectForFaqs
         },

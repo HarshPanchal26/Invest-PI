@@ -3,139 +3,173 @@ const mongoose = require('mongoose')
 const SchemForNotificationOfNewInvestment = new mongoose.Schema({
     type: {
         type: String,
-        require: false,
+        required: false,
         default: 'NEW_INVESTMENTS'
     },
     rid: {
         type: String,
-        require: true
+        required: true
     },
     leadinvestors: {
         type: Array,
-        require: true
+        required: true
     },
     company: {
         type: String,
-        require: true
+        required: true
     },
     allinvestors: {
         type: Array,
-        require: true
+        required: true
     },
     details: {
         type: Object,
-        require: true,
+        required: true,
     },
     createdAt: {
         type: Date,
-        require: false,
+        required: false,
         default: new Date()
     }
 
 })
 // Schema For Notifications
-const SchemaForClaimInvestors = new mongoose.Schema({
+
+const SchemaForClaimInvestorsNotification = new mongoose.Schema({
     type: {
         type: String,
-        require: false,
+        required: false,
         default: 'CLAIM_INVESTORS'
+    },
+    irid: {
+        type: String,
+        required: true
     },
     leadinvestors: {
         type: Array,
-        require: true
+        required: true
     },
     company: {
         type: String,
-        require: true
+        required: true
     },
     allinvestors: {
         type: Array,
-        require: true
+        required: true
     },
     details: {
-        type: Object,
-        require: true
+        raisedAmount: {
+            type: Number,
+            required: true
+        },
+        dateofInvestment: {
+            type: Date,
+            required: false,
+            default: new Date()
+        },
+        typeOfInvestment: {
+            type: String,
+            required: true
+        }
     },
     createdAt: {
         type: Date,
-        require: false,
+        required: false,
         default: new Date()
+    },
+    approval: {
+        type: Object,
+        required: false
     }
 
+}, { minimize: false })
+
+SchemaForClaimInvestorsNotification.pre('save', function (next) {
+    if (!this.isNew) {
+        return next();
+    }
+    let ObjForApproval = {};
+    for (let i = 0; i < this.allinvestors.length; i++) {
+        ObjForApproval.investors[i] = false
+    }
+    this.approval = ObjForApproval;
+    console.log("Created Obj from pre function in Notofication", ObjForApproval);
+    next()
 })
+
 
 const SchemaForNewInterests = new mongoose.Schema({
     type: {
         type: String,
-        require: false,
+        required: false,
         default: 'NEW_INTERESTS'
     },
     interestedIn: {
         type: String,
-        require: true
+        required: true
     },
     interested: {
         type: Array,
-        require: true
+        required: true
     },
     createdAt: {
         type: Date,
-        require: false,
+        required: false,
         default: new Date()
     }
 })
 
 const SchemaForCounterOfferNotifications = new mongoose.Schema({
-    type : {
+    type: {
         type: String,
-        require: false,
+        required: false,
         default: 'NEW_COUNTEROFFER'
     },
-    crid : {    
-        type : String,
-        require : true        
+    crid: {
+        type: String,
+        required: true
     },
-    pitchId : {
-        type : String,
-        require : true
+    pitchId: {
+        type: String,
+        required: true
     },
-    offerFor : {
-        type : String,
-        require : true
+    offerFor: {
+        type: String,
+        required: true
     },
-    offerBy : {
-        type : String,
-        require : true
+    offerBy: {
+        type: String,
+        required: true
     },
-    offereAmount : {
-        type : String,
-        require : true
+    offereAmount: {
+        type: String,
+        required: true
     },
-    offeredEquity : {
-        type : String,
-        require : true
+    offeredEquity: {
+        type: String,
+        required: true
     },
-    accepted :{
-        type : Boolean,
-        require : false,
-        default : false
+    accepted: {
+        type: Boolean,
+        required: false,
+        default: false
     },
-    rejected :{
-        type : Boolean,
-        require : false,
-        default : false
+    rejected: {
+        type: Boolean,
+        required: false,
+        default: false
     },
-    createdAt : {
-        type : Date,
-        require : false,
-        default : new Date()
+    createdAt: {
+        type: Date,
+        required: false,
+        default: new Date()
     }
 
 })
 
 module.exports = {
     SchemForNotificationOfNewInvestment,
-    SchemaForClaimInvestors,
+    SchemaForClaimInvestorsNotification,
     SchemaForNewInterests,
     SchemaForCounterOfferNotifications
 }

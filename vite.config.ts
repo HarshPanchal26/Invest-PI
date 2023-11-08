@@ -18,7 +18,8 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'http://localhost:5000', // Set the target to your server
+                target: 'https://piserver.onrender.com/', // Set the target to your server
+                // target: 'http://localhost:5000', // Set the target to your server
                 changeOrigin: true, // Change the origin to match the target
                 rewrite: (path) => path.replace(/^\/api/, ''), // Optionally rewrite the path
             },

@@ -23,6 +23,7 @@ import UpdateCoverImage from './update_component/UpdateCoverImage';
 import BackButton from '../../Assets/BackButton';
 import Post from '../DashBord/Home/components/Post';
 import NoData from '../../Assets/NoData';
+import ViewHighLights from '../DashBord/RaiseFund/pitch_componnets/ViewHighLights';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -167,7 +168,7 @@ export default function ProfileForCF({ objForProfile }: props) {
                 {/* Profile */}
                 <main className='relative bottom-24 z-0'>
                     <section className="py-8">
-                        <div className="flex mx-10">
+                        <div className="flex mx-10 flex-row">
                             <div className="relative">
                                 <IconButton onClick={() => handleOpenForModal('Profile')}>
                                     <Avatar
@@ -178,6 +179,9 @@ export default function ProfileForCF({ objForProfile }: props) {
                                     />
                                 </IconButton>
                             </div>
+                            <div className='flex justify-end w-full mt-24'>
+                                <p className='text-red-600 font-bold text-3xl cursor-pointer hover:underline'>{'#432'}</p>
+                            </div>   
                         </div>
                         <div className="mt-6 flex flex-row border bg-slate-50 rounded-md mx-4 justify-between">
                             <div className='flex flex-col'>
@@ -334,6 +338,27 @@ export default function ProfileForCF({ objForProfile }: props) {
                             </CustomTabPanel2>
                         </div>
 
+                        {/* HighLights section */}
+                        <div className='border rounded-md mx-2 my-3'>
+                            <div className="flex flex-row justify-between">
+                                <p className='text-2xl mx-3 font-bold p-2'>{'Highlights'}</p>
+                            </div>
+                            <section className="flex flex-col py-4  border-gray-200">
+                                <div className='flex my-3 mx-3 p-3 bg-slate-50 rounded-md'>
+                                    {/* {objForProfile?.PRODUCTINSIDE.length === 0 && (
+                                        <NoData />
+                                    )}
+                                    {objForProfile?.PRODUCTINSIDE && ( */}
+                                    <div className='mt-1 mx-auto'>
+                                        <ViewHighLights ArrayForHighlights={[
+                                            { title: 'Total Invetsment', value: `10` },
+                                            { title: 'Ticket Size', value: `20M` },
+                                        ]} />
+                                    </div>
+                                    {/* )} */}
+                                </div>
+                            </section>
+                        </div>
                         {/* tab*/}
                         <div className='border mx-2 rounded-md my-4'>
                             <div className="flex flex-row justify-between">

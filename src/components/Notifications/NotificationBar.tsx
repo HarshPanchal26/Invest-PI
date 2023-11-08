@@ -3,7 +3,6 @@ import { Avatar } from '@mui/material';
 import { NotificationContext } from '../../context/NotificationContext';
 import Loading from '../../Assets/Loading';
 import NotificationForClaimedInvestor from './components/NotificationForClaimedInvestor';
-import {CommanUserDataStotage} from '../../utils/factory/ObjForUser'
 import { useNavigate } from 'react-router-dom';
 import NotificationForCounterOffers from './components/NotificationForCounterOffers';
 import NotificationForOfferResults from './components/NotificationForOfferResults';
@@ -14,8 +13,8 @@ export interface INotificationDatatForState {
     notificationForClaims: [] | null,
     notificationForInterest: [] | null,
     notificationForFollow: [] | null,
-    notificationForCounter : [] | null,
-    notificationForResultOfOffers : [] | null,
+    notificationForCounter: [] | null,
+    notificationForResultOfOffers: [] | null,
 }
 export default function NotificationBar() {
 
@@ -32,8 +31,8 @@ export default function NotificationBar() {
                 notificationForClaims: data.notificationForClaims,
                 notificationForInterest: data.notificationForNewInterest,
                 notificationForFollow: data.notificationForFollow,
-                notificationForCounter : data.notificationForCounter,
-                notificationForResultOfOffers : data.notificationForResultOfOffers
+                notificationForCounter: data.notificationForCounter,
+                notificationForResultOfOffers: data.notificationForResultOfOffers
             }
             setStateForNotificationData(newObj)
         }
@@ -65,7 +64,7 @@ export default function NotificationBar() {
                         return (
                             <div
                                 className='bg-green-400 flex flex-row px-4 py-2 text-sm text-gray-700 cursor-pointer text-left border-b items-center'
-                           
+
                             >
                                 <Avatar
                                     alt="Remy Sharp"
@@ -78,28 +77,26 @@ export default function NotificationBar() {
                                 </div>
                             </div>)
                     })}
-                    {stateForNotificationData.notificationForResultOfOffers && stateForNotificationData.notificationForResultOfOffers.map((item , index)=>{
+                    {stateForNotificationData.notificationForResultOfOffers && stateForNotificationData.notificationForResultOfOffers.map((item, index) => {
                         return (
-                            <NotificationForOfferResults objForNotification={item}/>
+                            <NotificationForOfferResults objForNotification={item} />
                         )
                     })}
-                    {stateForNotificationData.notificationForCounter && stateForNotificationData.notificationForCounter.map((item , index) => {
-                        console.log("New Notification is" , item)
+                    {stateForNotificationData.notificationForCounter && stateForNotificationData.notificationForCounter.map((item, index) => {
+                        console.log("New Notification is", item)
                         return (
-                            <NotificationForCounterOffers objForNotification={item} usedFor='Notification'/>
+                            <NotificationForCounterOffers objForNotification={item} usedFor='Notification' />
                         )
                     })}
                     {stateForNotificationData.notificationForClaims && stateForNotificationData.notificationForClaims.map((item, index) => {
                         return (
-                            <NotificationForClaimedInvestor objForNotification={item}/>)
+                            <NotificationForClaimedInvestor objForNotification={item} />)
                     })}
-                    {
-                        stateForNotificationData.notificationForClaims=== null && (
-                           <div>
-                                {'Loading......'}
-                           </div>
-                        )
-                    }
+                    {stateForNotificationData.notificationForClaims === null && (
+                        <div>
+                            {'Loading......'}
+                        </div>
+                    )}
                     {stateForNotificationData.notificationForInterest && stateForNotificationData.notificationForInterest.map((item, index) => {
                         return (
                             <div
@@ -117,6 +114,11 @@ export default function NotificationBar() {
                                 </div>
                             </div>)
                     })}
+                    {notificationContext && notificationContext.TotalNewNotification === 0 && (
+                        <ul>
+                            <li>'Invetsi PI Does not have any update for you right now , As soon we get something for you will let you know. </li>
+                        </ul>
+                    )}
                 </div>
             )}
             {!stateForNotificationData && <Loading />}

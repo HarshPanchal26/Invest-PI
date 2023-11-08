@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar } from '@mui/material'
-import { CommanUserDataStotage  , GenerateObjForCommanUserData} from '../../../utils/factory/ObjForUser'
+import { CommanUserDataStotage, GenerateObjForCommanUserData } from '../../../utils/factory/ObjForUser'
 import axios from 'axios'
 import Loading from '../../../Assets/Loading'
 import AvatarGroup from '@mui/material/AvatarGroup';
@@ -18,26 +18,6 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
     const [objForCompany, setObjForCompany] = useState<any | null>(null);
     const [ArrayForAllInvestors, setArrayForAllInvestors] = useState<Array<[]>>([]);
 
-    // const fetchUser = async (id: String) => {
-    //     let findLocal: any = []
-    //     console.log("We are First IF Block" , CommanUserDataStotage)
-    //     if(CommanUserDataStotage.length > 0){
-    //         findLocal = CommanUserDataStotage.filter((item: any) => item._id === id)
-    //     }
-    //     if (findLocal[0]) {
-    //         console.log("We are inside IF Block")
-    //         return findLocal[0];
-    //     } else {
-    //         console.log("We are inside ELSE Block")
-    //         try {
-    //             const array = await axios.get(`/api/profile/filter/?find=${id}`);
-    //             GenerateObjForCommanUserData(array.data)
-    //             return array.data;
-    //         } catch (error: any) {
-    //             console.log("error", error)
-    //         }
-    //     }
-    // }
     const fetchUser = async (id: String) => {
         let findLocal: any = [];
         if (CommanUserDataStotage.length > 0) {
@@ -56,7 +36,7 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
             }
         }
     }
-    
+
     const fetchAllInvestors = async () => {
         for (let i = 0; i < objForNotification?.allinvestors.length; i++) {
             let res = await fetchUser(objForNotification?.allinvestors[i],)
@@ -69,6 +49,30 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
     const fetchOrganization = async () => {
         let profile = await fetchUser(objForNotification.company);
         setObjForCompany({ ...profile })
+    }
+
+    const handleAcceptClaim = async () => {
+        try {
+            const res = await axios.post('/api/investments/claim/action/accept', {
+                irid: objForNotification.irid,
+                compnay: objForNotification.company
+            });
+            console.log("Result of action ", res)
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
+
+    const handleDeclineOfClaim = async () => {
+        try {
+            const res = await axios.post('/api/investments/claim/action/decline', {
+                irid: objForNotification.irid,
+                compnay: objForNotification.company
+            });
+            console.log("Result of action ", res)
+        } catch (error) {
+            console.log("error", error)
+        }
     }
 
     useEffect(() => {
@@ -110,23 +114,37 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
                             <p className='text-sm text-gray-700 mb-2'>Investors</p>
                             <AvatarGroup max={4}>
                                 <Avatar alt="Remy Sharp" src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTP5mQSEI40IsJlF-L-sNFVuqS-bIbXJ3bfkdu_tNrPp-0v3Awn" />
-                                {ArrayForAllInvestors.map((item : any)=>{
+                                {ArrayForAllInvestors.map((item: any) => {
                                     return (
-                                        <Avatar alt="Remy Sharp" src={item?.profileImage} />   
+                                        <Avatar alt="Remy Sharp" src={item?.profileImage} />
                                     )
                                 })}
                             </AvatarGroup>
                         </div>
-                            <div className='block my-5 mx-6'>
-                                <Stack direction="row" spacing={1}>
-                                    <Chip icon={<CheckIcon />} label="Accept" variant='outlined' color='primary' style={{
+                        <div className='block my-5 mx-6'>
+                            <Stack direction="row" spacing={1}>
+                                <button type='button' onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleAcceptClaim()
+                                }}>
+                                    <Chip
+                                        icon={<CheckIcon />}
+                                        label="Accept"
+                                        variant='filled'
+                                        color='primary'
+                                        style={{
+                                            padding: '20px'
+                                        }}
+                                    /></button>
+                                <button type='button' onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleDeclineOfClaim()
+                                }}>
+                                    <Chip icon={<ClearIcon />} label="Decline" variant="outlined" color='primary' style={{
                                         padding: '20px'
-                                    }} />
-                                    <Chip icon={<ClearIcon />} label="Decline" variant="filled" color='primary' style={{
-                                        padding: '20px'
-                                    }} />
-                                </Stack>
-                            </div>
+                                    }} /></button>
+                            </Stack>
+                        </div>
                     </div>
                 </div>
             )}

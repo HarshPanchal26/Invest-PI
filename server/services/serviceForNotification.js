@@ -1,7 +1,7 @@
 const { mongoose } = require('../config/database');
 const {
     SchemForNotificationOfNewInvestment,
-    SchemaForClaimInvestors,
+    SchemaForClaimInvestorsNotification,
     SchemaForCounterOfferNotifications
 } = require('../models/NotifiationModels');
 const { SchemaForCounterOffer } = require('../models/PitchModels');
@@ -20,11 +20,20 @@ const newInvestmentNotification = (obj) => {
     })
 }
 
-const notificationForClaimedInvestors = (obj) => {
+const notificationForClaimedInvestors = (objForNotification) => {
     return new Promise(async (reslove, reject) => {
         try {
-            const Model = dbForNotification.model('newInvestment', SchemaForClaimInvestors, 'n-asinvestors');
-            const res = await Model.create({});
+            const Model = dbForNotification.model('newInvestment', SchemaForClaimInvestorsNotification, 'n-asinvestors');
+            const res = await Model.create({
+                irid: objForNotification.rid,
+                company: objForNotification.company,
+                allinvestors: objForNotification.allinvestors,
+                leadinvestors: objForNotification.leadinvestors,
+                details: {
+                    raisedAmount: objForNotification.details.raisedAmount,
+                    typeOfInvestment: objForNotification.details.typeOfInvestment
+                }
+            });
             console.log("Climed Posistion ", res)
             reslove(res);
         } catch (error) {
@@ -73,16 +82,21 @@ const fetchNotificatinForNewInvestmenst = (idofNotification) => {
 
 const fetchNotificatinForClaimedInvestors = (idofNotification, rid) => {
     return new Promise(async (reslove, reject) => {
-        const Model = dbForNotification.model('Position', SchemaForClaimInvestors, 'n-asinvestors')
+        const Model = dbForNotification.model('Position', SchemaForClaimInvestorsNotification, 'n-asinvestors')
         try {
             if (idofNotification) {
                 const res = await Model.find({ _id: idofNotification });
                 reslove(res)
             } else {
                 const res = await Model.find({
-                    allinvestors: rid
+
+                    $or: [
+                        { allinvestors: rid },
+                        { leadinvestors: rid }
+                    ]
+
                 });
-                console.log("Climed Posistion By Filter", res)
+                console.log("!!!!!!!!!!!!Climed Posistion By Filter", res)
                 reslove(res)
             }
 
@@ -202,6 +216,57 @@ const fetchCounterOfferResult = (docID, userId) => {
     })
 }
 
+
+const AcceptClaimForInvestor = (compnayId , docId, userId) => {
+    return new Promise(async (reslove, reject) => {
+        try {
+            const Model = dbForNotification.model('Invetsments', SchemaForClaimInvestorsNotification, 'n-counterOffers')
+            const res = await Model.updateOne({ 
+                irid: docId ,
+                company : compnayId
+            }, {
+                $set: {
+                    ['approval'[userId]]: true
+                }
+            })
+            reslove(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const DeclineClaimForInvestor = (compnayId ,docId, userId) => {
+
+    return new Promise(async (reslove, reject) => {
+        try {
+            const Model = dbForNotification.model('Counter', SchemaForClaimInvestorsNotification, 'n-counterOffers')
+            const res = await Model.updateOne({
+                 irid: docId ,
+                 company :compnayId  
+                }, {
+                $set: {
+                    ['approval'[userId]]: true
+                }
+            })
+            reslove(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const fetchClaimInvestorsAction = ()=>{
+    return new Promise(async(reslove ,reject)=>{
+        try {
+            
+        } catch (error) {
+            
+        }
+    })
+}
+
+
 module.exports = {
     notificationForClaimedInvestors,
     newInvestmentNotification,
@@ -213,5 +278,8 @@ module.exports = {
     createNotificationForCounterOffers,
     AcceptCounterOfferNotofication,
     DeclineCounterOfferNotification,
-    fetchCounterOfferResult
+    fetchCounterOfferResult,
+    AcceptClaimForInvestor,
+    DeclineClaimForInvestor,
+    fetchClaimInvestorsAction
 }

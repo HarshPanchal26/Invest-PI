@@ -51,6 +51,9 @@ const SocketContextComponent: React.FunctionComponent<ISocketContextComponentPro
             socket.on('action-on-counterOffer', (message) => {    
                 notificationContext?.NotificationReducer({ type: 'RESULTS_FOR_OFFERS', payload: {docID : message}})
             }) 
+            socket.on('action-on-claimInvestor', (idOfInvetsmentDoc , Accepter_id) => {    
+                notificationContext?.NotificationReducer({ type: 'RESULTS_FOR_OFFERS', payload: {docID : idOfInvetsmentDoc , accepter : Accepter_id}})
+            }) 
         })
 
 

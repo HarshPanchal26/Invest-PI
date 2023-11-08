@@ -1,3 +1,4 @@
+const { json } = require('body-parser')
 const ServiceForNotification = require('../services/serviceForNotification')
 
 const newInvestmentNotification = async (req, res) => {
@@ -103,11 +104,30 @@ const notificationForInterests = async (req, res) => {
     }
 }
 
+
+const controllerForResultOfClaimInvesttorsAction = async(req  ,res)=>{
+    let documentID = req.body.docID;
+    let userId = res.locals.uid;
+    try {
+        await ServiceForNotification.fetchClaimInvestorsAction(documentID)
+        res.status(201).json({
+            fetch : true,
+            message : ''
+        })
+    } catch (error) {
+        res.status(201).json({
+            fetch : false,
+            message : ''
+        })
+    }
+}
+
 module.exports = {
     notificationForPositionClaim,
     newInvestmentNotification,
     notificationForInterests,
     notificationForNewPost,
     notificationForCounterOffers,
-    notoficationForCounterResults
+    notoficationForCounterResults,
+    controllerForResultOfClaimInvesttorsAction
 }

@@ -1,5 +1,5 @@
 // Section 7 is for Desire Investor 
-import React, { SetStateAction, useEffect, useState } from 'react'
+import React, { SetStateAction, useEffect, useState , useContext} from 'react'
 import { Button } from '@mui/material'
 import { TypeForFAQs, TypeForDetailsAboutBusiness } from '../../../../utils/type'
 import axios from 'axios'
@@ -10,6 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
 import {Backdrop} from '@mui/material'
 import {CircularProgress} from '@mui/material'
+import { ContextForDashBord } from '../../../../context/contextForDashBord'
 
 type Props = {
     handleNext: Function
@@ -47,6 +48,8 @@ export default function QueForPitchSection7({ setDrawerOpen, arryForDesireInvest
     const [errorMessage, setErrorMessage] = useState<TypeForError>({
         desireInvestor: '',
     })
+
+    const contextForDashBord = useContext(ContextForDashBord)
 
     const [openDrop , setOpenDrop] = useState<boolean>(false)
 
@@ -123,7 +126,9 @@ export default function QueForPitchSection7({ setDrawerOpen, arryForDesireInvest
             const res = await axios.post('/api/product/create/pitch', ObjToSend);
             console.log("res", res);
             setDrawerOpen(false);
+            contextForDashBord.MYPITCHES.push(res.data.result)
         } catch (error) {
+            setDrawerOpen(false);
             console.log("error", error);
         }
     }

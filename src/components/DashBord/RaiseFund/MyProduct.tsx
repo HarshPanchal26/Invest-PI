@@ -81,7 +81,7 @@ export default function MyProduct() {
                         </div>
                         <div className='my-5 md:col-span-4 md:text-left col-span-full md:order-2 order-3 text-center'>
                             <span className='text-lg  text-slate-500'>Product</span>
-                            <p className='text-3xl font-bold my-2'>HR Cloths</p>
+                            <p className='text-3xl font-bold my-2'>{contextForDashBord.USER.COMPANYNAME}</p>
                         </div>
                         <div className='my-5 md:order-3 order-2 cursor-pointer'>
                             <span className='text-lg  text-slate-500'>Rank</span>

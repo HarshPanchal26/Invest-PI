@@ -4,7 +4,6 @@ const ServiceForNotofication = require('../services/serviceForNotification')
 const controllerForNewInvestment = async (req, res) => {
     try {
         const { investmentData, extarData } = req.body
-        // Instance of Socet server
         let io = req.app.get('io');
 
         let ObjectToInsert = {
@@ -31,13 +30,13 @@ const controllerForNewInvestment = async (req, res) => {
         }
 
         const result = await ServiceForInvestment.createNewInvestment(ObjectToInsert);
-        await ServiceForInvestment.addNewInvestment(result._id, res.locals.uid)
+        await ServiceForInvestment.addNewInvestment(result._id, res.locals.uid, ObjectToInsert)
 
         let objForNotification = {
             rid: result._id,
-            leadinvestors: ObjectToInsert.leadInvestors,
             company: ObjectToInsert.recipient,
-            allinvestors: ObjectToInsert.allInvestor,
+            leadinvestors: [...ObjectToInsert.leadInvestors],
+            allinvestors: [...ObjectToInsert.allInvestor],
             details: {
                 raisedAmount: parseFloat(investmentData.raisedAmount, 10),
                 dateofInvestment: investmentData.dateofInvestment,
@@ -86,4 +85,36 @@ const controllerForFetchInvestments = async (req, res) => {
     }
 }
 
-module.exports = { controllerForNewInvestment, controllerForFetchInvestments }
+const controllerForActionOnClaim = async (req, res) => {
+    let docId = req.body.irid;
+    let compnayId = req.body.compnay;
+    let useId = res.locals.uid
+    let io = req.app.get('io')
+    try {
+        let actionType = req.customData.action
+        if (actionType === 'ACCEPT') {
+            await ServiceForInvestment.acceptClaimForInvestror(compnayId , docId, useId);
+            await ServiceForNotofication.AcceptClaimForInvestor(compnayId , docId, useId)
+        } else if (actionType === 'DECLINE') {
+            await ServiceForInvestment.declneClaimForInvestror(compnayId , docId, useId);
+            await ServiceForNotofication.DeclineClaimForInvestor(compnayId , docId, useId)
+        } else {
+            res.status(401).json({
+                action: false,
+                message: 'Server Error, Please Contact Help Center'
+            })
+        }
+        io.triggerNotificatioinForResultOfClaimInvestor(compnayId, useId, docId)
+        res.status(201).json({
+            accepted: true,
+            message: ''
+        })
+    } catch (error) {
+        res.status(401).json({
+            accepted: false,
+            message: error.message
+        })
+    }
+}
+
+module.exports = { controllerForNewInvestment, controllerForFetchInvestments, controllerForActionOnClaim }

@@ -5,7 +5,7 @@ import axios from 'axios';
 
 type formatForSignInData = {
   email: string,
-  username : string,
+  username: string,
   password: string,
   cPassword: string
 }
@@ -25,10 +25,12 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
 
   const [dataForSignIn, setdataForSignIn] = useState<formatForSignInData>({
     email: objForSignInComonent.email,
-    username : '',
+    username: '',
     password: '',
     cPassword: ''
   })
+  const [LoaderForLogin, setLoaderForLogin] = useState<boolean>(false);
+
 
   const [error, setError] = useState<string | null>(null);
   const [typeOfUser, setTypeOfUser] = useState<string | null>(null);
@@ -39,36 +41,38 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
     try {
       await verifyDataForSignUp(dataForSignIn);
       if (typeOfUser !== null) {
+        setLoaderForLogin(true)
         try {
           const objects = {
             details: {
               ...objForSignInComonent,
-              username : dataForSignIn.username
+              username: dataForSignIn.username
             },
             authenticationData: {
-              name :  objForSignInComonent.companyname || objForSignInComonent.firmname || (objForSignInComonent.firstName + " " +objForSignInComonent.lastName), 
+              name: objForSignInComonent.companyname || objForSignInComonent.firmname || (objForSignInComonent.firstName + " " + objForSignInComonent.lastName),
               email: dataForSignIn.email,
               password: dataForSignIn.password,
-              username : dataForSignIn.username,
+              username: dataForSignIn.username,
               type: typeOfUser
             }
           }
           const result = await axios.post(`/api/signin/${typeOfUser}`, objects)
-          console.log("result from form", result)
           if (result.data.authorization) {
             window.location.href = '/feed';
           } else {
             setError(result.data.message)
+            setLoaderForLogin(false)
           }
 
         } catch (error: any) {
-          console.log("error form Sign in Form " , error)
-          if(error.response?.data?.message) setError(error.response.data.message);
+          setLoaderForLogin(false)
+          if (error.response?.data?.message) setError(error.response.data.message);
           else setError('Error Due to Network Issue')
 
         }
       }
     } catch (error: any) {
+      setLoaderForLogin(false)
       alert(`Error is ${error}`)
     }
   }
@@ -82,16 +86,14 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
   }
 
   useEffect(() => {
-    // Effect for push user type and ArrayForInterest inside main objects            
     objForSignInComonent.interest = [...ArrayForInterest]
-    console.log('objForSignInComonent==>', objForSignInComonent, ArrayForInterest)
     setTypeOfUser(objForSignInComonent.type);
   }, [])
 
   return (
     <div className='flex md:w-1/2 w-full mx-auto flex-col h-auto my-10'>
       <Logo />
-      {error && <p className=' my-5 border border-red-700 rounded-xl p-1 bg-red-600 block mx-auto text-white w-1/2'>{error}</p>}
+      {error && <p className=' my-5 p-1 text-lg block mx-auto text-red-600 w-1/2'>{error}</p>}
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="space-y-6" >
           <div className="">

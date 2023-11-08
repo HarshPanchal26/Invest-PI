@@ -48,6 +48,7 @@ export default function FormForPitch({setDrawerOpen} : Props)  {
       currentValuation : 0,
       offeredEquity : 0,
       maximunofferedEquity : 0,
+      fundingType : ''
   })
 
   const [arryForDesireInvestor , setArrayForDesireInvestor] = useState<Array<any>>([]);

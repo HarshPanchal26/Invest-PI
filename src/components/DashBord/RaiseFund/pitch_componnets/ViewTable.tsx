@@ -83,11 +83,11 @@ export default function ViewTable({ dataForInvestments, setDataForInvestments }:
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow className='text-2xl'>
-            <TableCell><b>Lead Investors</b></TableCell>
-            <TableCell align="right"><b>Type</b></TableCell>
-            <TableCell align="right"><b>Amount</b></TableCell>
-            <TableCell align="right"><b>Total Investor</b></TableCell>
-            <TableCell align="right"><b>Date</b></TableCell>
+            <TableCell><b className='text-lg'>Lead Investors</b></TableCell>
+            <TableCell align="right"><b className='text-lg'>Type</b></TableCell>
+            <TableCell align="right"><b className='text-lg'>Amount</b></TableCell>
+            <TableCell align="right"><b className='text-lg'>Total Investor</b></TableCell>
+            <TableCell align="right"><b className='text-lg'>Date</b></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -98,7 +98,7 @@ export default function ViewTable({ dataForInvestments, setDataForInvestments }:
             >
               <TableCell component="th" scope='row'>
                 {dataForInvestorsProfile !== null && (
-                  <div className='flex flex-col flex-wrap w-[300px] h-full '>
+                  <div className='flex md:flex-row flex-row flex-wrap w-[500px] h-full '>
                     {
                       item.leadInvestors.map((item: any) => {
                         let Obj: any = findUserThroughId(item)
@@ -137,20 +137,10 @@ export default function ViewTable({ dataForInvestments, setDataForInvestments }:
                   </>
                 }
               </TableCell>
-              <TableCell align="right">{item.typeOfInvestment}</TableCell>
-              <TableCell align="right">${item.raisedAmount}M</TableCell>
-              <TableCell align="right">{item.allInvestor.length}</TableCell>
-              <TableCell align="right">{item.dateofInvestment}</TableCell>
-              {/* <TableCell component="th" scope="row">
-                {
-                  item.allInvestor.map((item: any) => {
-                    return (
-                      <span>{item}</span>
-                    )
-                  })
-                }
-              </TableCell>
-            */}
+              <TableCell align="right"><span className='font-bold text-lg text-left'>{item.typeOfInvestment}</span></TableCell>
+              <TableCell align="right"><span className='font-bold text-lg text-left text-blue-700'>${item.raisedAmount}M</span></TableCell>
+              <TableCell align="right"><span className='font-bold text-lg text-left'>{item.allInvestor.length}</span></TableCell>
+              <TableCell align="right"><span className='font-bold text-lg text-left'>{item.dateofInvestment}</span></TableCell>
             </TableRow>
           ))}
         </TableBody>

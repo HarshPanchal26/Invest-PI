@@ -3,7 +3,6 @@ const {isAutorized} = require('../middleware/middlewareForAuthentication')
 const getUserData = require('../middleware/middlewareForUserData');
 const {controllerForAllFeed, controllerForSingleFeed} = require('../controller/controllerForFeed');
 const {ServerSocket} = require('../socketio');
-const {io} = require('../server');
 
 const router = experess.Router();
 

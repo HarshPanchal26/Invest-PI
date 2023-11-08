@@ -10,7 +10,7 @@ type Props = {
 
 export default function ViewHighLights( {ArrayForHighlights} : Props) {
     return (
-        <div className='p-1 flex flex-row flex-wrap gap-6 w-4/5 mx-auto justify-center'>
+        <div className='p-1 flex flex-row flex-wrap gap-6 w-full  justify-center'>
             {ArrayForHighlights.map((item , index) => {
                 return (
                     (<div className='border rounded-lg min-w-max bg-slate-200 shadow-md md:p-10 p-5' key={index}>
