@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { resolve } from 'path'
 import react from '@vitejs/plugin-react'
 import viteTsconfigPaths from 'vite-tsconfig-paths'
 import dns from 'dns'
@@ -28,6 +29,16 @@ export default defineConfig({
         open: true,
         host: "localhost",
         port: 8080
-    }
+    },
+    build: {
+        lib: {
+            entry: resolve(__dirname, 'src/index.ts'),
+            name: 'myLib',
+            fileName: 'myLib',
+        },
+        rollupOptions: {
+            external: [/^node:\w+/], // <-- ignores all 'node:*'
+        },
+    },
 
 })
