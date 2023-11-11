@@ -1,6 +1,7 @@
 import React, { useState, useRef , SetStateAction , useContext} from 'react';
 import { IconButton } from '@mui/material'
-import { EyeIcon, PencilIcon } from '@heroicons/react/20/solid';
+import PermMediaIcon from '@mui/icons-material/PermMedia';
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import axios from 'axios';
 import { ContextForDashBord } from '../../../context/contextForDashBord';
 
@@ -79,13 +80,13 @@ export default function UpdateCoverImage({ objForProfile , closeModal}: PropsTyp
 
         <div>
           <label htmlFor="file-upload">
-            <IconButton
-              onClick={openFileInput}
-              className="h-12 w-12 my-2 cursor-pointer bg-black"
-              style={{ color: 'black' }}
-            >
-              <PencilIcon />
-            </IconButton>
+          <IconButton
+                onClick={openFileInput}
+                className="h-12 w-12 my-2 cursor-pointer bg-black"
+                style={{ color: 'black' }}
+              >
+                <PermMediaIcon style={{width : '30px' , height : '30px'}}/>
+              </IconButton>
           </label>
           <input
             type="file"
@@ -96,19 +97,19 @@ export default function UpdateCoverImage({ objForProfile , closeModal}: PropsTyp
             onChange={changeProfileURL}
           />
 
-          <p className="p-1">{'Edit'}</p>
+          <p className="p-1 text-xl text-center">{'Edit'}</p>
         </div>
         <div>
-          <IconButton
-            aria-label="upload picture"
-            component="span"
-            className="h-12 w-12 my-2 cursor-pointer bg-black"
-            style={{ color: 'black' }}
-            onClick={handleProfileUpdate}
-          >
-            <EyeIcon />
-          </IconButton>
-          <p className="p-1">{'View'}</p>
+        <IconButton
+              aria-label="upload picture"
+              component="span"
+              className="h-12 w-12 my-2 cursor-pointer bg-black"
+              style={{ color: 'black' }}
+              onClick={handleProfileUpdate}
+            >
+              <PublishedWithChangesIcon style={{width : '30px' , height : '30px'}}/>
+            </IconButton>
+          <p className="p-1 text-xl text-center">{'Update'}</p>
         </div>
 
 

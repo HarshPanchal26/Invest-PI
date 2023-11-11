@@ -7,7 +7,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NoData from '../../../../Assets/NoData';
-
+import {Avatar} from '@mui/material';
 
 export default function ViewUSPs({ ArrayForUSP }: any) {
     return (
@@ -21,24 +21,22 @@ export default function ViewUSPs({ ArrayForUSP }: any) {
                     return (
                         <div className='flex border xl:w-1/5 md:w-1/3 min-h-[300px] h-fit flex-col rounded-lg relative shadow-lg' key={index}>
                             <div className='h-1/5 border-b border-gray-400 w-full p-1 flex flex-row justify-between '>
-                                {/* Background Image */}
-                                <p className='text-left ml-2 p-2'>USP-{index + 1}</p>
+                                <p className='text-center text-lg font-bold ml-2 p-2'>USP-{index + 1}</p>
                             </div>
                             <div className='mt-2'>
-                                <div
-                                    className='mx-auto w-32 h-32 rounded-full hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white cursor-pointer'
-                                    style={{
-                                        backgroundImage: `url('https://cdn5.vectorstock.com/i/1000x1000/60/94/cartoon-glowing-yellow-light-bulb-vector-18016094.jpg')`,
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                    }}
-                                >
+                                <div className='w-full p-1'>
+                                    <Avatar
+                                        alt="Remy Sharp"
+                                        src={item.imageUrl}
+                                        sx={{ width: 120, height: 120 }}
+                                        className="rounded-full w-40 h-40 border-4 mx-auto border-white shadow-lg"
+                                    />
                                 </div>
                                 <div className='w-full mt-5'>
                                     <p className='text-center font-bold text-lg'>{item.title}</p>
                                 </div>
                                 <div className='h-auto mt-5 p-2 '>
-                                    <div>
+                                    {/* <div>
                                         <IconButton
                                             aria-label="upload picture"
                                             component="span"
@@ -48,8 +46,7 @@ export default function ViewUSPs({ ArrayForUSP }: any) {
                                             <FavoriteBorderIcon />
                                             <span className='ml-2 text-lg'>{item.likes}</span>
                                         </IconButton>
-                                    </div>
-
+                                    </div> */}
                                     <div>
                                         <Accordion>
                                             <AccordionSummary

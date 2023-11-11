@@ -1,27 +1,36 @@
-import React, { useEffect, useState, useContext, SetStateAction } from 'react'
+import React, { useEffect, useState, useContext, SetStateAction, useRef } from 'react'
 import Loading from '../../../../Assets/Loading';
 import axios from 'axios';
 import { ContextForDashBord } from '../../../../context/contextForDashBord';
+import { Avatar } from '@mui/material';
+import { IconButton } from '@mui/material';
+import LocalSeeIcon from '@mui/icons-material/LocalSee';
 
 
-// type TypeForUSPData = {
-//     title: string,
-//     aboutUSP: string,
-//     imageUrl: string,
-//     likes?: string,
-// }
+type TypeForUSPData = {
+    index: number,
+    title: string,
+    aboutUSP: string,
+    imageUrl?: string
+    likes?: number,
+}
 
 type TypeForUpdateUsp = {
-    objForUpdate: any | null,
+    data: TypeForUSPData | null,
     index: number
+}
+
+type TypeForMedia = {
+    file: File | null,
+    generatedURL: string
 }
 
 type PropsType = {
     objForUpdateUsp?: TypeForUpdateUsp,
     task: 'update' | 'new',
-    dataForUSPs: Array<any> | null
+    dataForUSPs: Array<TypeForUSPData> | null
     setDataForUpdateUSP?: React.Dispatch<SetStateAction<TypeForUpdateUsp>>,
-    setDataForUSPs: React.Dispatch<SetStateAction<Array<any> | null>>
+    setDataForUSPs: React.Dispatch<SetStateAction<Array<TypeForUSPData> | null>>
     closeModal: React.Dispatch<SetStateAction<{ open: boolean, child: string | null }>>,
 }
 
@@ -29,14 +38,44 @@ type PropsType = {
 export default function ModalForCreateUSPs({ objForUpdateUsp, closeModal, dataForUSPs, task, setDataForUSPs, setDataForUpdateUSP }: PropsType) {
 
     const [loader, setLoader] = useState<boolean>(true);
+    const fileInputRef = useRef<HTMLInputElement>(null);
     const [error, setError] = useState<string | null>(null);
-    const [updateData, setupdateData] = useState<any>({
+    const [updateData, setupdateData] = useState<TypeForUSPData>({
         title: '',
         aboutUSP: '',
         imageUrl: '',
         likes: 0,
+        index: -1
     });
+    const [StateForMeida, setStateForMeida] = useState<TypeForMedia>({
+        file: null,
+        generatedURL: '',
+    })
     const contextForDashBord = useContext(ContextForDashBord);
+
+    const formData = new FormData();
+
+    const openFileInput = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    }
+
+    const changeImageForUSPs = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = event.target.files?.[0];
+        if (selectedFile) {
+            const blobUrl = URL.createObjectURL(selectedFile);
+            setupdateData({
+                ...updateData,
+                imageUrl: blobUrl
+            })
+            setStateForMeida({
+                file: selectedFile,
+                generatedURL: blobUrl
+            })
+        }
+    }
+
 
     const handleChageInValue = (event: any) => {
         const { value, name } = event.target;
@@ -44,15 +83,28 @@ export default function ModalForCreateUSPs({ objForUpdateUsp, closeModal, dataFo
             ...updateData,
             [name]: value
         })
-
     }
 
-    const handleUSPCreation = async () => {
+    const handleUSPsUpdate = async () => {
         setLoader(true);
         try {
-            const res = await axios.post('/api/product/create/usp', updateData);
-            console.log("res For Usp", res);
-            if (dataForUSPs !== null) {
+            StateForMeida.file && formData.append('uspmedia', StateForMeida.file);
+            updateData && formData.append('uspdata', JSON.stringify(updateData));
+            let res = null;
+            if (task === 'new') {
+                res = await axios.post('/api/product/create/usp', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data', // Important for file uploads
+                    },
+                });
+            } else {
+                res = await axios.post('/api/product/update/usp', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data', // Important for file uploads
+                    },
+                });
+            }
+            if (dataForUSPs !== null && res !== null) {
                 let newArray = [...dataForUSPs];
                 newArray.push(updateData);
                 setDataForUSPs(newArray);
@@ -69,22 +121,13 @@ export default function ModalForCreateUSPs({ objForUpdateUsp, closeModal, dataFo
         }
     }
 
-    const handleUpdate = async () => {
-        setError(null);
-        try {
-
-        } catch (error: any) {
-            setError(`${error?.message || error}`)
-        }
-    }
 
     useEffect(() => {
-        if (task === 'update') {
-            setupdateData(objForUpdateUsp?.objForUpdate);
+        if (task === 'update' && objForUpdateUsp !== undefined) {
+            objForUpdateUsp.data && setupdateData(objForUpdateUsp.data)
         }
         setLoader(false);
     }, [])
-
 
     return (
         <>
@@ -95,6 +138,33 @@ export default function ModalForCreateUSPs({ objForUpdateUsp, closeModal, dataFo
                 {!loader && (
                     <div className='p-2'>
                         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                            <div className='col-span-5 md:col-span-3 mt-3'>
+                                <Avatar
+                                    alt="Remy Sharp"
+                                    src={updateData.imageUrl}
+                                    sx={{ width: 140, height: 140 }}
+                                    className="rounded-full w-40 h-40 border-4 mx-auto border-white shadow-lg"
+                                />
+                                <div className='flex justify-end'>
+                                    <IconButton
+                                        aria-label="upload picture"
+                                        component="span"
+                                        className="h-12 w-12 my-2 cursor-pointer bg-black mx-10"
+                                        style={{ color: 'black' }}
+                                        onClick={openFileInput}
+                                    >
+                                        <LocalSeeIcon />
+                                    </IconButton>
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        id="file-upload"
+                                        accept="image/*"
+                                        style={{ display: "none" }}
+                                        onChange={changeImageForUSPs}
+                                    />
+                                </div>
+                            </div>
                             <div className="col-span-5 md:col-span-3">
                                 <label htmlFor="title" className="block text-sm font-semibold leading-6 text-gray-900">
                                     Title For Usp
@@ -126,7 +196,7 @@ export default function ModalForCreateUSPs({ objForUpdateUsp, closeModal, dataFo
                             <div className="mt-10 col-span-3">
                                 <button
                                     type="button"
-                                    onClick={task === 'update' ? handleUpdate : handleUSPCreation}
+                                    onClick={handleUSPsUpdate}
                                     className="flex rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 justify-center w-full"
                                 >
                                     Update

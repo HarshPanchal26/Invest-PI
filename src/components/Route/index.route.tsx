@@ -6,6 +6,7 @@ import { ContextProviderForDashBord } from '../../context/contextForDashBord';
 import { NotificationContextProvier } from '../../context/NotificationContext';
 import SidePannelForTieUps from '../DashBord/TieUps/components/SidePanleForTieUps';
 import SocketContextComponent from '../../context/ScoketHandlerComponent'
+import SideBar from '../DashBord/Component_DashBord/SideBar';
 // import SideBar from '../DashBord/Component_DashBord/SideBar';
 // import Suggestions from '../DashBord/Component_DashBord/Suggestions';
 // import SuggestedPeople from '../DashBord/Component_DashBord/SuggestedPeople';
@@ -44,7 +45,7 @@ export default function IndexForRoute() {
                             />
                         )
                     })}
-                    {RoutingForDashBordPages.map((page) => {
+                      {RoutingForDashBordPages.map((page) => {
                         return (
                             <Route
                                 path={page.path}

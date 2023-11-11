@@ -15,6 +15,7 @@ import { generateSchemaForSuggestion } from '../../../utils/factory/SuggestedUse
 import NotificationBar from '../../Notifications/NotificationBar';
 import Badge from '@mui/material/Badge';
 import { NotificationContext } from '../../../context/NotificationContext'
+import Logo from '../../../Assets/logo';
 
 const navigationForSideBar = [
   { name: 'Home', href: '/feed', icon: <HomeIcon />, current: false, inMobile: true },
@@ -150,11 +151,7 @@ export default function NavbarForDashBord() {
               <div className="flex h-14 items-center justify-between flex-initial">
                 {/*  Company Logo */}
                 <div className="flex-shrink-0">
-                  <img
-                    className="h-8 w-8"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                    alt="Your Company"
-                  />
+                 <Logo/>
                 </div>
 
                 {/*Search Bar  */}

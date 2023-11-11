@@ -312,36 +312,33 @@ export default function ProfileForCompany({ objForProfile }: any) {
                             </CustomTabPanel2>
                             <CustomTabPanel2 value={valueForAbout} index={1}>
                                 <div>
-                                    <div className="px-4 sm:px-0 my-3">
-                                        <h3 className="text-base font-semibold leading-7 text-gray-900">{`Information about ${dataForProfilePage?.USERNAME}`}</h3>
-                                    </div>
                                     <div className="mt-6 border-t border-gray-100">
                                         <dl className="divide-y divide-gray-100">
-                                            {/* <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                                <dt className="text-sm font-medium leading-6 text-gray-900">Company Name</dt>
-                                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{dataForProfilePage?.COMPANYNAME}</dd>
-                                            </div> */}
-                                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 ">
                                                 <dt className="text-sm font-medium leading-6 text-gray-900">Industry </dt>
-                                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{dataForProfilePage?.INDUSTRY}</dd>
+                                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                                    <p className='mx-2 p-2 text-center border-blue-600 bg-blue-600 inline-block text-white rounded-lg '>{dataForProfilePage?.INDUSTRY}</p>
+                                                </dd>
                                             </div>
                                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                 <dt className="text-sm font-medium leading-6 text-gray-900">Specialization </dt>
-                                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{dataForProfilePage?.SPECIALIZATION}</dd>
+                                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                                <p className='mx-2 p-2 text-center border-blue-600 bg-blue-600 inline-block text-white rounded-lg '>{dataForProfilePage?.SPECIALIZATION}</p>
+                                                </dd>
                                             </div>
                                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                 <dt className="text-sm font-medium leading-6 text-gray-900">Headquarters</dt>
-                                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{
+                                                <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0 font-bold">{
                                                     dataForProfilePage?.STATE} , {dataForProfilePage?.COUNTRY}</dd>
                                             </div>
                                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                 <dt className="text-sm font-medium leading-6 text-gray-900">Size</dt>
-                                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{
+                                                <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0 font-bold">{
                                                     dataForProfilePage?.SIZE}</dd>
                                             </div>
                                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                                 <dt className="text-sm font-medium leading-6 text-gray-900">Link</dt>
-                                                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                                <dd className="mt-1 text-lg leading-6 text-gray-700 sm:col-span-2 sm:mt-0 font-bold">
                                                     {dataForProfilePage?.LINK}
                                                 </dd>
                                             </div>
@@ -431,9 +428,9 @@ export default function ProfileForCompany({ objForProfile }: any) {
                 aria-describedby="modal-modal-description"
                 className='mx-2'
             >
-                <div className='w-full bg-white p-4 rounded-xl md:w-auto' style={styleForModal}>
+                <div className='w-full md:min-w-[600px] bg-white p-4 rounded-xl md:w-auto' style={styleForModal}>
                     <div className='p-2 text-2xl flex flex-row justify-between'>
-                        <p className='my-auto p-2 bg-gray-200 rounded-md'>{`${modalData.child} Section `}</p>
+                        <p className='my-auto p-3 bg-gray-200 rounded-md'>{`${modalData.child} Section `}</p>
                         <div className='mr-0 my-auto bg-gray-200 rounded-full'>
                             <IconButton
                                 aria-label="upload picture"

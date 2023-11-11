@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Button, IconButton } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -13,18 +13,19 @@ import EditIcon from '@mui/icons-material/Edit';
 import { ContextForDashBord } from '../../../../context/contextForDashBord';
 import NoData from '../../../../Assets/NoData';
 import Loading from '../../../../Assets/Loading';
+import { Avatar } from '@mui/material';
 
 type TypeForUSPData = {
-    index : number,
+    index: number,
     title: string,
     aboutUSP: string,
-    imageUrl: string
+    imageUrl?: string
     likes?: number,
 }
 
 type TypeForUpdateUsp = {
-    objForUpdate : any | null,
-    index : number
+    data: TypeForUSPData | null,
+    index: number
 }
 
 type StateTypeForModal = {
@@ -48,18 +49,18 @@ export default function USPs() {
 
     const contextForDashBord = useContext(ContextForDashBord);
 
-    const [dataForUSPs, setDataForUSPs] = useState<Array<any> | null>(null);
+    const [dataForUSPs, setDataForUSPs] = useState<Array<TypeForUSPData> | null>(null);
     const [dataForUpdateUSP, setDataForUpdateUSP] = useState<TypeForUpdateUsp>({
-        objForUpdate : null,
-        index :  -1
+        data: null,
+        index: -1
     });
 
     const handleOpenForModal = (feild: string, index: number) => {
         if (feild === 'update' && dataForUSPs !== null) {
             let ObjForUpdateUSP = dataForUSPs[index];
             setDataForUpdateUSP({
-                objForUpdate : ObjForUpdateUSP,
-                index : index
+                data: ObjForUpdateUSP,
+                index: index
             });
         }
         setModalData({
@@ -72,7 +73,7 @@ export default function USPs() {
         if (dataForUSPs === null) {
             setDataForUSPs(contextForDashBord.USER.PRODUCTINSIDE.usp);
         }
-    }, [contextForDashBord]);
+    }, [contextForDashBord.USER.PRODUCTINSIDE.usp]);
 
     return (
         <>
@@ -92,9 +93,8 @@ export default function USPs() {
                         {dataForUSPs !== null && dataForUSPs.length > 0 &&
                             dataForUSPs.map((item, index) => {
                                 return (
-                                    <div className='flex border xl:w-1/5 md:w-1/3 min-h-[300px] h-fit flex-col rounded-lg relative shadow-lg' key={index}>
+                                    <div className='flex border xl:w-[15%] md:w-[30%] min-h-[300px] h-fit flex-col rounded-lg relative shadow-lg ' key={index}>
                                         <div className='h-1/5 border-b border-gray-400 w-full p-1 flex flex-row justify-between '>
-                                            {/* Background Image */}
                                             <p className='text-left ml-2 p-2'>USP-{index + 1}</p>
                                             <IconButton
                                                 aria-label="upload picture"
@@ -107,20 +107,19 @@ export default function USPs() {
                                             </IconButton>
                                         </div>
                                         <div className='mt-2'>
-                                            <div
-                                                className='mx-auto w-28 h-28 rounded-full hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white cursor-pointer'
-                                                style={{
-                                                    backgroundImage: `url('https://cdn5.vectorstock.com/i/1000x1000/60/94/cartoon-glowing-yellow-light-bulb-vector-18016094.jpg')`,
-                                                    backgroundSize: 'cover',
-                                                    backgroundPosition: 'center',
-                                                }}
-                                            >
+                                            <div className='w-full p-1'>
+                                            <Avatar
+                                                alt="Remy Sharp"
+                                                src={item.imageUrl}
+                                                sx={{ width: 120, height: 120 }}
+                                                className="rounded-full w-40 h-40 border-4 mx-auto border-white shadow-lg"
+                                            />
                                             </div>
                                             <div className='w-full mt-5'>
                                                 <p className='text-center font-bold text-lg'>{item.title}</p>
                                             </div>
                                             <div className='h-auto mt-5 p-2 '>
-                                                <div>
+                                                {/* <div>
                                                     <IconButton
                                                         aria-label="upload picture"
                                                         component="span"
@@ -130,8 +129,7 @@ export default function USPs() {
                                                         <FavoriteBorderIcon />
                                                         <span className='ml-2 text-lg'>{item.likes}</span>
                                                     </IconButton>
-                                                </div>
-
+                                                </div> */}
                                                 <div>
                                                     <Accordion>
                                                         <AccordionSummary
@@ -182,9 +180,9 @@ export default function USPs() {
                             {modalData.child === 'new' &&
                                 <ModalForCreateUSPs
                                     closeModal={setModalData}
+                                    dataForUSPs={dataForUSPs && dataForUSPs}
                                     setDataForUSPs={setDataForUSPs}
                                     task='new'
-                                    dataForUSPs={dataForUSPs}
                                 />}
                             {modalData.child === 'update' &&
                                 <ModalForCreateUSPs

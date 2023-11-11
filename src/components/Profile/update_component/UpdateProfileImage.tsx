@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, SetStateAction, useContext } from 'react';
 import { Avatar, IconButton } from '@mui/material';
-import { EyeIcon, PencilIcon } from '@heroicons/react/20/solid';
+import PermMediaIcon from '@mui/icons-material/PermMedia';
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import axios from 'axios';
 import { ContextForDashBord } from '../../../context/contextForDashBord';
 
@@ -27,14 +28,12 @@ export default function UpdateProfileImage({ objForProfile, closeModal }: PropsT
 
   const changeProfileURL = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
-    console.log("selectedFile", selectedFile)
     if (selectedFile) {
       const blobUrl = URL.createObjectURL(selectedFile);
       setUrl(blobUrl);
       formData.append('profile', selectedFile);
       selectedFile && setUploadedFile(formData);
     }
-
   };
 
   const handleProfileUpdate = async () => {
@@ -67,7 +66,7 @@ export default function UpdateProfileImage({ objForProfile, closeModal }: PropsT
   }, [uploadedFile])
 
   return (
-    <div className="flex flex-col w-96">
+    <div className="flex flex-col">
       <p className="text-3xl font-bold text-black p-2 my-4">Profile Picture</p>
       <IconButton className="mx-auto">
         <Avatar
@@ -79,14 +78,14 @@ export default function UpdateProfileImage({ objForProfile, closeModal }: PropsT
       </IconButton>
       {(objForProfile.USERTYPE !== 'VISITOR' ) && (
         <div className="text-black p-3 flex flex-row border-t-2 gap-6">
-          <div>
+          <div className='flex flex-col'>
             <label htmlFor="file-upload">
               <IconButton
                 onClick={openFileInput}
                 className="h-12 w-12 my-2 cursor-pointer bg-black"
                 style={{ color: 'black' }}
               >
-                <PencilIcon />
+                <PermMediaIcon style={{width : '30px' , height : '30px'}}/>
               </IconButton>
             </label>
             <input
@@ -98,9 +97,9 @@ export default function UpdateProfileImage({ objForProfile, closeModal }: PropsT
               onChange={changeProfileURL}
             />
 
-            <p className="p-1">{'Edit'}</p>
+            <p className="p-1 text-xl text-center">{'Edit'}</p>
           </div>
-          <div>
+          <div className='flex flex-col'>
             <IconButton
               aria-label="upload picture"
               component="span"
@@ -108,9 +107,9 @@ export default function UpdateProfileImage({ objForProfile, closeModal }: PropsT
               style={{ color: 'black' }}
               onClick={handleProfileUpdate}
             >
-              <EyeIcon />
+              <PublishedWithChangesIcon style={{width : '30px' , height : '30px'}}/>
             </IconButton>
-            <p className="p-1">{'View'}</p>
+            <p className="p-1 text-xl text-center">{'Update'}</p>
           </div>
         </div>)}
     </div>
