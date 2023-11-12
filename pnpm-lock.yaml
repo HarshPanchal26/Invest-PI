@@ -125,6 +125,9 @@ dependencies:
   vite:
     specifier: ^4.4.11
     version: 4.4.11(@types/node@16.18.39)
+  vite-plugin-env-compatible:
+    specifier: ^1.1.1
+    version: 1.1.1
   vite-tsconfig-paths:
     specifier: ^4.2.1
     version: 4.2.1(typescript@4.9.5)(vite@4.4.11)
@@ -13225,6 +13228,10 @@ packages:
       assert-plus: 1.0.0
       core-util-is: 1.0.2
       extsprintf: 1.3.0
+    dev: false
+
+  /vite-plugin-env-compatible@1.1.1:
+    resolution: {integrity: sha512-4lqhBWhOzP+SaCPoCVdmpM5cXzjKQV5jgFauxea488oOeElXo/kw6bXkMIooZhrh9q7gclTl8en6N9NmnqUwRQ==}
     dev: false
 
   /vite-tsconfig-paths@4.2.1(typescript@4.9.5)(vite@4.4.11):
