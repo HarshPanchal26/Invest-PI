@@ -1,15 +1,18 @@
-import { defineConfig } from 'vite'
+import { defineConfig , loadEnv } from 'vite'
 import { resolve } from 'path'
 import react from '@vitejs/plugin-react'
 import viteTsconfigPaths from 'vite-tsconfig-paths'
 import dns from 'dns'
-
 dns.setDefaultResultOrder('verbatim')
+ 
+// Load environment variables
+const env = loadEnv('production', process.cwd(), '');
 
 export default defineConfig({
-    // depending on your application, base can also be "/"
-    // publicDir: './public',
     // base: '/Invest-PI/',
+    define: {
+        'process.env': env,
+    },
     plugins: [react(), viteTsconfigPaths()],
     css: {
         postcss: {
