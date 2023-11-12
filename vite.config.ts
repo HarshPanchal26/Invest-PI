@@ -13,8 +13,8 @@ export default defineConfig(({mode}) => {
     return {
         // base: '/Invest-PI/',
         define: {
-            // 'process.env': import.meta.env,
-            'process.env.SOME_KEY': JSON.stringify(env.SOME_KEY)
+            'process.env': env,
+            // 'process.env': JSON.stringify(env.SOME_KEY)
         },
         plugins: [react(), viteTsconfigPaths()],
         css: {
