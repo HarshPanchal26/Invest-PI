@@ -9,7 +9,10 @@ dns.setDefaultResultOrder('verbatim')
 export default defineConfig({
     // depending on your application, base can also be "/"
     // publicDir: './public',
-    base: '/Invest-PI/',
+    // base: '/Invest-PI/',
+    define: {
+        'process.env': {}
+    },
     plugins: [react(), viteTsconfigPaths()],
     css: {
         postcss: {
