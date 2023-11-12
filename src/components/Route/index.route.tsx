@@ -31,7 +31,7 @@ const RoutingForTieUps = [
 export default function IndexForRoute() {
     return (
         <>
-            <Router basename="/root/Invest-PI">
+            <Router basename="/root/">
                 <Routes>
                     {RoutingForIntroPages.map((page) => {
                         return (
