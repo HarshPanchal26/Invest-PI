@@ -12,9 +12,9 @@ export default defineConfig(({mode}) => {
     const env = loadEnv(mode, process.cwd(), '');
     return {
         // base: '/Invest-PI/', 
-        define: {
-            'process.env': env,
-        },
+        // define: {
+        //     'process.env': env,
+        // },
         plugins: [react(), viteTsconfigPaths() , envCompatible()],
         css: {
             postcss: {
