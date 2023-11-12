@@ -10,8 +10,8 @@ dns.setDefaultResultOrder('verbatim')
 export default defineConfig(({mode}) => {
     // Load environment variables
     return {
+        base: '/Invest-PI/', // Add this line
         define: {
-            // 'process.env': env,
             'process.env.NODE_ENV': JSON.stringify(mode),
         },
         plugins: [react(), viteTsconfigPaths() , envCompatible()],
