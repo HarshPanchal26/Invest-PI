@@ -9,7 +9,7 @@ dns.setDefaultResultOrder('verbatim')
 export default defineConfig({
     // depending on your application, base can also be "/"
     // publicDir: './public',
-    base: '',
+    base: '/Invest-PI/',
     plugins: [react(), viteTsconfigPaths()],
     css: {
         postcss: {
@@ -20,7 +20,6 @@ export default defineConfig({
         proxy: {
             '/api': {
                 target: 'http://localhost:5000', // Set the target to yosur server
-                // target: 'https://piserver.onrender.com/', // Set the target to your server
                 changeOrigin: true, // Change the origin to match the target
                 rewrite: (path) => path.replace(/^\/api/, ''), // Optionally rewrite the path
             },
