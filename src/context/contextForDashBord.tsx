@@ -44,7 +44,7 @@ export function ContextProviderForDashBord({ children }: child) {
   const checkAuthorization = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        let res = await axios.get('https://api.investipi.com/check/authorizationion')
+        let res = await axios.get(`https://api.investipi.com/check/authorization`)
         console.log("resresres", res)
         if (res.data.user) {
           let Obj: any = null;
@@ -135,15 +135,8 @@ export function ContextProviderForDashBord({ children }: child) {
     if (!ObjForContextData.isAutorizedUser) {
       checkAuthorization();
     }
-    // if (ArrayForNewThoughts.length === 0 && ObjForContextData.isAutorizedUser) {
-    //   fetchDataForMainFeed()
-    // }
   }, [ObjForContextData.isAutorizedUser]);
 
-
-  useEffect(() => {
-    console.log("ArrayForNewThoughts", ArrayForNewThoughts, ObjForContextData.POSTS)
-  }, [ArrayForNewThoughts, ObjForContextData.POSTS])
 
   return (
     <ContextForDashBord.Provider value={ObjForContextData}>
