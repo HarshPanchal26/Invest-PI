@@ -23,7 +23,7 @@ export default defineConfig(({mode}) => {
         server: {
             proxy: {
                 '/api': {
-                    target: 'http://localhost:5000', // Set the target to yosur server
+                    target: 'http://api.investipi.com/', // Set the target to yosur server
                     changeOrigin: true, // Change the origin to match the target
                     rewrite: (path) => path.replace(/^\/api/, ''), // Optionally rewrite the path
                 },
