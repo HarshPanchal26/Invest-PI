@@ -10,7 +10,7 @@ dns.setDefaultResultOrder('verbatim')
 export default defineConfig(({mode}) => {
     // Load environment variables
     return {
-        base: '/root/', // Add this line
+        base: '/', // Add this line
         define: {
             'process.env.NODE_ENV': JSON.stringify(mode),
         },

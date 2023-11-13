@@ -31,7 +31,7 @@ const RoutingForTieUps = [
 export default function IndexForRoute() {
     return (
         <>
-            <Router basename="/root/">
+            <Router basename="/">
                 <Routes>
                     {RoutingForIntroPages.map((page) => {
                         return (
