@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import Logo from "../../Assets/logo"
 import axios from "axios"
 import verifyDataForLogIn from '../../Verification/LoginDataVarification'
-import Loading from "../../Assets/Loading"
 import { CircularProgress } from "@mui/material"
 
 type TypeForLogIn = {
@@ -113,9 +112,9 @@ export default function LogInPage() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  {/* <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500"> */}
                     Forgot password?
-                  </a>
+                  {/* </a> */}
                 </div>
               </div>
               <div className="mt-2">
