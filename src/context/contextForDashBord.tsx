@@ -44,7 +44,7 @@ export function ContextProviderForDashBord({ children }: child) {
   const checkAuthorization = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        let res = await axios.get(`https://api.investipi.com/check/authorization`)
+        let res = await axios.get(`${process.env.VITE_APP_API_URL}/check/authorization`)
         console.log("resresres", res)
         if (res.data.user) {
           let Obj: any = null;
