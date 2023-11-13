@@ -55,7 +55,7 @@ export default function LogInPage() {
       const res: any = await verifyDataForLogIn(loginData);
       if (res?.Verified) { 
         setLoaderForLogin(true);
-        axios.post('https://api.investipi.com/login/user', loginData)
+        axios.post(`${process.env.VITE_APP_API_URL}/login/user`, loginData)
           .then((res) => {
             window.location.href = '/feed'
           }).catch((error) => {
