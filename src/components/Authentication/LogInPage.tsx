@@ -23,7 +23,7 @@ export default function LogInPage() {
 
 
   const checkAutorization = () => {
-    console.log("Check ETC", import.meta.env.VITE_APP_API_URL)
+    // console.log("Check ETC", import.meta.env.VITE_APP_API_URL)
     try {
       axios.get(`https://api.investipi.com/login/authorization`)
         .then((result) => {
@@ -74,7 +74,7 @@ export default function LogInPage() {
   }
 
   useEffect(() => {
-    console.log("URL is " , import.meta.env.VITE_APP_API_URL)
+    // console.log("URL is " , import.meta.env.VITE_APP_API_URL)
     checkAutorization()
   }, [])
 
