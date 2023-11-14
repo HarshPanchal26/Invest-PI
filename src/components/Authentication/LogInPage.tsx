@@ -25,7 +25,7 @@ export default function LogInPage() {
   const checkAutorization = () => {
     console.log("Check ETC", import.meta.env.VITE_APP_API_URL)
     try {
-      axios.get(`${import.meta.env.VITE_APP_API_URL}login/authorization`)
+      axios.get(`https://api.investipi.com/login/authorization`)
         .then((result) => {
           if (result.data.authorized) {
             window.location.href = '/feed'
@@ -56,7 +56,7 @@ export default function LogInPage() {
       const res: any = await verifyDataForLogIn(loginData);
       if (res?.Verified) { 
         setLoaderForLogin(true);
-        axios.post(`${import.meta.env.VITE_APP_API_URL}login/user`, loginData)
+        axios.post(`https://api.investipi.com/login/user`, loginData)
           .then((res) => {
             window.location.href = '/feed'
           }).catch((error) => {
