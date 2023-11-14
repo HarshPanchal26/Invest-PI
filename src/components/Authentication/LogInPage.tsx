@@ -74,6 +74,7 @@ export default function LogInPage() {
   }
 
   useEffect(() => {
+    console.log("URL is " , import.meta.env.VITE_APP_API_URL)
     checkAutorization()
   }, [])
 
