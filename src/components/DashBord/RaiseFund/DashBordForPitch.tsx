@@ -29,7 +29,7 @@ export default function DashBordForPitch() {
 
   const fetchMyPitches = async () => {
     try {
-      const res = await axios.get(`/api/pitches/fetch/multiple?uid=${contextForDashBord.USER.USERID}`);
+      const res = await axios.get(`${import.meta.env.VITE_APP_API_URL}pitches/fetch/multiple?uid=${contextForDashBord.USER.USERID}`);
       setArrayForMyPitches(res.data.pitch);
       contextForDashBord.setArrayForMyPiches(res.data.pitch);
     } catch (error) {

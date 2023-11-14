@@ -12,7 +12,7 @@ export default function Feed() {
   const contextForDashBord = useContext(ContextForDashBord);
 
   const fetchData = async () => {
-    const res = await axios.get('/api/feed/thoughts/all');
+    const res = await axios.get(`${import.meta.env.VITE_APP_API_URL}feed/thoughts/all`);
     SetThoughts(res.data.newthoughts);
     setLoader(false);
     contextForDashBord.setArrayForNewThoughts(res.data.newthoughts)

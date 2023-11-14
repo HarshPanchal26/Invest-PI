@@ -32,19 +32,19 @@ export function ContextProviderForDashBord({ children }: child) {
   const [arrayForPosts, setArrayForPosts] = useState<Array<Object> | null>()
 
   const fetchThoughtsForUser = async () => {
-    const res = await axios.get('/api/feed/fetchposts');
+    const res = await axios.get(`${import.meta.env.VITE_APP_API_URL}feed/fetchposts`);
     setArrayForPosts(res.data.data);
   }
 
   const fetchDataForMainFeed = async () => {
-    const res = await axios.get('/api/feed/thoughts/all');
+    const res = await axios.get(`${import.meta.env.VITE_APP_API_URL}feed/thoughts/all`);
     setArrayForNewThoughts(res.data.newthoughts)
   }
 
   const checkAuthorization = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        let res = await axios.get(`${process.env.VITE_APP_API_URL}/check/authorization`)
+        let res = await axios.get(`${import.meta.env.VITE_APP_API_URL}check/authorization`)
         console.log("resresres", res)
         if (res.data.user) {
           let Obj: any = null;
@@ -93,7 +93,7 @@ export function ContextProviderForDashBord({ children }: child) {
       }
 
       try {
-        const res = await axios.post('/api/profile/users', { username: username });
+        const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}profile/users`, { username: username });
         console.log("New Profile foe visit", res);
         if (res.data.user) {
           let Obj: any = null;

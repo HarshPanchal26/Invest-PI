@@ -87,7 +87,7 @@ export function NotificationContextProvier(props: any) {
 
     const fetchNewNotifiocationForNewPosts = async (state: [], payload: {}): Promise<any[]> => {
         try {
-            const res = await axios.post('/api/n/fetch/newPosts', payload);
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}n/fetch/newPosts`, payload);
             return [...res.data.newData];
         } catch (error) {
             console.log("error", error);
@@ -97,7 +97,7 @@ export function NotificationContextProvier(props: any) {
 
     const fetchNewNotifiocationForInterests = async (state: any[], payload: {}): Promise<any[]> => {
         try {
-            const res = await axios.post('/api/n/fetch/newInterests', payload);
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}n/fetch/newInterests`, payload);
             return [...res.data.newData];
         } catch (error) {
             console.log("error", error);
@@ -107,7 +107,7 @@ export function NotificationContextProvier(props: any) {
 
     const fetchNewNotifiocationForNewClaims = async (state: [], payload: {}): Promise<any[]> => {
         try {
-            const res = await axios.post('/api/n/fetch/newclaims', payload);
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}n/fetch/newclaims`, payload);
             return [...res.data.newData];
         } catch (error) {
             console.log("error", error);
@@ -117,7 +117,7 @@ export function NotificationContextProvier(props: any) {
 
     const fetchNewNotifiocationForNewInvestments = async (state: [], payload: {}): Promise<any[]> => {
         try {
-            const res = await axios.post('/api/n/fetch/newinvestments', payload);
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}n/fetch/newinvestments`, payload);
             return res.data.newData;
         } catch (error) {
             console.log("New Investments Error", error);
@@ -127,7 +127,7 @@ export function NotificationContextProvier(props: any) {
 
     const fetchNewNotifiocationForNewCounterOffers = async (state: [], payload: {}): Promise<any[]> => {
         try {
-            const res = await axios.post('/api/n/fetch/counter/new', payload);
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}n/fetch/counter/new`, payload);
             return res.data.newData;
         } catch (error) {
             console.log("New Investments Error", error);
@@ -136,7 +136,7 @@ export function NotificationContextProvier(props: any) {
     }
     const fechResultsForMadeOffers = async (state: [], payload: {}): Promise<any[]> => {
         try {
-            const res = await axios.post('/api/n/fetch/counter/results', payload);
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}n/fetch/counter/results`, payload);
             return res.data.newData;
         } catch (error) {
             console.log("New Investments Error", error);
@@ -146,7 +146,7 @@ export function NotificationContextProvier(props: any) {
 
     const fetchResultForClaimInvetstor = async (state: [], payload: {}): Promise<any[]> => {
         try {
-            const res = await axios.post('/api/n/fetch/claim/results', payload);
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}n/fetch/claim/results`, payload);
             console.log("New Result Of Counter Offers", res)
             return res.data.newData;
         } catch (error) {

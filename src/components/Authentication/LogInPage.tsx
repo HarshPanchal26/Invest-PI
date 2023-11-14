@@ -3,6 +3,7 @@ import Logo from "../../Assets/logo"
 import axios from "axios"
 import verifyDataForLogIn from '../../Verification/LoginDataVarification'
 import { CircularProgress } from "@mui/material"
+// import { VITE_APP_API_URL } from 'vite/env';
 
 type TypeForLogIn = {
   email: string,
@@ -22,8 +23,9 @@ export default function LogInPage() {
 
 
   const checkAutorization = () => {
+    console.log("Check ETC", import.meta.env.VITE_APP_API_URL)
     try {
-      axios.get('/api/login/authorization')
+      axios.get(`${import.meta.env.VITE_APP_API_URL}login/authorization`)
         .then((result) => {
           if (result.data.authorized) {
             window.location.href = '/feed'
@@ -54,7 +56,7 @@ export default function LogInPage() {
       const res: any = await verifyDataForLogIn(loginData);
       if (res?.Verified) { 
         setLoaderForLogin(true);
-        axios.post(`${process.env.VITE_APP_API_URL}/login/user`, loginData)
+        axios.post(`${import.meta.env.VITE_APP_API_URL}login/user`, loginData)
           .then((res) => {
             window.location.href = '/feed'
           }).catch((error) => {

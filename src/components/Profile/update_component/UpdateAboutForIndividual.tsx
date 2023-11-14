@@ -34,7 +34,7 @@ export default function UpdateAboutForIndividual({ objForProfile , closeModal} :
   const handleUpdateForIndividual = async()=>{
     setError(null);
     try {
-        const res = await axios.post('/api/profile/update/about' , updatedAboutData);
+        const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}profile/update/about` , updatedAboutData);
         console.log("res" , res)
         contextForDashBord.USER.ABOUT = updatedAboutData.about;
         closeModal({

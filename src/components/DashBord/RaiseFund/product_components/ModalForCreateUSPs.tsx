@@ -92,13 +92,13 @@ export default function ModalForCreateUSPs({ objForUpdateUsp, closeModal, dataFo
             updateData && formData.append('uspdata', JSON.stringify(updateData));
             let res = null;
             if (task === 'new') {
-                res = await axios.post('/api/product/create/usp', formData, {
+                res = await axios.post(`${import.meta.env.VITE_APP_API_URL}product/create/usp`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data', // Important for file uploads
                     },
                 });
             } else {
-                res = await axios.post('/api/product/update/usp', formData, {
+                res = await axios.post(`${import.meta.env.VITE_APP_API_URL}product/update/usp`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data', // Important for file uploads
                     },

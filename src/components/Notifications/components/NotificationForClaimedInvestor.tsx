@@ -28,7 +28,7 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
             return findLocal[0];
         } else {
             try {
-                const array = await axios.get(`/api/profile/filter/?find=${id}`);
+                const array = await axios.get(`${import.meta.env.VITE_APP_API_URL}profile/filter/?find=${id}`);
                 GenerateObjForCommanUserData(array.data);
                 return array.data;
             } catch (error: any) {
@@ -53,7 +53,7 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
 
     const handleAcceptClaim = async () => {
         try {
-            const res = await axios.post('/api/investments/claim/action/accept', {
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}investments/claim/action/accept`, {
                 irid: objForNotification.irid,
                 compnay: objForNotification.company
             });
@@ -65,7 +65,7 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
 
     const handleDeclineOfClaim = async () => {
         try {
-            const res = await axios.post('/api/investments/claim/action/decline', {
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}investments/claim/action/decline`, {
                 irid: objForNotification.irid,
                 compnay: objForNotification.company
             });

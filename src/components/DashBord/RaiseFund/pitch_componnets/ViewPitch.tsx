@@ -82,7 +82,7 @@ export default function ViewPitch({ PitchData = null, CompanyData = null, Produc
 
                 if (!isInLocalStore) {
 
-                    const res = await axios.get(`/api/pitches/fetch/single?uid=${pitchId}`);
+                    const res = await axios.get(`${import.meta.env.VITE_APP_API_URL}pitches/fetch/single?uid=${pitchId}`);
                     console.log("Fetching Pitch ", res)
                     const GObjForPitch = GenerateObjForPitchData(res.data.pitch.pitchData);
                     FetchedObjFromLocalStotage.PITCHDATA = GObjForPitch
@@ -90,7 +90,7 @@ export default function ViewPitch({ PitchData = null, CompanyData = null, Produc
                     FetchedObjFromLocalStotage.COMPANYDATA = GObjForCompany
                 }
                 if (!isInLocalStore || FetchedObjFromLocalStotage?.PRODUCTDATA === null) {
-                    const resForProducts = await axios.get(`/api/product/fetch/all?id=${FetchedObjFromLocalStotage.PITCHDATA?.rid}`);
+                    const resForProducts = await axios.get(`${import.meta.env.VITE_APP_API_URL}product/fetch/all?id=${FetchedObjFromLocalStotage.PITCHDATA?.rid}`);
                     const GObjForProducts = GenerateProductObjDataForPitch(resForProducts.data.product);
                     console.log("Product Inside" , GObjForProducts)
                     FetchedObjFromLocalStotage.PRODUCTDATA = GObjForProducts
@@ -128,7 +128,7 @@ export default function ViewPitch({ PitchData = null, CompanyData = null, Produc
                 }
 
             try {
-                const res = await axios.post('/api/pitches/counter/create', ObjForCounterOffer);
+                const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}pitches/counter/create`, ObjForCounterOffer);
                 console.log("Counter offer", res)
                 setBackDrop(false);
                 setModal(false);

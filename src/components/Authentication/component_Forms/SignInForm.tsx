@@ -56,7 +56,7 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
               type: typeOfUser
             }
           }
-          const result = await axios.post(`/api/signin/${typeOfUser}`, objects)
+          const result = await axios.post(`${import.meta.env.VITE_APP_API_URL}signin/${typeOfUser}`, objects)
           if (result.data.authorization) {
             window.location.href = '/feed';
           } else {

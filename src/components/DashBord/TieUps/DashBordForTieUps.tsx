@@ -24,7 +24,7 @@ export default function TieUps() {
   const navigation = useNavigate();
   const fetchNewPitch = async () => {
     try {
-      const res = await axios.post('/api/pitches/fetch', {});
+      const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}/pitches/fetch`, {});
       console.log("Res is ", res)
       let ArrayOfPitches = res.data.pitchs;
       const newArray: Array<TypeForPitchData> = ArrayOfPitches.map((item: any): TypeForPitchData => {

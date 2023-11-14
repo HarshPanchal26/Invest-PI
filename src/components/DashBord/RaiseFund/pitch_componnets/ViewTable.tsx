@@ -50,7 +50,7 @@ export default function ViewTable({ dataForInvestments, setDataForInvestments }:
     console.log("arrayOFId", arrayOFId)
 
     try {
-      const res = await axios.post('/api/profile/view', { array: arrayOFId, field: '_id' });
+      const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}profile/view`, { array: arrayOFId, field: '_id' });
       console.log(res);
       setDatForInvestorsProfile(res.data.profiles)
     } catch (error) {

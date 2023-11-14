@@ -42,7 +42,7 @@ export default function UpdateCoverImage({ objForProfile , closeModal}: PropsTyp
     error && setError(null);
     console.log("uploadedFile=>" , uploadedFile)
     try {
-      const res = await axios.post('/api/profile/update/coverimage', uploadedFile , {
+      const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}profile/update/coverimage`, uploadedFile , {
         headers: {
           'Content-Type': 'multipart/form-data', // Important for file uploads
         },

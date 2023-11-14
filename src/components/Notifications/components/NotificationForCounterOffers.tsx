@@ -54,7 +54,7 @@ export default function NotificationForCounterOffers({ objForNotification, usedF
         } else {
             try {
                 if (id) {
-                    const array = await axios.get(`/api/profile/filter/?find=${id}`);
+                    const array = await axios.get(`${import.meta.env.VITE_APP_API_URL}profile/filter/?find=${id}`);
                     console.log("array", array.data)
                     let userData = GenerateObjForCommanUserData(array.data);
                     setObjForOfferMaker(userData);
@@ -69,7 +69,7 @@ export default function NotificationForCounterOffers({ objForNotification, usedF
 
     const handleAcceptCounter = async () => {
         try {
-            const res = await axios.post('/api/pitches/counter/action/accept', objForNotification);
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}pitches/counter/action/accept`, objForNotification);
             console.log("Result of action ", res)
         } catch (error) {
             console.log("error", error)
@@ -78,7 +78,7 @@ export default function NotificationForCounterOffers({ objForNotification, usedF
 
     const handleDeclineOfCounter = async() => {
         try {
-            const res = await axios.post('/api/pitches/counter/action/decline', objForNotification);
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}pitches/counter/action/decline`, objForNotification);
             console.log("Result of action ", res)
         } catch (error) {
             console.log("error", error)

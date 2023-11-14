@@ -36,7 +36,7 @@ export default function People() {
 
   const fetchStore = async (category: String) => {
     try {
-      const res = await axios.get(`/api/profile/users/suggestions?category=${category}`)
+      const res = await axios.get(`${import.meta.env.VITE_APP_API_URL}profile/users/suggestions?category=${category}`)
       console.log("Res" , res)
       if (category === 'individual') {
         setIndividualStore(res.data.newData)

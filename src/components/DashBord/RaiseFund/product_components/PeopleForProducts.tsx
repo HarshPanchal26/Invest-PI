@@ -73,7 +73,7 @@ export default function PeopleForProducts() {
       arrayOFId.push(contextForDashBord.USER.PEOPLE[item]);
     })
     try {
-      const res = await axios.post('/api/profile/view', { array: arrayOFId, field: '_id' });
+      const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}profile/view`, { array: arrayOFId, field: '_id' });
       let arayForProfile = res.data.profiles;
       let arrayWithData = arrayOfUser.map((user: any) => {
         const profileData = arayForProfile.find((profile: any) => profile._id === user._id);
@@ -108,7 +108,7 @@ export default function PeopleForProducts() {
         })
       }
       try {
-        const res = await axios.post('/api/product/add/pepole', ObjForNewPerson)
+        const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}/product/add/pepole`, ObjForNewPerson)
         if (res.data === "Inavlid request") {
           setErrorMessage({
             ...errorMessage,

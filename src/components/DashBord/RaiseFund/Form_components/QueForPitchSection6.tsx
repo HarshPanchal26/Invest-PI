@@ -3,7 +3,6 @@ import React, { SetStateAction, useEffect, useState } from 'react'
 import { Button } from '@mui/material'
 import { TypeForFAQs, TypeForQueAns, TypeForDetailsAboutBusiness } from '../../../../utils/type'
 import { convertText } from '../../../../utils/factory/FormatText'
-import axios from 'axios'
 
 type Props = {
     handleNext: Function

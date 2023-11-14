@@ -24,7 +24,7 @@ export default function Financial() {
 
     const findDataForInvestments = async () => {
         try {
-            const res = await axios.post('/api/investments/fetch' , contextForDashBord.USER.PRODUCTINSIDE.investments);
+            const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}investments/fetch` , contextForDashBord.USER.PRODUCTINSIDE.investments);
             contextForDashBord.USER.INVESTMENTS = [...res.data.investment]
             setDataForInvestments(res.data.investment);
         } catch (error) {

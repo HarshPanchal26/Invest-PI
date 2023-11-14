@@ -209,7 +209,7 @@ export default function QueForFundigRoundDetails({ handleNext, setObjForNewInves
     const fetchPepole = (user: String) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const array = await axios.get(`/api/profile/tag?find=${user}`);
+                const array = await axios.get(`${import.meta.env.VITE_APP_API_URL}profile/tag?find=${user}`);
                 console.log("array", array)
                 resolve(array)
             } catch (error: any) {

@@ -43,7 +43,7 @@ export default function UpdateMainForCompany({ objForProfile ,  closeModal} :Pro
         bio : updatedAboutData.bio.trim(),
       }               
     //   await VerificationForMainDataOfCF(TrimedObject);
-        const updated = await axios.post('/api/profile/update/main' , {data : TrimedObject});
+        const updated = await axios.post(`${import.meta.env.VITE_APP_API_URL}profile/update/main` , {data : TrimedObject});
         console.log("updated" ,contextForDashBord.USER)
         const User = contextForDashBord.USER;
         User.COMPANYNAME = TrimedObject.name;

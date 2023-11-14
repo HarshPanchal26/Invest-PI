@@ -122,7 +122,7 @@ export default function SharePost() {
 
             try {
                 setLoading(true);
-                const res = await axios.post('/api/thoughts/publish', formData, {
+                const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}thoughts/publish`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data', // Important for file uploads
                     },

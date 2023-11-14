@@ -31,7 +31,7 @@ export default function NotificationForOfferResults({ objForNotification }: Prop
     } else {
       try {
         if (id) {
-          const array = await axios.get(`/api/profile/filter/?find=${id}`);
+          const array = await axios.get(`${import.meta.env.VITE_APP_API_URL}profile/filter/?find=${id}`);
           let userData = GenerateObjForCommanUserData(array.data);
           setObjForAccepter(userData);
         } else {

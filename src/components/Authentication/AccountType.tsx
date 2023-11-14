@@ -93,7 +93,7 @@ export default function AccountType() {
     }
 
     const checkAutorization = async () => {
-        await axios.get('/api/signin/authorization').then((result) => {
+        await axios.get(`${import.meta.env.VITE_APP_API_URL}signin/authorization`).then((result) => {
             console.log("res from account type", result)
             if(!result.data.authorization){
                 setloader(false)

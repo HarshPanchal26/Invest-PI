@@ -102,7 +102,7 @@ export default function Media() {
             try {
                 fileForUpdate && formData.append('media', fileForUpdate);
                 formData.append('data', JSON.stringify(sideBarImageObj));
-                const res = await axios.post('/api/product/create/media', formData, {
+                const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}product/create/media`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data', // Important for file uploads
                     }

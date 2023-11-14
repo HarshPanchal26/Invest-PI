@@ -74,7 +74,7 @@ export default function NavbarForDashBord() {
     console.log("user", user)
     return new Promise(async (resolve, reject) => {
       try {
-        const array = await axios.get(`/api/profile/search?find=${user}`);
+        const array = await axios.get(`${import.meta.env.VITE_APP_API_URL}profile/search?find=${user}`);
         console.log("array", array)
         resolve(array)
       } catch (error: any) {
@@ -111,7 +111,7 @@ export default function NavbarForDashBord() {
   const handleClickForAccount = (task: string) => {
     if (task === 'Logout') {
       try {
-        axios.get('/api/logout/user')
+        axios.get(`${import.meta.env.VITE_APP_API_URL}/logout/user`)
           .then((res) => {
             console.log("res for logout", res);
             if (res.data.logout) {

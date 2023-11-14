@@ -95,7 +95,7 @@ export default function QuestionForUseofFunds({ setDrawerOpen, setObjForNewInves
                 extarData: { growth: growthElem.value, milestones: milestonesElem.value }
             }
             try {
-                await axios.post('/api/investments/new', Obj)
+                await axios.post(`${import.meta.env.VITE_APP_API_URL}investments/new`, Obj)
                 if (dataForInvestments) {
                     let newArray = [...dataForInvestments];
                     newArray.push(objForNewInvestment)

@@ -52,7 +52,7 @@ export default function UpdateMainForIndividual({ objForProfile, closeModal }: T
     const updatedStatus = await checkForFeildChange(updatedAboutData);
     console.log(updatedStatus);
     try {
-      const updated = await axios.post('/api/profile/update/main', {data : {...updatedAboutData} , status : updatedStatus});
+      const updated = await axios.post(`${import.meta.env.VITE_APP_API_URL}profile/update/main`, {data : {...updatedAboutData} , status : updatedStatus});
       console.log("updated", updated);
       const User = contextForDashBord.USER;
       User.FIRST_NAME = updatedAboutData.firstname.trim();
