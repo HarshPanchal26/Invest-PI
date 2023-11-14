@@ -65,7 +65,7 @@ export default function LogInPage() {
           })
       } else {
         console.log("Error 1" , error)
-        setError('Please Enter Email and Password properly.')
+        setError('Note : Please Enter Email and Password properly.')
         setLoaderForLogin(false);
       }
     } catch (error: any) {
