@@ -60,7 +60,7 @@ export default function LogInPage() {
           .then((res) => {
             window.location.href = '/feed'
           }).catch((error) => {
-            setError(error.response.data.message)
+            setError(`NNN : ${error.response.data.message}`)
             setLoaderForLogin(false);
           })
       } else {
@@ -70,7 +70,7 @@ export default function LogInPage() {
       }
     } catch (error: any) {
       console.log("Error 2" , error)
-      setError('Please Enter Email and Password properly.')
+      setError('Note := Please Enter Email and Password properly.')
       setLoaderForLogin(false);
     }
   }
