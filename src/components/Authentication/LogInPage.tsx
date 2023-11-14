@@ -64,10 +64,12 @@ export default function LogInPage() {
             setLoaderForLogin(false);
           })
       } else {
+        console.log("Error 1" , error)
         setError('Please Enter Email and Password properly.')
         setLoaderForLogin(false);
       }
     } catch (error: any) {
+      console.log("Error 2" , error)
       setError('Please Enter Email and Password properly.')
       setLoaderForLogin(false);
     }

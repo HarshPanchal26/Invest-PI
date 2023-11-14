@@ -22,10 +22,10 @@ export default defineConfig(({mode}) => {
         },
         server: {
             proxy: {
-                '/api': {
+                '/': {
                     target: 'https://api.investipi.com/', // Set the target to yosur server
                     changeOrigin: true, // Change the origin to match the target
-                    rewrite: (path) => path.replace(/^\/api/, ''), // Optionally rewrite the path
+                    // rewrite: (path) => path.replace(/^\/api/, ''), // Optionally rewrite the path
                 },
             },
             // Add this line to handle client-side routing
