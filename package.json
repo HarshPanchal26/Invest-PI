@@ -28,6 +28,7 @@
     "fs": "0.0.1-security",
     "gsap": "^3.12.2",
     "heroicons": "^2.0.18",
+    "js-cookie": "^3.0.5",
     "mongodb": "^5.7.0",
     "mongodb-realm": "^1.0.0",
     "path-browserify": "^1.0.1",

@@ -77,6 +77,9 @@ dependencies:
   heroicons:
     specifier: ^2.0.18
     version: 2.0.18
+  js-cookie:
+    specifier: ^3.0.5
+    version: 3.0.5
   mongodb:
     specifier: ^5.7.0
     version: 5.7.0
@@ -8938,6 +8941,11 @@ packages:
 
   /js-base64@3.7.5:
     resolution: {integrity: sha512-3MEt5DTINKqfScXKfJFrRbxkrnk2AxPWGBL/ycjz4dK8iqiSJ06UxD8jh8xuh6p10TX4t2+7FsBYVxxQbMg+qA==}
+    dev: false
+
+  /js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
     dev: false
 
   /js-tokens@4.0.0:

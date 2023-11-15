@@ -43,7 +43,7 @@ export default function LogInPage() {
 
   const handlechangeInData = (event: any) => {
     const { name, value } = event.target;
-    
+
     setLoginData({
       ...loginData,
       [name]: value
@@ -54,9 +54,11 @@ export default function LogInPage() {
     error !== null && setError(null);
     try {
       const res: any = await verifyDataForLogIn(loginData);
-      if (res?.Verified) { 
+      if (res?.Verified) {
         setLoaderForLogin(true);
-        axios.post(`https://api.investipi.com/login/user`, loginData)
+        axios.post(`https://api.investipi.com/login/user`, loginData, {
+          withCredentials: true,
+        })
           .then((res) => {
             window.location.href = '/feed'
           }).catch((error) => {
@@ -64,12 +66,12 @@ export default function LogInPage() {
             setLoaderForLogin(false);
           })
       } else {
-        console.log("Error 1" , error)
+        console.log("Error 1", error)
         setError('Note : Please Enter Email and Password properly.')
         setLoaderForLogin(false);
       }
     } catch (error: any) {
-      console.log("Error 2" , error)
+      console.log("Error 2", error)
       setError('Note := Please Enter Email and Password properly.')
       setLoaderForLogin(false);
     }
@@ -118,7 +120,7 @@ export default function LogInPage() {
                 </label>
                 <div className="text-sm">
                   {/* <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500"> */}
-                    Forgot password?
+                  Forgot password?
                   {/* </a> */}
                 </div>
               </div>
