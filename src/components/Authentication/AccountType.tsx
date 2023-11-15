@@ -1,6 +1,6 @@
 
 import Logo from '../../Assets/logo'
-import axios from 'axios';
+import axios from '../../../axios.config';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, SetStateAction, useRef } from 'react'
 import Loading from '../../../../Assets/Loading';
-import axios from 'axios';
+import axios from '../../../../../axios.config';
 import { ContextForDashBord } from '../../../../context/contextForDashBord';
 import { Avatar } from '@mui/material';
 import { IconButton } from '@mui/material';

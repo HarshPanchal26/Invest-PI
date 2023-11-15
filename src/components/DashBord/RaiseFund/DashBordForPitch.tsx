@@ -10,7 +10,7 @@ import { Avatar } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import axios from 'axios';
+import axios from '../../../../axios.config';
 import { Skeleton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import NoData from '../../../Assets/NoData';

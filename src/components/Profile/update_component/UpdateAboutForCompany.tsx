@@ -6,7 +6,7 @@ import Loading from '../../../Assets/Loading';
 // import { EyeIcon } from '@heroicons/react/20/solid';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import axios from 'axios';
+import axios from '../../../../axios.config';
 
 
 type Props = {

@@ -3,7 +3,7 @@ import Post from "./components/Post"
 import Suggestions from "../Component_DashBord/Suggestions"
 import { ContextForDashBord } from "../../../context/contextForDashBord";
 import Loading from "../../../Assets/Loading";
-import axios from "axios";
+import axios from "../../../../axios.config";
 
 export default function Feed() {
 

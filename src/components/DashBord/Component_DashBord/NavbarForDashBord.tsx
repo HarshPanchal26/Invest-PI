@@ -10,7 +10,7 @@ import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import Loading from '../../../Assets/Loading';
 import CloseIcon from '@mui/icons-material/Close';
-import axios from 'axios';
+import axios from '../../../../axios.config';
 import { generateSchemaForSuggestion } from '../../../utils/factory/SuggestedUser';
 import NotificationBar from '../../Notifications/NotificationBar';
 import Badge from '@mui/material/Badge';

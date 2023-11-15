@@ -2,7 +2,7 @@
 import React, { SetStateAction, useEffect, useState , useContext} from 'react'
 import { Button } from '@mui/material'
 import { TypeForFAQs, TypeForDetailsAboutBusiness } from '../../../../utils/type'
-import axios from 'axios'
+import axios from '../../../../../axios.config'
 import Loading from '../../../../Assets/Loading'
 import { generateSchemaForSuggestion } from '../../../../utils/factory/SuggestedUser';
 import { Avatar } from '@mui/material';

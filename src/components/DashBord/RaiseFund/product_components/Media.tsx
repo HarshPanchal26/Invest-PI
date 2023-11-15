@@ -9,7 +9,7 @@ import { generateMediaData, ArrayForMediaData } from '../../../../utils/factory/
 import { Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { ContextForDashBord } from '../../../../context/contextForDashBord';
-import axios from 'axios';
+import axios from '../../../../../axios.config';
 import { Backdrop } from '@mui/material';
 import { CircularProgress } from '@mui/material';
 

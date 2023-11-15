@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar } from '@mui/material'
 import { CommanUserDataStotage, GenerateObjForCommanUserData } from '../../../utils/factory/ObjForUser'
-import axios from 'axios'
+import axios from '../../../../axios.config'
 import { useNavigate } from 'react-router-dom'
 
 type Props = {

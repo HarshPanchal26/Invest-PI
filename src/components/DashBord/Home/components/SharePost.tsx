@@ -8,7 +8,7 @@ import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ContextForDashBord } from '../../../../context/contextForDashBord';
 import { formatTextForDisplay } from '../../../../utils/factory/FormatText'
-import axios from 'axios';
+import axios from '../../../../../axios.config';
 import Backdrop from '@mui/material/Backdrop';
 import { CircularProgress } from '@mui/material';
 import Loading from '../../../../Assets/Loading';

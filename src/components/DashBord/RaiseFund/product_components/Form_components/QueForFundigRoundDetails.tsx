@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import { TextField } from '@mui/material';
 import Loading from '../../../../../Assets/Loading';
 import { ArrayForSuggestedPepole, findTaggedPepoleLocaly, generateSchemaForSuggestion } from '../../../../../utils/factory/SuggestedUser'
-import axios from 'axios';
+import axios from '../../../../../../axios.config';
 import { Avatar } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';

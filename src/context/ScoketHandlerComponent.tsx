@@ -20,7 +20,7 @@ const SocketContextComponent: React.FunctionComponent<ISocketContextComponentPro
 
     const notificationContext = useContext(NotificationContext);
 
-    const socket = useSocket('http://localhost:5000', {
+    const socket = useSocket('https://api.investipi.com/', {
         transports: ['websocket'],
         reconnectionAttempts: 5,
         reconnectionDelay: 1000,

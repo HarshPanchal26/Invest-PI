@@ -2,7 +2,7 @@ import React, { SetStateAction, useEffect } from 'react';
 import { useState } from 'react';
 import { Avatar } from '@mui/material';
 import { generateSchemaForSuggestion } from '../../utils/factory/SuggestedUser';
-import axios from 'axios';
+import axios from '../../../axios.config';
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Loading from '../../Assets/Loading';

@@ -1,7 +1,7 @@
 import React, { SetStateAction, useEffect, useState, useContext } from 'react'
 import Loading from '../../../Assets/Loading';
 import { VerificationForAboutDataOfCF } from '../../../Verification/UpdateDataVerification'
-import axios from 'axios';
+import axios from '../../../../axios.config';
 import { ContextForDashBord } from '../../../context/contextForDashBord'
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';

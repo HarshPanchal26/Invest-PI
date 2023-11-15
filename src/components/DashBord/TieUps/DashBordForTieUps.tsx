@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ContextTypeForPitches, ContextTypeForComapnyDataForPitch, ContextTypeForProductsDataForPitch } from '../../../utils/type'
 import { GenerateObjForPitchData, GenerateCompanyObjForPitch } from '../../../utils/factory/ObjForUser'
-import axios from 'axios'
+import axios from '../../../.../../../axios.config'
 import { Skeleton } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import VisibilityIcon from '@mui/icons-material/Visibility';

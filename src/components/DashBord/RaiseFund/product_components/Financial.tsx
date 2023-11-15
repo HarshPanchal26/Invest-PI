@@ -10,7 +10,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Drawer from '@mui/material/Drawer';
 import FormForInvestments from './FormForInvestments';
 import CloseIcon from '@mui/icons-material/Close';
-import axios from 'axios';
+import axios from '../../../../../axios.config';
 
 
 export default function Financial() {

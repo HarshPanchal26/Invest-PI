@@ -1,7 +1,7 @@
 // Question for Target Audience:
 import React, { SetStateAction, useEffect, useState } from 'react'
 import { Button } from '@mui/material'
-import axios from 'axios'
+import axios from '../../../../../axios.config'
 import { TypeForFAQs , TypeForDetailsAboutBusiness} from '../../../../utils/type'
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';

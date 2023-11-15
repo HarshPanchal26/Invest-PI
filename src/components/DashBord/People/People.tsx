@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close';
 import { ContextForDashBord } from "../../../context/contextForDashBord";
 import { CommanUserDataStotage } from '../../../utils/factory/ObjForUser'
-import axios from "axios";
+import axios from "../../../../axios.config";
 
 let username = null;
 

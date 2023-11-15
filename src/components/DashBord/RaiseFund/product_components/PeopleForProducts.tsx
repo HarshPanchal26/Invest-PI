@@ -5,7 +5,7 @@ import { Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FindPepole from '../../../Serch/FindPepole';
 import NoData from '../../../../Assets/NoData';
-import axios from 'axios';
+import axios from '../../../../../axios.config';
 import { ContextForDashBord } from '../../../../context/contextForDashBord';
 import { Backdrop } from '@mui/material';
 import { CircularProgress } from '@mui/material';

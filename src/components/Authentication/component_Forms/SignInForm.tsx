@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Logo from '../../../Assets/logo';
 import { verifyDataForSignUp } from '../../../Verification/SignUpVerification'
-import axios from 'axios';
+import axios from '../../../../axios.config';
 
 type formatForSignInData = {
   email: string,

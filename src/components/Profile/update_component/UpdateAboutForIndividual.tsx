@@ -1,6 +1,6 @@
 import React, { SetStateAction, useEffect, useState , useContext} from 'react'
 import Loading from '../../../Assets/Loading';
-import axios from 'axios';
+import axios from '../../../../axios.config';
 import { ContextForDashBord } from '../../../context/contextForDashBord';
 import {formatTextForDisplay} from '../../../utils/factory/FormatText'
 

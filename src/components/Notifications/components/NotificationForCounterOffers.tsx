@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Avatar } from '@mui/material'
 import { CommanUserDataStotage, GenerateObjForCommanUserData } from '../../../utils/factory/ObjForUser'
-import axios from 'axios'
+import axios from '../../../../axios.config'
 import Loading from '../../../Assets/Loading'
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';

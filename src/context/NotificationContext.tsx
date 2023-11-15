@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
+import axios from '../../axios.config';
 import { createContext } from 'react'
 import { ContextForDashBord } from './contextForDashBord';
 

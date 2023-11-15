@@ -7,7 +7,7 @@ import ViewAnswers from './ViewAnswers';
 import ViewHighLights from './ViewHighLights';
 import BackButton from '../../../../Assets/BackButton';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../../../../axios.config';
 import { ContextTypeForPitches, ContextTypeForComapnyDataForPitch, ContextTypeForProductsDataForPitch } from '../../../../utils/type'
 import { GenerateObjForPitchData, GenerateCompanyObjForPitch, GenerateProductObjDataForPitch, CommanStorageForVisitedPitch } from '../../../../utils/factory/ObjForUser'
 import { Modal, Avatar, Button, Backdrop, CircularProgress} from '@mui/material'

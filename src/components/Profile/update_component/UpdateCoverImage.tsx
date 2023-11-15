@@ -2,7 +2,7 @@ import React, { useState, useRef , SetStateAction , useContext} from 'react';
 import { IconButton } from '@mui/material'
 import PermMediaIcon from '@mui/icons-material/PermMedia';
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
-import axios from 'axios';
+import axios from '../../../../axios.config';
 import { ContextForDashBord } from '../../../context/contextForDashBord';
 
 type PropsType = {

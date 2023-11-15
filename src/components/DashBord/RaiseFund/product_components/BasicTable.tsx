@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Avatar } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
-import axios from 'axios';
+import axios from '../../../../../axios.config';
 import { useNavigate } from 'react-router-dom';
 
 function createData(

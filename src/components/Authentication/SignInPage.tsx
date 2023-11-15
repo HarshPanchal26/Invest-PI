@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../../axios.config';
 import React, { useEffect, useState } from 'react'
 import RegistartionForCF from './component_Auth/RegistartionForCF';
 import RegistrationForAngel from './component_Auth/RegistrationForAngel';

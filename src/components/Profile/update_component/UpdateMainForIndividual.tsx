@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, SetStateAction } from 'react'
 import Loading from '../../../Assets/Loading';
-import axios from 'axios';
+import axios from '../../../../axios.config';
 import { ContextForDashBord } from '../../../context/contextForDashBord';
 
 type TypeForProps = {
