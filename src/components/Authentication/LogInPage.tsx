@@ -59,17 +59,17 @@ export default function LogInPage() {
           .then((res) => {
             window.location.href = '/feed'
           }).catch((error) => {
-            setError(`NNN : ${error.response.data.message}`)
+            setError(`${error.response.data.message}`)
             setLoaderForLogin(false);
           })
       } else {
         console.log("Error 1", error)
-        setError('Note : Please Enter Email and Password properly.')
+        setError('Please Enter Email and Password properly.')
         setLoaderForLogin(false);
       }
     } catch (error: any) {
       console.log("Error 2", error)
-      setError('Note := Please Enter Email and Password properly.')
+      setError('Please Enter Email and Password properly.')
       setLoaderForLogin(false);
     }
   }
