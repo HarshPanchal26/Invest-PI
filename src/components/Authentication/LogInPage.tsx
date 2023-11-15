@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Logo from "../../Assets/logo"
-import axios from "axios"
+import axios from "../../../axios.config"
 import verifyDataForLogIn from '../../Verification/LoginDataVarification'
 import { CircularProgress } from "@mui/material"
 // import { VITE_APP_API_URL } from 'vite/env';
@@ -25,9 +25,7 @@ export default function LogInPage() {
   const checkAutorization = () => {
     // console.log("Check ETC", import.meta.env.VITE_APP_API_URL)
     try {
-      axios.get(`https://api.investipi.com/login/authorization`, {
-        withCredentials: true,
-      }).then((result) => {
+      axios.get(`https://api.investipi.com/login/authorization`).then((result) => {
         if (result.data.authorized) {
           window.location.href = '/feed'
         } else {
@@ -57,9 +55,7 @@ export default function LogInPage() {
       const res: any = await verifyDataForLogIn(loginData);
       if (res?.Verified) {
         setLoaderForLogin(true);
-        axios.post(`https://api.investipi.com/login/user`, loginData, {
-          withCredentials: true,
-        })
+        axios.post(`https://api.investipi.com/login/user`, loginData)
           .then((res) => {
             window.location.href = '/feed'
           }).catch((error) => {
