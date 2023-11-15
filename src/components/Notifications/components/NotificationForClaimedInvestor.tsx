@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , useContext } from 'react'
 import { Avatar } from '@mui/material'
 import { CommanUserDataStotage, GenerateObjForCommanUserData } from '../../../utils/factory/ObjForUser'
 import axios from '../../../../axios.config'
@@ -8,6 +8,8 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import { NotificationContext } from '../../../context/NotificationContext';
+
 
 type Props = {
     objForNotification: any
@@ -17,6 +19,7 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
 
     const [objForCompany, setObjForCompany] = useState<any | null>(null);
     const [ArrayForAllInvestors, setArrayForAllInvestors] = useState<Array<[]>>([]);
+    const notificationContext = useContext(NotificationContext);
 
     const fetchUser = async (id: String) => {
         let findLocal: any = [];
@@ -57,6 +60,8 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
                 irid: objForNotification.irid,
                 compnay: objForNotification.company
             });
+            let newArray = notificationContext?.NotificationState.notificationForClaims;
+                   
             console.log("Result of action ", res)
         } catch (error) {
             console.log("error", error)

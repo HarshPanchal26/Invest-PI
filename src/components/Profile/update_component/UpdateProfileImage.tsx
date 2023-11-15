@@ -4,6 +4,8 @@ import PermMediaIcon from '@mui/icons-material/PermMedia';
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import axios from '../../../../axios.config';
 import { ContextForDashBord } from '../../../context/contextForDashBord';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 type PropsType = {
   objForProfile: any,
@@ -16,6 +18,8 @@ export default function UpdateProfileImage({ objForProfile, closeModal }: PropsT
   const [urlForProfile, setUrl] = useState<string>('');
   const [uploadedFile, setUploadedFile] = useState<FormData | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [Loader, setLoader] = useState<boolean>(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const formData = new FormData();
@@ -40,6 +44,7 @@ export default function UpdateProfileImage({ objForProfile, closeModal }: PropsT
     error && setError(null);
     console.log("uploadedFile=>", uploadedFile)
     try {
+      setLoader(true)
       const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}profile/update/profileimage`, uploadedFile, {
         headers: {
           'Content-Type': 'multipart/form-data', // Important for file uploads
@@ -51,6 +56,7 @@ export default function UpdateProfileImage({ objForProfile, closeModal }: PropsT
         open: false
       })
       setUrl(res.data.imageUrl)
+      setLoader(false)
     } catch (error: any) {
       console.log("error", error)
       setError(error)
@@ -112,6 +118,15 @@ export default function UpdateProfileImage({ objForProfile, closeModal }: PropsT
             <p className="p-1 text-xl text-center">{'Update'}</p>
           </div>
         </div>)}
+        <Backdrop
+            sx={{ color: 'blue', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={Loader}
+          >
+            <div className=' flex flex-row'>
+              <CircularProgress color="inherit" />
+              <span className='mx-3 my-auto'>{'Upadting .......'}</span>
+            </div>
+          </Backdrop>
     </div>
   );
 }

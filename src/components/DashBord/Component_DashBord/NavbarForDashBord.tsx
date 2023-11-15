@@ -25,7 +25,7 @@ const navigationForSideBar = [
 ]
 const userNavigation = [
   { name: 'Your Profile', value: 'Profile', href: '#' },
-  { name: 'Settings', value: 'Settings', href: '#' },
+  // { name: 'Settings', value: 'Settings', href: '#' },
   { name: 'Sign out', value: 'Logout', href: '#' },
 ]
 
@@ -368,7 +368,7 @@ export default function NavbarForDashBord() {
                                 <div
                                   className={classNames(
                                     active ? 'bg-gray-100' : '',
-                                    'block px-4 py-2 text-sm text-gray-700 cursor-pointer'
+                                    'block px-4 py-2 text-sm text-gray-700 cursor-pointer border-b'
                                   )}
                                   onClick={() => handleClickForAccount(item.value)}
                                 >

@@ -116,7 +116,7 @@ export default function NotificationBar() {
                     })}
                     {notificationContext && notificationContext.TotalNewNotification === 0 && (
                         <ul>
-                            <li>'Invetsi PI Does not have any update for you right now , As soon we get something for you will let you know. </li>
+                            <li className='text-lg p-2 font-bold border-b'>'Invetsi PI Does not have any update for you right now , As soon we get something for you will let you know. </li>
                         </ul>
                     )}
                 </div>

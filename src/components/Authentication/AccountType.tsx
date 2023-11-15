@@ -8,6 +8,8 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Loading from '../../Assets/Loading';
+import Alert from '@mui/material/Alert';
 
 
 const steps = ['Select Categoery', 'Select Subcategory'];
@@ -80,7 +82,7 @@ export default function AccountType() {
     };
 
     const categoryDidSelect = (value: String) => {
-        if (value === "CF" || value === "individuals" ||value === "product") 
+        if (value === "CF" || value === "individuals" || value === "product")
             window.location.href = `/registration?type=${value}`
         else {
             setTypeOfUser(value);
@@ -95,9 +97,9 @@ export default function AccountType() {
     const checkAutorization = async () => {
         await axios.get(`${import.meta.env.VITE_APP_API_URL}signin/authorization`).then((result) => {
             console.log("res from account type", result)
-            if(!result.data.authorization){
+            if (!result.data.authorization) {
                 setloader(false)
-            }else{
+            } else {
                 window.location.href = '/feed'
             }
         }).catch((error) => {
@@ -153,13 +155,18 @@ export default function AccountType() {
                                 <div className=' flex items-center justify-center h-full flex-col '>
                                     <Logo />
                                     <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10">Slecte your Preference</p>
-                                    <div className='p-4 rounded-lg w-[80%] lg:w-5/6 text-center flex sm:flex-row flex-col flex-wrap h-[80%] md:bg-gray-200'>
+                                    <Alert variant='standard' severity="info">
+                                        <p className='text-lg font-bold'>
+                                            Info — Investi Pi has three types of users , Individual  , Investment Group and Products/Company.
+                                        </p>
+                                    </Alert>
+                                    <div className='mt-4 p-4 rounded-lg w-[80%] lg:w-5/6 text-center flex sm:flex-row flex-col flex-wrap h-[80%] md:bg-gray-200'>
                                         {/* Boxes */}
 
                                         {categoryForUser.map((item, index) => {
                                             return (
-                                                <div className='shadow-lg w-auto h-full rounded-lg text-center text-3xl my-10 mx-auto cursor-pointer border border-black bg-white ' 
-                                                onClick={() => categoryDidSelect(item.value)}>
+                                                <div className='shadow-lg w-auto h-full rounded-lg text-center text-3xl my-10 mx-auto cursor-pointer border border-black bg-white '
+                                                    onClick={() => categoryDidSelect(item.value)}>
                                                     <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyF_wARWd9jbfA9k88RvbIj-c-KWBYOsqAeg&usqp=CAU' alt='Innvestor iamge ' className='h-full w-[200px] mx-auto rounded-lg'></img>
                                                     <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900  my-10 mx-4">{item.title}</p>
                                                 </div>)
@@ -178,8 +185,8 @@ export default function AccountType() {
 
                                         {objForInvestor.map((item, index) => {
                                             return (
-                                                <div className='shadow-lg w-auto h-full rounded-lg text-center text-3xl my-10 mx-auto cursor-pointer border border-black bg-white ' 
-                                                onClick={() => subCatergoryDidSelect(item.value)}>
+                                                <div className='shadow-lg w-auto h-full rounded-lg text-center text-3xl my-10 mx-auto cursor-pointer border border-black bg-white '
+                                                    onClick={() => subCatergoryDidSelect(item.value)}>
                                                     <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyF_wARWd9jbfA9k88RvbIj-c-KWBYOsqAeg&usqp=CAU' alt='Innvestor iamge ' className='h-full w-[200px] mx-auto rounded-lg'></img>
                                                     <p className="mt-2 text-2xl font-bold tracking-tight text-gray-900  my-10 mx-4">{item.title}</p>
                                                 </div>)
@@ -187,8 +194,8 @@ export default function AccountType() {
                                         }
 
                                     </div>
-                            </div>)}
-                            
+                                </div>)}
+
 
                         </Box>
                         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
@@ -216,9 +223,7 @@ export default function AccountType() {
         );
     } else {
         return (
-            <div className='mx-10'>
-                <h1>{'Loading.......'}</h1>
-            </div>
+            <Loading />
         )
     }
 }

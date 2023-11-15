@@ -12,9 +12,9 @@ let username = null
 const ArrasyOfListItem = [
     { feild: 'People', href: '', icon: <PeopleAltIcon /> },
     { feild: 'Connection', href: `/connection/${username}`, icon: <SensorOccupiedIcon /> },
-    { feild: 'Interested People', href: '/people/interested', icon: <RecommendIcon /> },
+    // { feild: 'Interested People', href: '/people/interested', icon: <RecommendIcon /> },
     { feild: 'Trending Products', href: '/tranding/products', icon: <WhatshotIcon /> },
-    { feild: 'Trending People', href: '/tranding/people', icon: <WhatshotIcon /> },
+    // { feild: 'Trending People', href: '/tranding/people', icon: <WhatshotIcon /> },
     { feild: 'News', href: '', icon: <ArticleIcon /> },
 ]
 

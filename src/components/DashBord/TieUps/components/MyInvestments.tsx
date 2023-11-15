@@ -21,8 +21,8 @@ export default function MyInvestments() {
     return (
         <>
             <div className='p-1 my-4'>
-                <p className='text-xl font-bold text-left my-3 mx-5 border-b'>My Investments</p>
-                <main className='w-full h-auto flex flex-row flex-wrap gap-y-7 gap-5 justify-center'>
+                {/* <p className='text-xl font-bold text-left my-3 mx-5 border-b'>My Investments</p> */}
+                {/* <main className='w-full h-auto flex flex-row flex-wrap gap-y-7 gap-5 justify-center'>
                     <div className='flex flex-col xl:w-[45%] md:w-4/5 w-full rounded-lg shadow-md cursor-pointer p-1'>
                         <div className='w-full hidden md:block'>
                             <p className='text-sm text-gray-500 font-bold mt-2 text-left'>
@@ -131,7 +131,7 @@ export default function MyInvestments() {
                             </div>
                         </section>
                     </div>
-                </main>
+                </main> */}
             </div>
             <div className='my-4'>
                 <main className='w-full h-auto'>

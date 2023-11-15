@@ -101,8 +101,10 @@ export default function QuestionForUseofFunds({ setDrawerOpen, setObjForNewInves
                     newArray.push(objForNewInvestment)
                     setDataForInvestments(newArray)
                 }
+                window.location.href = '/product/my'        
                 setLoader(false);
                 setDrawerOpen(false);
+                
             } catch (error: any) {
                 console.log("Error is ", error)
                 setLoader(false);

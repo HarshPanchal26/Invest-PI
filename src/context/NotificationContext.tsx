@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, SetStateAction } from 'react';
 import axios from '../../axios.config';
 import { createContext } from 'react'
 import { ContextForDashBord } from './contextForDashBord';
@@ -22,7 +22,7 @@ export const defaultNotificationState: INotificationContextState = {
     notificationForFollow: null,
     notificationForCounter: null,
     notificationForResultOfOffers: null,
-    notificationForClaimResult: null
+    notificationForClaimResult: null,
 }
 
 export type INotificationConetxtAction
@@ -70,7 +70,6 @@ export function NotificationContextProvier(props: any) {
     const [TotalNewNotification, setTotalNewNotification] = useState<number>(0);
 
     async function fetchDataForNoification() {
-
         // if (NotificationState.notificationForNewInvestments && NotificationState.notificationForNewInvestments.length === 0) {
         //     await NotificationReducer({ type: 'NEW_INVESTMENTS', payload: '' })
         // }
@@ -237,9 +236,7 @@ export function NotificationContextProvier(props: any) {
             } else {
                 setTotalNewNotification(total)
             }
-
         }
-
     }, [StateForNewPostNotification, StateForNewInvestmentsNotification, StateForNewClamimsNotification, StateForNewInterestNotification, StateForNewFollowersNotification, StateForNewCounterOfferNotification])
 
     const NotificationState: INotificationContextState = {

@@ -6,7 +6,8 @@ import { ContextProviderForDashBord } from '../../context/contextForDashBord';
 import { NotificationContextProvier } from '../../context/NotificationContext';
 import SidePannelForTieUps from '../DashBord/TieUps/components/SidePanleForTieUps';
 import SocketContextComponent from '../../context/ScoketHandlerComponent'
-import SideBar from '../DashBord/Component_DashBord/SideBar';
+import { Alert } from '@mui/material';
+// import SideBar from '../DashBord/Component_DashBord/SideBar';
 // import SideBar from '../DashBord/Component_DashBord/SideBar';
 // import Suggestions from '../DashBord/Component_DashBord/Suggestions';
 // import SuggestedPeople from '../DashBord/Component_DashBord/SuggestedPeople';
@@ -45,7 +46,7 @@ export default function IndexForRoute() {
                             />
                         )
                     })}
-                      {RoutingForDashBordPages.map((page) => {
+                    {RoutingForDashBordPages.map((page) => {
                         return (
                             <Route
                                 path={page.path}
@@ -54,11 +55,13 @@ export default function IndexForRoute() {
                                         <NotificationContextProvier>
                                             <SocketContextComponent>
                                                 <div className='md:flex flex-row h-full w-full gap-1'>
-                                                    {/* <div className='w-[7%] xl:block hidden'>
-                                                <SideBar />
-                                            </div> */}
                                                     <div className='flex flex-col w-full'>
                                                         <NavbarForDashBord />
+                                                        <Alert variant='standard' severity="warning">
+                                                            <p className='text-lg font-bold'>
+                                                                Info — This is a proposal web app designed to acquaint you with the fundamental business workflow. This is not an official website for Investi PI .
+                                                            </p>
+                                                        </Alert>
                                                         <Suspense fallback={<div>Loading......</div>}>
                                                             <div className='mt-2 overflow-auto h-full mx-2'>
                                                                 {page.component}
