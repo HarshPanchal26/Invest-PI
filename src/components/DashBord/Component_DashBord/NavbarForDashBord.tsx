@@ -111,7 +111,7 @@ export default function NavbarForDashBord() {
   const handleClickForAccount = (task: string) => {
     if (task === 'Logout') {
       try {
-        axios.get(`${import.meta.env.VITE_APP_API_URL}/logout/user`)
+        axios.get(`${import.meta.env.VITE_APP_API_URL}logout/user`)
           .then((res) => {
             console.log("res for logout", res);
             if (res.data.logout) {
