@@ -25,16 +25,17 @@ export default function LogInPage() {
   const checkAutorization = () => {
     // console.log("Check ETC", import.meta.env.VITE_APP_API_URL)
     try {
-      axios.get(`https://api.investipi.com/login/authorization`)
-        .then((result) => {
-          if (result.data.authorized) {
-            window.location.href = '/feed'
-          } else {
-            setLoader(false);
-          }
-        }).catch((error) => {
+      axios.get(`https://api.investipi.com/login/authorization`, {
+        withCredentials: true,
+      }).then((result) => {
+        if (result.data.authorized) {
+          window.location.href = '/feed'
+        } else {
           setLoader(false);
-        })
+        }
+      }).catch((error) => {
+        setLoader(false);
+      })
     } catch (error: any) {
       alert(`Error is ${error.message}`)
     }
