@@ -176,12 +176,9 @@ export default function QueForFundigRoundDetails({ handleNext, setObjForNewInves
             let user = atChar[atChar.length - 1];
             if (atChar[atChar.length - 1] && atChar[atChar.length - 1].match(regex)) {
                 if (!suggestionMenuForTag) {
-                    let elem = document.getElementById(id)
-                    console.log("elem" , id , elem)
                     document.getElementById(id)?.classList.remove('hidden');
                     setSuggestionMenuForaTag(true)
                 }
-                //const arrayofSuggestions = findTaggedPepoleLocaly(user);
                 if (debounceTimeOut) {
                     clearTimeout(debounceTimeOut);
                 }
@@ -193,7 +190,8 @@ export default function QueForFundigRoundDetails({ handleNext, setObjForNewInves
                     } else {
                         setprofileForLeadInvestor(schema);
                     }
-
+                    document.getElementById(id)?.classList.add('hidden');
+                    setSuggestionMenuForaTag(true)
                 }, 1000)
             } else {
                 if (suggestionMenuForTag) {
