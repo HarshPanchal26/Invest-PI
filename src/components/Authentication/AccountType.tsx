@@ -155,11 +155,11 @@ export default function AccountType() {
                                 <div className=' flex items-center justify-center h-full flex-col '>
                                     <Logo />
                                     <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10">Slecte your Preference</p>
-                                    <Alert variant='standard' severity="info">
+                                    {/* <Alert variant='standard' severity="info">
                                         <p className='text-lg font-bold'>
                                             Info — Investi Pi has three types of users , Individual  , Investment Group and Products/Company.
                                         </p>
-                                    </Alert>
+                                    </Alert> */}
                                     <div className='mt-4 p-4 rounded-lg w-[80%] lg:w-5/6 text-center flex sm:flex-row flex-col flex-wrap h-[80%] md:bg-gray-200'>
                                         {/* Boxes */}
 
