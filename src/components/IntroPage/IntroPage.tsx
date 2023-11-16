@@ -42,8 +42,8 @@ export default function Example() {
               </a>
             ))}
           </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end bg-red-600 p-4 rounded-lg">
-            <a href="/login" className="text-sm font-semibold leading-6 text-gray-900">
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
+            <a href="/login" className="text-sm font-semibold leading-6 text-gray-900 bg-red-600 p-4 rounded-lg">
               Log in <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
