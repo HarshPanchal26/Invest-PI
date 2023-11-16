@@ -33,11 +33,10 @@ export default function Example() {
     } catch (error: any) {
       alert(`Error is ${error.message}`)
     }
-
   }
 
   useEffect(()=>{
-    checkAutorization();
+    // checkAutorization();
   })
 
   return (
