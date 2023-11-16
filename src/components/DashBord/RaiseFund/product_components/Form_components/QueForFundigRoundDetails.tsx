@@ -190,8 +190,8 @@ export default function QueForFundigRoundDetails({ handleNext, setObjForNewInves
                     } else {
                         setprofileForLeadInvestor(schema);
                     }
-                    document.getElementById(id)?.classList.add('hidden');
-                    setSuggestionMenuForaTag(true)
+                    // document.getElementById(id)?.classList.add('hidden');
+                    // setSuggestionMenuForaTag(true)
                 }, 1000)
             } else {
                 if (suggestionMenuForTag) {
