@@ -6,6 +6,7 @@ import { Avatar } from '@mui/material';
 import BlockIcon from '@mui/icons-material/Block';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import AvatarGroup from '@mui/material/AvatarGroup';
+import NoData from '../../../../Assets/NoData';
 
 
 export default function MyInvestments() {
@@ -140,14 +141,19 @@ export default function MyInvestments() {
                         <div className='p-2'>
                             <p className='font-bold text-left my-3 text-2xl'>New Offers</p>
                             <div className='p-4'>
-                                {StateForNewNotification.map((item) => {
+                                {StateForNewNotification.map((item , index) => {
                                     return (
-                                        <NotificationForClaimedInvestor objForNotification={item} />
+                                        <NotificationForClaimedInvestor objForNotification={item} index={index} />
                                     )
                                 })}
                             </div>
                         </div>
                     )}
+                    {
+                        StateForNewNotification &&  StateForNewNotification.length === 0 && (
+                            <NoData/>
+                        )
+                    }
                 </main>
             </div>
         </>

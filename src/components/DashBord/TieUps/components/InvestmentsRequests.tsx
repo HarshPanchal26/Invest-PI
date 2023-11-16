@@ -23,9 +23,9 @@ export default function InvestmentsRequests() {
             {StateForNewNotification && StateForNewNotification.length > 0 && (
                 <div className='p-2'>
                     <p className='font-bold text-left my-3 text-2xl'>New Offers</p>
-                    {StateForNewNotification.map((item) => {
+                    {StateForNewNotification.map((item , index)  => {
                         return (
-                            <NotificationForClaimedInvestor objForNotification={item} />
+                            <NotificationForClaimedInvestor objForNotification={item} index={index}/>
                         )
                     })}
                 </div>
