@@ -20,11 +20,10 @@ export default function Pricing() {
         </div>
         <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
           <div className="p-8 sm:p-10 lg:flex-auto">
-            <h3 className="text-2xl font-bold tracking-tight text-gray-900">Lifetime membership</h3>
-            {/* <p className="mt-6 text-base leading-7 text-gray-600">
-              Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis
-              repellendus etur quidem assumenda.
-            </p> */}
+            <h3 className="text-2xl font-bold tracking-tight text-gray-900">Premium offres</h3>
+            <p className="mt-6 text-base leading-7 text-gray-600">
+              Might get chnage in future.
+            </p>
             <div className="mt-10 flex items-center gap-x-4">
               <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-600">What’s included</h4>
               <div className="h-px flex-auto bg-gray-100" />
