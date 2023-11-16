@@ -36,7 +36,8 @@ export default function NotificationBar() {
             }
             setStateForNotificationData(newObj)
         }
-    }, [notificationContext?.NotificationState])
+        console.log('Updated Array' , notificationContext?.NotificationState)
+    }, [notificationContext?.NotificationState , notificationContext])
 
     return (
         <>
@@ -90,7 +91,7 @@ export default function NotificationBar() {
                     })}
                     {stateForNotificationData.notificationForClaims && stateForNotificationData.notificationForClaims.map((item, index) => {
                         return (
-                            <NotificationForClaimedInvestor objForNotification={item} />)
+                            <NotificationForClaimedInvestor objForNotification={item} index={index} />)
                     })}
                     {stateForNotificationData.notificationForClaims === null && (
                         <div>

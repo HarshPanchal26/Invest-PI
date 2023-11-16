@@ -113,12 +113,12 @@ export default function ViewPitch({ PitchData = null, CompanyData = null, Produc
     }
 
     const handleCounterOffers = async () => {
-        if (!ErrorMessage.counterEquity && !ErrorMessage.counterFund) {
+        const counterAmountEle = document.getElementById('counterFund') as HTMLInputElement
+        let counterAmount = counterAmountEle.value;
+        const counterEquityEle = document.getElementById('counterEquity') as HTMLInputElement
+        let counterEquity = counterEquityEle.value;
+        if (!ErrorMessage.counterEquity && !ErrorMessage.counterFund && counterAmountEle.value && counterEquityEle.value) {
             setBackDrop(true);
-            const counterAmountEle = document.getElementById('counterFund') as HTMLInputElement
-            let counterAmount = counterAmountEle.value;
-            const counterEquityEle = document.getElementById('counterEquity') as HTMLInputElement
-            let counterEquity = counterEquityEle.value;
             let ObjForCounterOffer = {
                 pitchId: ArrayForPitchData.PITCHDATA?._id,
                 offerBy: contextForDashBord.USER.USERID,
@@ -166,6 +166,12 @@ export default function ViewPitch({ PitchData = null, CompanyData = null, Produc
             setErrorMessage({
                 ...ErrorMessage,
                 counterEquity: 'Please Enter Valid values .'
+            })
+        }
+        if (name === 'counterEquity' && (value === '' || parseInt(value) > 99 )) {
+            setErrorMessage({
+                ...ErrorMessage,
+                counterEquity: 'Please offer valid Equity.'
             })
         }
     }
@@ -487,16 +493,6 @@ export default function ViewPitch({ PitchData = null, CompanyData = null, Produc
                                                 How much amount you are willing to Invest in this product ?
                                             </label>
                                             <div className="mt-2">
-                                                {/* <TextField
-                                                    label="$"
-                                                    type='number'
-                                                    name="counterFund"
-                                                    id="counterFund"
-                                                    onChange={handleChageInValue}
-                                                    defaultValue={ArrayForPitchData.PITCHDATA?.seekingFund}
-                                                    variant="outlined"
-                                                    sx={{ width: '70%' }}
-                                                /> */}
                                                 <div className="relative mt-2 rounded-md shadow-sm">
                                                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                                                         <span className="font-bold sm:text-sm"  >$</span>

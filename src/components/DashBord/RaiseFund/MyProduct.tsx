@@ -93,10 +93,10 @@ export default function MyProduct() {
                             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                                 <Tab label="Summary" {...a11yProps(0)} />
                                 <Tab label="Financial" {...a11yProps(1)} />
-                                <Tab label="News" {...a11yProps(2)} />
-                                <Tab label="USP" {...a11yProps(3)} />
-                                <Tab label="Media" {...a11yProps(4)} />
-                                <Tab label="Pepole" {...a11yProps(5)} />
+                                {/* <Tab label="News" {...a11yProps(2)} /> */}
+                                <Tab label="USP" {...a11yProps(2)} />
+                                <Tab label="Media" {...a11yProps(3)} />
+                                <Tab label="Pepole" {...a11yProps(4)} />
                             </Tabs>
                         </Box>
                         <CustomTabPanel value={value} index={0}>
@@ -105,16 +105,16 @@ export default function MyProduct() {
                         <CustomTabPanel value={value} index={1}>
                             <Financial />
                         </CustomTabPanel>
-                        <CustomTabPanel value={value} index={2}>
+                        {/* <CustomTabPanel value={value} index={2}>
                             <News />
-                        </CustomTabPanel>
-                        <CustomTabPanel value={value} index={3}>
+                        </CustomTabPanel> */}
+                        <CustomTabPanel value={value} index={2}>
                             <USPs />
                         </CustomTabPanel>
-                        <CustomTabPanel value={value} index={4}>
+                        <CustomTabPanel value={value} index={3}>
                             <Media />
                         </CustomTabPanel>
-                        <CustomTabPanel value={value} index={5}>
+                        <CustomTabPanel value={value} index={4}>
                             <PeopleForProducts />
                         </CustomTabPanel>
                     </div>

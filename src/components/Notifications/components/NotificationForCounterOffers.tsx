@@ -39,7 +39,7 @@ type TypeForCounterObj = {
 export default function NotificationForCounterOffers({ objForNotification, usedFor }: Props) {
 
     const [ObjForOfferMaker, setObjForOfferMaker] = useState<TypeOfCommanData | null>(null);
-
+    const [Visible , setVisible] = useState<'hidden' | 'block'>('block')
     const contextForDashBord = useContext(ContextForDashBord);
     const navigate = useNavigate()
 
@@ -71,6 +71,8 @@ export default function NotificationForCounterOffers({ objForNotification, usedF
         try {
             const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}pitches/counter/action/accept`, objForNotification);
             console.log("Result of action ", res)
+            let elm = document.getElementById('notification') as HTMLElement;
+            elm.classList.add('hidden')
         } catch (error) {
             console.log("error", error)
         }
@@ -80,6 +82,8 @@ export default function NotificationForCounterOffers({ objForNotification, usedF
         try {
             const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}pitches/counter/action/decline`, objForNotification);
             console.log("Result of action ", res)
+            let elm = document.getElementById('notification') as HTMLElement;
+            elm.classList.add('hidden')
         } catch (error) {
             console.log("error", error)
         }
@@ -92,8 +96,9 @@ export default function NotificationForCounterOffers({ objForNotification, usedF
     }, [objForNotification])
 
     return (
-        <div className='px-4 py-2 cursor-pointer text-left border-b w-full '
+        <div className='px-4 py-2 cursor-pointer text-left border-b w-full'
             onClick={() => navigate('/tieups/requests')}
+            id='notification'
         >
             {(!ObjForOfferMaker) && (
                 <Loading />

@@ -37,8 +37,8 @@ export default function Financial() {
         if(contextForDashBord.USER.INVESTMENTS.length !== 0){
             setDataForInvestments(contextForDashBord.USER.INVESTMENTS)
         }
+        setDataForFinance(contextForDashBord.USER.PRODUCTINSIDE);
         if (dataForInvestments === null && contextForDashBord.USER.INVESTMENTS.length === 0) {
-            setDataForFinance(contextForDashBord.USER.PRODUCTINSIDE);
             findDataForInvestments()
         }
     }, []);

@@ -48,8 +48,8 @@ export interface ISocketContextActions {
 export interface INotificationProps {
     NotificationState: INotificationContextState,
     NotificationReducer: Function,
-    TotalNewNotification: number
-    // setNotificationState: React.Dispatch<SetStateAction<INotificationContextState>>
+    TotalNewNotification: number,
+    SetNotificationState: any
 }
 
 export const NotificationContext = createContext<INotificationProps | null>(null)
@@ -250,8 +250,20 @@ export function NotificationContextProvier(props: any) {
         notificationForClaimResult : StateForResulofClaims
     }
 
+
+    const SetNotificationState = {
+        setStateForNewPostNotification : setStateForNewPostNotification,
+        setTotalNewNotification : setTotalNewNotification,
+        setStateForResultofOffers : setStateForResultofOffers,
+        setStateForNewCounterOfferNotification : setStateForNewCounterOfferNotification,
+        setStateForNewFollowersNotification : setStateForNewFollowersNotification,
+        setStateForNewInterestNotification : setStateForNewInterestNotification,
+        setStateForNewClamimsNotification : setStateForNewClamimsNotification,
+        setStateForNewInvestmentsNotification : setStateForNewInvestmentsNotification
+    }
+
     return (
-        <NotificationContext.Provider value={{ NotificationState, NotificationReducer, TotalNewNotification }}>
+        <NotificationContext.Provider value={{ NotificationState, NotificationReducer, TotalNewNotification , SetNotificationState}}>
             {children}
         </NotificationContext.Provider>
     )

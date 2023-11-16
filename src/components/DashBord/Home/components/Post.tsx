@@ -28,7 +28,6 @@ function Post({ ArrayOfthoughts }: props) {
       <div className='w-full'>
         {ArrayOfthoughts.map((item: any, index) => {
           return (
-            // <Link to={`/feed/${item?._id}`}>
             <div className='border-b-2 w-full md:w-5/6 mx-auto cursor-pointer hover:bg-gray-50 rounded-sm' key={index}>
               <div className='w-full min-h-[100px] h-auto flex flex-col'>
                 <div className=' border-gray-300 flex flex-row '>
@@ -60,19 +59,33 @@ function Post({ ArrayOfthoughts }: props) {
                   </div>)}
                 {/* </Main Post Section > */}
                 <div className='mt-10 flex flex-row w-3/4 gap-3'>
+                  {/* <div className='w-full'>
+                    <IconButton
+                      aria-label="upload picture"
+                      component="span"
+                      className="h-12 w-12 my-2 cursor-pointer"
+                      id={`like-btn-${index}`}
+                      style={{ color: 'black' }}
+                      onClick={handleLikeButton}
+                    >
+                      <ThumbUpAltIcon />
+                    </IconButton>
+                    <span className='mx-2 text-lg'>{'0'}</span>
+                  </div> */}
                   <div className='w-full'>
                     <IconButton
                       aria-label="upload picture"
                       component="span"
                       className="h-12 w-12 my-2 cursor-pointer"
                       id={`like-btn-${index}`}
-                      style={{ color: 'blue' }}
+                      style={{ color: 'black' }}
                       onClick={handleLikeButton}
                     >
                       {/* <FavoriteBorderIcon /> */}
                       <ThumbUpAltIcon />
+
                     </IconButton>
-                    <span className='mx-2 text-lg'>{'100'}</span>
+                    <span className='mx-2 text-lg'>{'0'}</span>
                   </div>
                   <div className='w-full'>
                     <IconButton

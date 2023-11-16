@@ -183,7 +183,10 @@ export default function Connections() {
                     </Box>
                 </div>
                 <div className='w-1/3 hidden xl:block'>
-                    <Suggestions />
+                    <div className='p-2 mx-2'>
+                        <Suggestions />
+                    </div>
+
                 </div>
             </div>
         </>

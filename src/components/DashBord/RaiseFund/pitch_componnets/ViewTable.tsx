@@ -26,15 +26,6 @@ type TypeForInvestorObj = {
   setDataForInvestments ?: React.Dispatch<React.SetStateAction<any>>
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-
 export default function ViewTable({ dataForInvestments, setDataForInvestments }: TypeForInvestorObj) {
 
   const [dataForInvestorsProfile, setDatForInvestorsProfile] = React.useState<Array<any> | null>(null);
@@ -105,17 +96,17 @@ export default function ViewTable({ dataForInvestments, setDataForInvestments }:
                         return (
                           <div className='flex flex-row cursor-pointer'>
                             <Avatar alt="Remy Sharp"
-                              src={Obj.profileImage}
+                              src={Obj?.profileImage}
                               sx={{ width: 50, height: 50 }}
                               className='my-2 mx-2'
                             />
                             <div className="min-w-0 flex-grow my-auto mx-3">
                               <p className="text-lg font-semibold leading-6 text-gray-900 hover:border-b"
                               onClick={()=>navigate(`/profile/${Obj.username}/`)}
-                              >{Obj.name}</p>
+                              >{Obj?.name}</p>
                               <p className="text-sm text-gray-500 font-semibold leading-6  hover:border-b"
                               onClick={()=>navigate(`/profile/${Obj.username}/`)}
-                              >@{Obj.username}</p>
+                              >@{Obj?.username}</p>
                             </div>
                           </div>
                         )

@@ -3,13 +3,9 @@ import { ContextTypeForPitches, ContextTypeForComapnyDataForPitch, ContextTypeFo
 import { GenerateObjForPitchData, GenerateCompanyObjForPitch } from '../../../utils/factory/ObjForUser'
 import axios from '../../../.../../../axios.config'
 import { Skeleton } from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { useNavigate } from 'react-router-dom'
 import { CommanStorageForVisitedPitch } from '../../../utils/factory/ObjForUser'
 import { Avatar } from '@mui/material';
-import AvatarGroup from '@mui/material/AvatarGroup';
 
 
 type TypeForPitchData = {

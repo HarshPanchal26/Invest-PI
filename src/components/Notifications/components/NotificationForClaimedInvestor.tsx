@@ -13,9 +13,10 @@ import { NotificationContext } from '../../../context/NotificationContext';
 
 type Props = {
     objForNotification: any
+    index : number
 }
 
-export default function NotificationForClaimedInvestor({ objForNotification }: Props) {
+export default function NotificationForClaimedInvestor({ objForNotification , index}: Props) {
 
     const [objForCompany, setObjForCompany] = useState<any | null>(null);
     const [ArrayForAllInvestors, setArrayForAllInvestors] = useState<Array<[]>>([]);
@@ -60,8 +61,11 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
                 irid: objForNotification.irid,
                 compnay: objForNotification.company
             });
-            let newArray = notificationContext?.NotificationState.notificationForClaims;
-                   
+            let newArray :any = notificationContext?.NotificationState.notificationForClaims;
+            console.log("newArray" , newArray)
+            newArray !== null && newArray?.splice(index , 1);
+            console.log("newArray" , newArray)
+            notificationContext?.SetNotificationState.setStateForNewClamimsNotification(newArray);
             console.log("Result of action ", res)
         } catch (error) {
             console.log("error", error)
@@ -88,6 +92,8 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
             fetchAllInvestors()
         }
     }, [])
+
+    
 
     return (
         <div className='flex flex-row px-4 py-2 text-sm text-gray-700 cursor-pointer text-left border-b items-center'
@@ -126,7 +132,7 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
                                 })}
                             </AvatarGroup>
                         </div>
-                        <div className='block my-5 mx-6'>
+                        {/* <div className='block my-5 mx-6'>
                             <Stack direction="row" spacing={1}>
                                 <button type='button' onClick={(e) => {
                                     e.stopPropagation();
@@ -149,7 +155,7 @@ export default function NotificationForClaimedInvestor({ objForNotification }: P
                                         padding: '20px'
                                     }} /></button>
                             </Stack>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             )}

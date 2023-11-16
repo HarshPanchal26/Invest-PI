@@ -51,21 +51,21 @@ export default function Profile() {
             }
         } else {
             contextForDashBord.checkAuthorization();
-        }   
-    }, [username , decodedUsername]);
+        }
+    }, [username, decodedUsername]);
 
     useEffect(() => {
         console.log("stateForProfilePage", stateForProfilePage.objForProfile)
     }, [stateForProfilePage])
 
-    useEffect(()=>{
-        if(stateForProfilePage.objForProfile !== null){
+    useEffect(() => {
+        if (stateForProfilePage.objForProfile !== null) {
             setStateForProfilePage({
                 ...stateForProfilePage,
-                objForProfile : contextForDashBord.USER
+                objForProfile: contextForDashBord.USER
             })
         }
-    } , [contextForDashBord.USER])
+    }, [contextForDashBord.USER])
     return (
         <>
 
@@ -94,8 +94,9 @@ export default function Profile() {
 
                 </div>
                 <div className='xl:w-1/3 xl:flex hidden flex-col items-center mx-5'>
-
-                    <Suggestions />
+                    <div className='p-1 w-full mt-10'>
+                        <Suggestions />
+                    </div>
                 </div>
 
             </div>

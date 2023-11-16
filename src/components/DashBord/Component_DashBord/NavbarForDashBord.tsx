@@ -166,7 +166,7 @@ export default function NavbarForDashBord() {
                 </div>
 
                 {/* Menu Bar for Search Party */}
-                <div className="absolute top-full xl:left-2 md:left-auto left-0 mt-2 xl:w-5/6 md:w-[90%] w-full md:h-80 h-96 overflow-auto border border-gray-300 bg-white rounded-lg shadow-lg z-10 hidden" id='search-modal'>
+                <div className="absolute top-full xl:left-2 md:left-auto left-0 mt-2 md:w-[90%] w-full md:h-80 h-96 overflow-auto border border-gray-300 bg-white rounded-lg shadow-lg z-10 hidden" id='search-modal'>
                   <div className='p-2 text-2xl flex flex-row justify-between '>
                     <p className='my-auto text-2xl font-bold'>{`Result For you`}</p>
                     <div className=' mr-0 my-auto bg-gray-200 rounded-full'>
@@ -182,7 +182,7 @@ export default function NavbarForDashBord() {
                     </div>
                   </div>
                   <div className='flex flex-row'>
-                    <div className='md:w-1/2 w-full border-r'>
+                    <div className='md:w-full w-full border-r'>
                       {fetchedPeople.length > 0 && (<ul className="divide-y divide-gray-100 rounded-lg bg-white">
                         {fetchedPeople.map((item: any, index) => {
                           return (
@@ -220,9 +220,9 @@ export default function NavbarForDashBord() {
                       </ul>)}
                       {fetchedPeople.length === 0 && <Loading />}
                     </div>
-                    <div className='w-1/2 md:flex hidden'>
-                      Tranding Pitches
-                    </div>
+                    {/* <div className='w-1/2 md:flex hidden'>
+                      Pitches
+                    </div> */}
                   </div>
 
                 </div>
