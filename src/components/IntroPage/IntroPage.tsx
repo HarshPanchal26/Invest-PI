@@ -43,7 +43,7 @@ export default function Example() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
-            <a href="/login" className="text-sm font-semibold leading-6 text-gray-900 bg-red-600 p-4 rounded-lg">
+            <a href="/login" className="text-sm font-semibold leading-6 text-gray-900 bg-blue-600 p-4 rounded-lg">
               Log in <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
@@ -112,7 +112,7 @@ export default function Example() {
           <Pricing />
         </div>
         {/*  Start Section */}
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 " id='main-section'>
+        {/* <div className="mx-auto max-w-2xl py-32 sm:py-48 " id='main-section'>
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
               Announcing our next round of funding.{' '}
@@ -142,7 +142,7 @@ export default function Example() {
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )
