@@ -1,10 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Features from './component_Intro/Feature'
 import Feature2 from './component_Intro/Feature2'
 import Pricing from './component_Intro/Pricing'
 import Logo from '../../Assets/logo'
+import axios from '../../../axios.config'
+import Loading from '../../Assets/Loading'
+
 const navigation = [
   { name: 'Home', href: '#featute-section' },
   { name: 'Features', href: '#featute2-section' },
@@ -14,9 +17,33 @@ const navigation = [
 
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [Loader , setLoading ] = useState<boolean>(true);
+
+  const checkAutorization = () => {
+    try {
+      axios.get(`${import.meta.env.VITE_APP_API_URL}login/authorization`).then((result) => {
+        if (result.data.authorized) {
+          window.location.href = '/feed'
+        } else {
+          setLoading(false);
+        }
+      }).catch((error) => {
+        setLoading(false);
+      })
+    } catch (error: any) {
+      alert(`Error is ${error.message}`)
+    }
+
+  }
+
+  useEffect(()=>{
+    checkAutorization();
+  })
 
   return (
-    <div className="bg-white h-auto overflow-auto">
+    <>
+
+    {!Loader && (<div className="bg-white h-auto overflow-auto">
       <header className="absolute inset-x-0 top-0 z-50 bg-white">
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
@@ -43,7 +70,7 @@ export default function Example() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end ">
-            <a href="/login" className="text-sm font-semibold leading-6 text-gray-900 bg-blue-600 p-4 rounded-lg">
+            <a href="/login" className="text-sm font-semibold leading-6  bg-blue-600 p-4 rounded-lg text-white">
               Log in <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
@@ -144,7 +171,9 @@ export default function Example() {
           </div>
         </div> */}
       </div>
-    </div>
+    </div>)}
+    {Loader && <Loading/>}
+    </>
   )
 }
 

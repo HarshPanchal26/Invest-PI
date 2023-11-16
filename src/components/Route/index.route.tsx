@@ -39,9 +39,11 @@ export default function IndexForRoute() {
                             <Route
                                 path={page.path}
                                 element={
-                                    <Suspense fallback={<div>Loading......</div>}>
-                                        {page.component}
-                                    </Suspense>
+                                    <ContextProviderForDashBord>
+                                        <Suspense fallback={<div>Loading......</div>}>
+                                            {page.component}
+                                        </Suspense>
+                                    </ContextProviderForDashBord>
                                 }
                             />
                         )
