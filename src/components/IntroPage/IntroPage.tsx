@@ -33,17 +33,17 @@ export default function Example() {
     } catch (error: any) {
       alert(`Error is ${error.message}`)
     }
+
   }
 
   useEffect(()=>{
-    // checkAutorization();
+    checkAutorization();
   })
 
   return (
     <>
 
-    {/* {!Loader && ( */}
-    <div className="bg-white h-auto overflow-auto">
+    {!Loader && (<div className="bg-white h-auto overflow-auto">
       <header className="absolute inset-x-0 top-0 z-50 bg-white">
         <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
           <div className="flex lg:flex-1">
@@ -171,9 +171,8 @@ export default function Example() {
           </div>
         </div> */}
       </div>
-    </div>
-    {/* // )} */}
-    {/* {Loader && <Loading/>} */}
+    </div>)}
+    {Loader && <Loading/>}
     </>
   )
 }
