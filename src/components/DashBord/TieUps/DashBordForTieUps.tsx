@@ -111,7 +111,7 @@ export default function TieUps() {
         })} */}
         {ArrayForTieUpsData && ArrayForTieUpsData.map((item: TypeForPitchData, index: number) => {
           return (
-            <div className='flex flex-col xl:w-[40%] md:w-4/5 w-full rounded-lg shadow-md cursor-pointer xl:ml-10 p-2' key={index}
+            <div className='flex flex-col xl:w-[44%] md:w-4/5 w-full rounded-lg shadow-md cursor-pointer xl:ml-10 p-2' key={index}
               onClick={() => navigation(`/pitch/${item.PITCHDATA?._id}`)}
             >
               <div className='w-full hidden md:block'>

@@ -76,7 +76,7 @@ export default function People() {
         </div>
         <div className="xl:w-3/4 w-full h-full overflow-auto">
           <div className="text-left">
-            <p className="text-xl p-2 text-left underline text-blue-700">Helphul Individual Suggestions for you.</p>
+            <p className="text-xl p-2 text-left underline text-blue-700">Helpful Individual Suggestions for you.</p>
             <div className="p-4 xl:mx-3">
               {IndividualStore !== null && <SuggestedPeople userData={IndividualStore} />}
               {IndividualStore == null && <SkeletonForSuggestions />}
@@ -86,7 +86,7 @@ export default function People() {
             </div>
           </div>
           <div className="text-left">
-            <p className="text-xl p-2 text-left underline text-blue-700">Helphul Company Suggestions for you.</p>
+            <p className="text-xl p-2 text-left underline text-blue-700">Helpful Company Suggestions for you.</p>
             <div className="p-4 xl:mx-3">
               {CompnayStore !== null && <SuggestedPeople userData={CompnayStore} />}
               {CompnayStore == null && <SkeletonForSuggestions />}
@@ -97,7 +97,7 @@ export default function People() {
             </div>
           </div>
           <div className="text-left">
-            <p className="text-xl p-2 text-left underline text-blue-700">Helphul Firm Suggestions for you.</p>
+            <p className="text-xl p-2 text-left underline text-blue-700">Helpful Firm Suggestions for you.</p>
             <div className="p-4 xl:mx-3">
               {CFStore !== null && <SuggestedPeople userData={CFStore} />}
               {CFStore == null && <SkeletonForSuggestions />}
