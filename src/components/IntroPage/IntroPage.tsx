@@ -26,6 +26,7 @@ export default function Example() {
           window.location.href = '/feed'
         } else {
           setLoading(false);
+          window.location.href = '/login'
         }
       }).catch((error) => {
         setLoading(false);
