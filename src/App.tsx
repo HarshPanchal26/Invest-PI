@@ -9,22 +9,22 @@ function App() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (window.location.protocol === 'http:') {
-      const httpsURL = 'https://' + window.location.host + window.location.pathname;
-      navigate(httpsURL, { replace: true });
-    } else {
-      setLoader(false);
-    }
+  // useEffect(() => {
+  //   if (window.location.protocol === 'http:') {
+  //     const httpsURL = 'https://' + window.location.host + window.location.pathname;
+  //     navigate(httpsURL, { replace: true });
+  //   } else {
+  //     setLoader(false);
+  //   }
 
-  }, [navigate]);
+  // }, [navigate]);
 
   return (
     <>
-      {!Loader && (<div className='App border w-full h-screen overflow-auto'>
-        <IndexForRoute />
+      {/* {!Loader && (<div className='App border w-full h-screen overflow-auto'>
       </div>)}
-      {Loader && <Loading />}
+    {Loader && <Loading />} */}
+    <IndexForRoute />
     </>
   );
 }
