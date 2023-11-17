@@ -34,8 +34,8 @@ export default function Example() {
         setLoading(false);
       })
     } catch (error: any) {
-      alert(`Error is ${error.message}`)
       window.location.href = '/login'
+      alert(`Error is ${error.message}`)
     }
 
   }
