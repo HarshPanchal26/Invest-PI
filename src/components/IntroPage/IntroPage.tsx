@@ -27,7 +27,6 @@ export default function Example() {
         } 
       }).catch((error) => {
         window.location.href = '/login'
-        setLoading(false);
       })
     } catch (error: any) {
       window.location.href = '/login'
