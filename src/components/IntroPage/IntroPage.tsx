@@ -24,18 +24,13 @@ export default function Example() {
       axios.get(`${import.meta.env.VITE_APP_API_URL}login/authorization`).then((result) => {
         if (result.data.authorized) {
           window.location.href = '/feed'
-        } else {
-          console.log("Here is code")
-          window.location.href = '/login'
-          setLoading(false);
-        }
+        } 
       }).catch((error) => {
         window.location.href = '/login'
         setLoading(false);
       })
     } catch (error: any) {
       window.location.href = '/login'
-      alert(`Error is ${error.message}`)
     }
 
   }
