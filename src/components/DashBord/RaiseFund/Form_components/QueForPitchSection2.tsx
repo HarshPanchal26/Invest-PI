@@ -263,7 +263,7 @@ export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjFo
 
                     <div className="col-span-5">
                         <label htmlFor="milestones" className="block font-medium leading-6 text-gray-900 text-lg">
-                            What are your average customers over the past year months?
+                            What are your average customers over the past year?
                         </label>
                         <div className="mt-2">
                             <RadioGroup
