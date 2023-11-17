@@ -25,8 +25,9 @@ export default function Example() {
         if (result.data.authorized) {
           window.location.href = '/feed'
         } else {
-          setLoading(false);
+          console.log("Here is code")
           window.location.href = '/login'
+          setLoading(false);
         }
       }).catch((error) => {
         setLoading(false);
