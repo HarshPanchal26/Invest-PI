@@ -87,7 +87,7 @@ export default function QueForPitchSection7({ setDrawerOpen, arryForDesireInvest
     const fetchPepole = (user: String) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const array = await axios.get(`${import.meta.env.VITE_APP_API_URL}/profile/tag?find=${user}`);
+                const array = await axios.get(`${import.meta.env.VITE_APP_API_URL}profile/tag?find=${user}`);
                 console.log("array", array)
                 resolve(array)
             } catch (error: any) {
@@ -100,7 +100,10 @@ export default function QueForPitchSection7({ setDrawerOpen, arryForDesireInvest
     const removeUser = (index: number) => {
         let newArray = profileForInvestor;
         newArray.splice(index, 1);
-        setProfileForInvestor(newArray);
+        setProfileForInvestor({
+            ...profileForInvestor,
+            ...newArray
+        });
     }
 
     const addAsLeadInvestor = (objForUser: TypeForInvestorProfile) => {
@@ -108,6 +111,7 @@ export default function QueForPitchSection7({ setDrawerOpen, arryForDesireInvest
         newArray = [...profileForInvestor];
         newArray.push(objForUser);
         setProfileForInvestor(newArray)
+        document.getElementById('suggestionmodal')?.classList.add('hidden');
     }
 
     const handleUpload = async () => {
@@ -120,9 +124,8 @@ export default function QueForPitchSection7({ setDrawerOpen, arryForDesireInvest
             faqs: { ...objForAllQnA },
             desireInvestor: [...profileForInvestor]
         }
-
-        console.log("ObjToSend", ObjToSend)
         try {
+            console.log("Final" , ObjToSend)
             const res = await axios.post(`${import.meta.env.VITE_APP_API_URL}product/create/pitch`, ObjToSend);
             console.log("res", res);
             setDrawerOpen(false);
@@ -159,9 +162,8 @@ export default function QueForPitchSection7({ setDrawerOpen, arryForDesireInvest
                             <input
                                 id="leadInvestor"
                                 name="leadInvestor"
-                                // value={dataForFundingRound.leadInvestors}
                                 placeholder='Write a Username or Name following with @'
-                                onChange={(e) => handleChageForTagPeople(e, 'suggestion-modal-for-lead')}
+                                onChange={(e) => handleChageForTagPeople(e, 'suggestionmodal')}
                                 className="block p-5 w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                             <p className="mt-1 text-sm leading-6 text-gray-600">
@@ -200,7 +202,7 @@ export default function QueForPitchSection7({ setDrawerOpen, arryForDesireInvest
                                         )
                                     })}
                                 </div>)}
-                            <div className="absolute top-full left-0 mt-2 w-full h-[250px] overflow-auto border border-gray-300 bg-white rounded-lg shadow-lg z-10 hidden" id='suggestion-modal-for-lead'>
+                            <div className="absolute top-full left-0 mt-2 w-full h-[250px] overflow-auto border border-gray-300 bg-white rounded-lg shadow-lg z-10 hidden" id='suggestionmodal'>
                                 {fetchedInvestors && (<ul className="divide-y divide-gray-100 rounded-lg bg-white">
                                     {fetchedInvestors?.map((item: TypeForInvestorProfile, index) => {
                                         return (

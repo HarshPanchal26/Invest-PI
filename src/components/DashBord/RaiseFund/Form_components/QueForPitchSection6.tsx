@@ -22,7 +22,16 @@ type TypeForEquity = {
     reasonForEquityOffer: string,
     exitstrategy: string,
     ROI: string,
-    fundingType : string
+    fundingType: string
+}
+
+type ObjForError = {
+    seekingFund: string,
+    purposesForFunding: string,
+    currentValuation: string,
+    fundingType: string,
+    offeredEquity: string,
+    maximunofferedEquity: string,
 }
 
 export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjForAllQnA, objForDetailsAboutBusiness, setObjForDetailsAboutBusiness }: Props) {
@@ -75,7 +84,16 @@ export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjFo
         reasonForEquityOffer: '',
         exitstrategy: '',
         ROI: '',
-        fundingType : ''
+        fundingType: ''
+    })
+
+    const [ErrorForField, setErrorForField] = useState<ObjForError>({
+        seekingFund: '',
+        purposesForFunding: '',
+        currentValuation: '',
+        fundingType: '',
+        offeredEquity: '',
+        maximunofferedEquity: '',
     })
 
     const handleInputChangeForLargeQuestions = (event: any, index: number) => {
@@ -115,25 +133,151 @@ export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjFo
             ...objForAdditionalData,
             [name]: value
         })
+
+        if (name === 'fundingType' && value === '') {
+            setErrorForField({
+                ...ErrorForField,
+                fundingType: 'Enter the type of funding round you are seeking for .'
+            })
+        }
+
+        if (name === 'fundingType' && value && ErrorForField.fundingType) {
+            setErrorForField({
+                ...ErrorForField,
+                fundingType: ''
+            })
+        }
+
+        if (name === 'seekingFund' && (value === '' || (/^0/.test(value)) || (/^-/.test(value)))) {
+            setErrorForField({
+                ...ErrorForField,
+                seekingFund: 'Enter the valid amount you are seeking for.'
+            })
+        }
+
+        if (name === 'seekingFund' && value && ErrorForField.seekingFund && !(/^0/.test(value)) && !(/^-/.test(value))) {
+            setErrorForField({
+                ...ErrorForField,
+                seekingFund: ''
+            })
+        }
+
+        if (name === 'currentValuation' && (value === '' || (/^0/.test(value)) || (/^-/.test(value)))) {
+            setErrorForField({
+                ...ErrorForField,
+                currentValuation: 'Enter the valid valuation of your respected organization.'
+            })
+        }
+        if (name === 'currentValuation' && value && ErrorForField.currentValuation && !(/^0/.test(value)) && !(/^-/.test(value))) {
+            setErrorForField({
+                ...ErrorForField,
+                currentValuation: ''
+            })
+        }
+
+        if (name === 'offeredEquity' && (value === '' || (/^0/.test(value)) || (/^-/.test(value)) || parseInt(value) >= 100  )) {
+            setErrorForField({
+                ...ErrorForField,
+                offeredEquity: 'Enter the valid percentage of equity you want to offer.'
+            })
+        }
+
+        if (name === 'offeredEquity' && parseInt(value) >= 100) {
+            setErrorForField({
+                ...ErrorForField,
+                offeredEquity: 'You can not offer more then 100% of your equity.'
+            })
+        }
+
+        if (name === 'offeredEquity' && value && ErrorForField.offeredEquity && !(/^0/.test(value)) && !(/^-/.test(value)) && parseInt(value) < 100) {
+            setErrorForField({
+                ...ErrorForField,
+                offeredEquity: ''
+            })
+        }
+
+        if (name === 'maximunofferedEquity' && (value === '' || (/^0/.test(value)) || (/^-/.test(value)) || parseInt(value) >= 100)) {
+            setErrorForField({
+                ...ErrorForField,
+                maximunofferedEquity: 'Enter the valid percentage of equity you want to offer.'
+            })
+        }
+
+        if (name === 'maximunofferedEquity' && parseInt(value) >= 100) {
+            setErrorForField({
+                ...ErrorForField,
+                maximunofferedEquity: 'You can not offer more then 100% of your equity.'
+            })
+        }
+
+        if (name === 'maximunofferedEquity' && value && ErrorForField.maximunofferedEquity && !(/^0/.test(value)) && !(/^-/.test(value)) && parseInt(value) < 100) {
+            setErrorForField({
+                ...ErrorForField,
+                maximunofferedEquity: ''
+            })
+        }
+    }
+
+    const VerificationForFeilds = () => {
+        let error = true;
+        if (objForAdditionalData.fundingType === '') {
+            setErrorForField({
+                ...ErrorForField,
+                fundingType: 'Enter the type of funding round you are seeking for .'
+            })
+        }
+
+        else if (objForAdditionalData.seekingFund.toString() !== '' && ((/^0/.test(objForAdditionalData.seekingFund.toString())) || (/-0/.test(objForAdditionalData.seekingFund.toString())))) {
+            setErrorForField({
+                ...ErrorForField,
+                seekingFund: 'Enter the valid amount you are seeking for.'
+            })
+        }
+
+        else if (objForAdditionalData.currentValuation.toString() !== '' && ((/^0/.test(objForAdditionalData.currentValuation.toString())) || (/-0/.test(objForAdditionalData.currentValuation.toString())))) {
+            setErrorForField({
+                ...ErrorForField,
+                currentValuation: 'Enter the valid valuation of your respected organization.'
+            })
+        }
+
+        else if (objForAdditionalData.offeredEquity.toString() !== '' && ((/^0/.test(objForAdditionalData.offeredEquity.toString())) || (/-0/.test(objForAdditionalData.offeredEquity.toString())) || objForAdditionalData.offeredEquity >= 100 )) {
+            setErrorForField({
+                ...ErrorForField,
+                offeredEquity: 'Enter the valid percentage of equity you want to offer.'
+            })
+        }
+
+        else if (objForAdditionalData.maximunofferedEquity.toString() !== '' && ((/^0/.test(objForAdditionalData.maximunofferedEquity.toString())) || (/-0/.test(objForAdditionalData.maximunofferedEquity.toString())) || objForAdditionalData.maximunofferedEquity >= 100 )) {
+            setErrorForField({
+                ...ErrorForField,
+                maximunofferedEquity: 'Enter the valid percentage of equity you want to offer.'
+            })
+        }
+        else {
+            error = false
+        }
+        return error
     }
 
     const handleNextButton = async () => {
-        setObjForDetailsAboutBusiness({
-            ...objForDetailsAboutBusiness,
-            currentValuation: objForAdditionalData.currentValuation,
-            seekingFund: objForAdditionalData.seekingFund,
-            offeredEquity: objForAdditionalData.offeredEquity,
-            maximunofferedEquity: objForAdditionalData.maximunofferedEquity,
-            fundingType : objForAdditionalData.fundingType
-        })
+        if (!VerificationForFeilds()) {
+            setObjForDetailsAboutBusiness({
+                ...objForDetailsAboutBusiness,
+                currentValuation: objForAdditionalData.currentValuation,
+                seekingFund: objForAdditionalData.seekingFund,
+                offeredEquity: objForAdditionalData.offeredEquity,
+                maximunofferedEquity: objForAdditionalData.maximunofferedEquity,
+                fundingType: objForAdditionalData.fundingType
+            })
 
-        setObjForAllQnA({
-            ...objForAllQnA,
-            Equity: [...arrayForEquity]
-        })
+            setObjForAllQnA({
+                ...objForAllQnA,
+                Equity: [...arrayForEquity]
+            })
 
-        handleNext();
-
+            handleNext();
+        }
     }
 
     useEffect(() => {
@@ -149,7 +293,7 @@ export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjFo
                 reasonForEquityOffer: convertText(objForAllQnA.Equity[2].ans.text),
                 exitstrategy: convertText(objForAllQnA.Equity[3].ans.text),
                 ROI: convertText(objForAllQnA.Equity[4].ans.text),
-                fundingType : objForDetailsAboutBusiness.fundingType
+                fundingType: objForDetailsAboutBusiness.fundingType
             })
             setArrayForEquity(objForAllQnA.Equity);
         }
@@ -184,8 +328,8 @@ export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjFo
                                 <option value={'series C'} >{'Series C'}</option>
 
                             </select>
-
                         </div>
+                        {ErrorForField.fundingType && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.fundingType}</p>}
                     </div>
 
                     <div className="col-span-5">
@@ -213,7 +357,7 @@ export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjFo
                                 </span>
                             </div>
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {ErrorForField.seekingFund && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.seekingFund}</p>}
                     </div>
 
                     <div className="col-span-5">
@@ -231,7 +375,7 @@ export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjFo
                                 className="block p-5 w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             />
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {/* {ErrorForField.fundingType && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.fundingType}</p>} */}
                     </div>
 
                     <div className="col-span-5">
@@ -259,7 +403,8 @@ export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjFo
                                 </span>
                             </div>
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {ErrorForField.currentValuation && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.currentValuation}</p>}
+
                     </div>
 
                     <div className="col-span-5">
@@ -305,7 +450,7 @@ export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjFo
                                 </span>
                             </div>
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {ErrorForField.offeredEquity && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.offeredEquity}</p>}
                     </div>
 
                     <div className="col-span-5">
@@ -333,7 +478,7 @@ export default function QueForPitchSection6({ handleNext, objForAllQnA, setObjFo
                                 </span>
                             </div>
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {ErrorForField.maximunofferedEquity && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.maximunofferedEquity}</p>}
                     </div>
 
                     <div className="col-span-5">

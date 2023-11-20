@@ -1,7 +1,7 @@
 // Question for Performance Metrics:
 import React, { SetStateAction, useEffect, useState } from 'react'
 import { Button } from '@mui/material'
-import { TypeForFAQs, TypeForQueAns , TypeForDetailsAboutBusiness } from '../../../../utils/type'
+import { TypeForFAQs, TypeForQueAns, TypeForDetailsAboutBusiness } from '../../../../utils/type'
 import { convertText } from '../../../../utils/factory/FormatText'
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -12,9 +12,9 @@ type Props = {
     handleNext: Function
     objForAllQnA: TypeForFAQs,
     setObjForAllQnA: React.Dispatch<SetStateAction<TypeForFAQs>>
-    objForDetailsAboutBusiness : TypeForDetailsAboutBusiness
-    setObjForDetailsAboutBusiness : React.Dispatch<SetStateAction<TypeForDetailsAboutBusiness>>
-  }
+    objForDetailsAboutBusiness: TypeForDetailsAboutBusiness
+    setObjForDetailsAboutBusiness: React.Dispatch<SetStateAction<TypeForDetailsAboutBusiness>>
+}
 
 type originalText = {
     avgSixMonthSale: string,
@@ -23,11 +23,20 @@ type originalText = {
     avgYearSale: string,
     avgYearViews: string,
     avgYearCustomer: string,
-    queForBusinessTarget : string,
-    queForValuations : string,
+    queForBusinessTarget: string,
+    queForValuations: string,
 }
 
-export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjForAllQnA  ,objForDetailsAboutBusiness , setObjForDetailsAboutBusiness}: Props) {
+type ObjForError = {
+    avgSixMonthSale: string,
+    avgSixMonthViews: string,
+    avgSixMonthCustomer: string,
+    avgYearSale: string,
+    avgYearViews: string,
+    avgYearCustomer: string,
+}
+
+export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjForAllQnA, objForDetailsAboutBusiness, setObjForDetailsAboutBusiness }: Props) {
 
     const [arrayForPerformance, setArrayForPerformance] = useState<Array<TypeForQueAns>>([
         {
@@ -53,26 +62,19 @@ export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjFo
         avgYearSale: '',
         avgYearViews: '',
         avgYearCustomer: '',
-        queForBusinessTarget : '',
-        queForValuations : '',
+        queForBusinessTarget: '',
+        queForValuations: '',
     })
 
-    const handleNextButton = () => {
-        setObjForAllQnA({
-            ...objForAllQnA,
-            Performance: arrayForPerformance
-        });
-        setObjForDetailsAboutBusiness({
-            ...objForDetailsAboutBusiness,
-            avgSixMonthSale: objForAdditionalData.avgSixMonthSale,
-            avgSixMonthViews: objForAdditionalData.avgSixMonthViews,
-            avgSixMonthCustomer: objForAdditionalData.avgSixMonthCustomer,
-            avgYearSale: objForAdditionalData.avgYearSale,
-            avgYearViews: objForAdditionalData.avgYearViews,
-            avgYearCustomer: objForAdditionalData.avgYearCustomer,
-          })
-        handleNext()
-    }
+    const [ErrorForField, setErrorForField] = useState<ObjForError>({
+        avgSixMonthSale: '',
+        avgSixMonthViews: '',
+        avgSixMonthCustomer: '',
+        avgYearSale: '',
+        avgYearViews: '',
+        avgYearCustomer: '',
+    })
+
 
     const handleInputChangeForLargeQuestions = (event: any, index: number) => {
         const inputText = event.target.value;
@@ -107,12 +109,154 @@ export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjFo
 
     };
 
-    const handleInputChange = (event : any)=>{
-        const {name , value} = event.target;
-         setObjForAdditionalData({
+    const VerificationForFeilds = (): boolean => {
+        let error = true;
+        if (!objForAdditionalData.avgSixMonthSale) {
+            setErrorForField({
+                ...ErrorForField,
+                avgSixMonthSale: 'Please Select valid option.'
+            })
+        }
+        else if (!objForAdditionalData.avgYearSale) {
+            setErrorForField({
+                ...ErrorForField,
+                avgYearSale: 'Please Enter Valid Mode'
+            })
+        }
+        else if (!objForAdditionalData.avgSixMonthViews) {
+            setErrorForField({
+                ...ErrorForField,
+                avgSixMonthViews: 'Please Enter Valid Mode'
+            })
+        }
+        else if (!objForAdditionalData.avgYearViews) {
+            setErrorForField({
+                ...ErrorForField,
+                avgYearViews: 'Please Enter Valid Mode'
+            })
+        }
+        else if (!objForAdditionalData.avgSixMonthCustomer) {
+            setErrorForField({
+                ...ErrorForField,
+                avgSixMonthCustomer: 'Please Enter Valid Mode'
+            })
+        }
+        else if (!objForAdditionalData.avgYearCustomer) {
+            setErrorForField({
+                ...ErrorForField,
+                avgYearCustomer: 'Please Enter Valid Mode'
+            })
+        }
+        else {
+            return false
+        }
+        return error;
+    }
+
+    
+    const handleInputChange = (event: any) => {
+        const { name, value } = event.target;
+        setObjForAdditionalData({
             ...objForAdditionalData,
-            [name] : value
-         })   
+            [name]: value
+        })
+
+        if (name === 'avgSixMonthCustomer' && ErrorForField.avgSixMonthCustomer && value) {
+            setErrorForField({
+                ...ErrorForField,
+                avgSixMonthCustomer: ''
+            })
+        }
+        if (name === 'avgSixMonthCustomer' && value === '') {
+            setErrorForField({
+                ...ErrorForField,
+                avgSixMonthCustomer: 'Please Enter the valid field.'
+            })
+        }
+        if (name === 'avgSixMonthSale' && ErrorForField.avgSixMonthSale && value) {
+            setErrorForField({
+                ...ErrorForField,
+                avgSixMonthSale: ''
+            })
+        }
+        if (name === 'avgSixMonthSale' && value === '') {
+            setErrorForField({
+                ...ErrorForField,
+                avgSixMonthSale: 'Please Enter the valid field.'
+            })
+        }
+        if (name === 'avgSixMonthViews' && ErrorForField.avgSixMonthViews && value) {
+            setErrorForField({
+                ...ErrorForField,
+                avgSixMonthViews: ''
+            })
+        }
+        if (name === 'avgSixMonthViews' && value === '') {
+            setErrorForField({
+                ...ErrorForField,
+                avgSixMonthViews: 'Please Enter the valid field.'
+            })
+        }
+        if (name === 'avgYearCustomer' && ErrorForField.avgYearCustomer && value) {
+            setErrorForField({
+                ...ErrorForField,
+                avgYearCustomer: ''
+            })
+        }
+        if (name === 'avgYearCustomer' && value === '') {
+            setErrorForField({
+                ...ErrorForField,
+                avgYearCustomer: 'Please Enter the valid field.'
+            })
+        }
+        if (name === 'avgYearSale' && ErrorForField.avgYearSale && value) {
+            setErrorForField({
+                ...ErrorForField,
+                avgYearSale: ''
+            })
+        }
+        if (name === 'avgYearSale' && value === '') {
+            setErrorForField({
+                ...ErrorForField,
+                avgYearSale: 'Please Enter the valid field.'
+            })
+        }
+        if (name === 'avgYearViews' && ErrorForField.avgYearViews && value) {
+            setErrorForField({
+                ...ErrorForField,
+                avgYearViews: ''
+            })
+        }
+        if (name === 'avgYearViews' && value === '') {
+            setErrorForField({
+                ...ErrorForField,
+                avgYearViews: 'Please Enter the valid field.'
+            })
+        }
+    }
+
+    const handleNextButton = () => {
+        VerificationForFeilds()
+        if (objForAdditionalData.avgSixMonthCustomer
+            && objForAdditionalData.avgSixMonthCustomer
+            && objForAdditionalData.avgSixMonthSale
+            && objForAdditionalData.avgYearCustomer
+            && objForAdditionalData.avgYearSale && objForAdditionalData.avgYearViews) {
+            setObjForAllQnA({
+                ...objForAllQnA,
+                Performance: arrayForPerformance
+            });
+            setObjForDetailsAboutBusiness({
+                ...objForDetailsAboutBusiness,
+                avgSixMonthSale: objForAdditionalData.avgSixMonthSale,
+                avgSixMonthViews: objForAdditionalData.avgSixMonthViews,
+                avgSixMonthCustomer: objForAdditionalData.avgSixMonthCustomer,
+                avgYearSale: objForAdditionalData.avgYearSale,
+                avgYearViews: objForAdditionalData.avgYearViews,
+                avgYearCustomer: objForAdditionalData.avgYearCustomer,
+            })
+            handleNext()
+        }
     }
 
 
@@ -125,8 +269,8 @@ export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjFo
                 avgYearSale: objForDetailsAboutBusiness.avgYearSale,
                 avgYearViews: objForDetailsAboutBusiness.avgYearViews,
                 avgYearCustomer: objForDetailsAboutBusiness.avgYearCustomer,
-                queForBusinessTarget : convertText(objForAllQnA.Performance[0].ans.text),
-                queForValuations : convertText(objForAllQnA.Performance[1].ans.text),                
+                queForBusinessTarget: convertText(objForAllQnA.Performance[0].ans.text),
+                queForValuations: convertText(objForAllQnA.Performance[1].ans.text),
             })
             setArrayForPerformance(objForAllQnA.Performance);
         }
@@ -137,7 +281,6 @@ export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjFo
             <div className='p-4 rounded-2xl'>
                 <h2 className="text-center  text-lg font-semibold leading-7 text-gray-900">{'Performance Metrics'}</h2>
                 <p className="mt-1 text-sm text-center leading-6 text-gray-600">Answer this question will help us to create a news article about your .Plase share the correct details. And might help in increase your Rank.</p>
-                {/* {errorMessage.otherError && <p className='block mx-auto text-red-600 w-full'>{errorMessage.otherError}</p>} */}
 
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:w-4/5 md:p-3">
 
@@ -167,7 +310,7 @@ export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjFo
                                 />
                             </RadioGroup>
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {ErrorForField.avgSixMonthSale && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.avgSixMonthSale}</p>}
                     </div>
 
                     <div className="col-span-5 border-b">
@@ -184,13 +327,13 @@ export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjFo
                                 <FormControlLabel value="<1000" control={<Radio />} label="Below 1,000 visits" />
                                 <FormControlLabel value="1000-5000" control={<Radio />} label="1,000 - 5,000 visits" />
                                 <FormControlLabel value="5000-10000" control={<Radio />} label="5,000 - 10,000 visits" />
-                                <FormControlLabel value="5000-10000" control={<Radio />} label="5,000 - 10,000 visits" />
+                                {/* <FormControlLabel value="5000-10000" control={<Radio />} label="5,000 - 10,000 visits" /> */}
                                 <FormControlLabel value="10000-20000" control={<Radio />} label="10,000 - 20,000 visits" />
                                 <FormControlLabel value=">20000" control={<Radio />} label="Over 20,000 visits" />
                                 <FormControlLabel value="NA" control={<Radio />} label="Not Applicable" />
                             </RadioGroup>
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {ErrorForField.avgSixMonthViews && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.avgSixMonthViews}</p>}
                     </div>
 
                     <div className="col-span-5 border-b">
@@ -213,7 +356,7 @@ export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjFo
 
                             </RadioGroup>
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {ErrorForField.avgSixMonthCustomer && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.avgSixMonthCustomer}</p>}
                     </div>
 
                     <div className="col-span-5 border-b">
@@ -235,7 +378,7 @@ export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjFo
                                 <FormControlLabel value="NA" control={<Radio />} label="Not Applicable" />
                             </RadioGroup>
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {ErrorForField.avgYearSale && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.avgYearSale}</p>}
                     </div>
 
                     <div className="col-span-5 border-b">
@@ -252,13 +395,12 @@ export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjFo
                                 <FormControlLabel value="<1000" control={<Radio />} label="Below 1,000 visits" />
                                 <FormControlLabel value="1000-5000" control={<Radio />} label="1,000 - 5,000 visits" />
                                 <FormControlLabel value="5000-10000" control={<Radio />} label="5,000 - 10,000 visits" />
-                                <FormControlLabel value="5000-10000" control={<Radio />} label="5,000 - 10,000 visits" />
                                 <FormControlLabel value="10000-20000" control={<Radio />} label="10,000 - 20,000 visits" />
                                 <FormControlLabel value=">20000" control={<Radio />} label="Over 20,000 visits" />
                                 <FormControlLabel value="NA" control={<Radio />} label="Not Applicable" />
                             </RadioGroup>
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {ErrorForField.avgYearViews && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.avgYearViews}</p>}
                     </div>
 
                     <div className="col-span-5">
@@ -281,7 +423,7 @@ export default function QueForPitchSection2({ handleNext, objForAllQnA, setObjFo
 
                             </RadioGroup>
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {ErrorForField.avgYearCustomer && <p className='block mx-auto text-red-600 w-full'>{ErrorForField.avgYearCustomer}</p>}
                     </div>
 
 

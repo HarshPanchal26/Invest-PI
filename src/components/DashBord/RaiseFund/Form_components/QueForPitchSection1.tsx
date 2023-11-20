@@ -23,6 +23,13 @@ type objForAdditionalData = {
   queForManufacture : string,
 }
 
+type ObjForError = {
+  startDate: string,
+  buisnessMode: string,
+  url: string,
+  queForManufacture : string,
+}
+
 export default function QueForPitchSection1({ handleNext, objForAllQnA, setObjForAllQnA  , objForDetailsAboutBusiness , setObjForDetailsAboutBusiness}: Props) {
 
   const [arrayOfLargeQuestins, setArrayOfLargeQuestins] = useState<Array<TypeForQueAns>>([
@@ -42,13 +49,82 @@ export default function QueForPitchSection1({ handleNext, objForAllQnA, setObjFo
     queForManufacture : '',
   })
 
+  const [ErrorForFeild , setErrorForFeild] = useState<ObjForError>({
+    startDate: '',
+    buisnessMode: '',
+    url: '',
+    queForManufacture : '',
+  })
+
+  const VerificationForFeilds = (): boolean => {
+    let error = true;
+    if (!objForAdditionalData.startDate) {
+      setErrorForFeild({
+            ...ErrorForFeild,
+            startDate: 'Please Enter Valid Date .'
+        })
+    }
+    else if (!objForAdditionalData.buisnessMode) {
+      setErrorForFeild({
+            ...ErrorForFeild,
+            buisnessMode: 'Please Enter Valid Mode .'
+        })
+    }
+    else if (!objForAdditionalData.url) {
+      setErrorForFeild({
+            ...ErrorForFeild,
+            url: 'Enter Valid URL .'
+        })
+    }else{
+      return false
+    }
+    return error;
+  }
 
   const   handleInputChange = (event : any)=>{
     const {name , value} = event.target;
-     setObjForAdditionalData({
-        ...objForAdditionalData,
-        [name] : value
-     })   
+    setObjForAdditionalData({
+      ...objForAdditionalData,
+      [name] : value
+    })   
+
+    if (name === 'startDate' && ErrorForFeild.startDate && value) {
+      setErrorForFeild({
+            ...ErrorForFeild,
+            startDate: ''
+        })
+    }
+    if (name === 'startDate' && value === '') {
+      setErrorForFeild({
+            ...ErrorForFeild,
+            startDate: 'Please Enter Valid Date.'
+        })
+    }
+    if (name === 'buisnessMode' && ErrorForFeild.buisnessMode && value) {
+      setErrorForFeild({
+            ...ErrorForFeild,
+            buisnessMode: ''
+        })
+    }
+    if (name === 'buisnessMode' && value === '') {
+      setErrorForFeild({
+            ...ErrorForFeild,
+            buisnessMode: 'Please Enter Valid Mode .'
+        })
+    }
+    if (name === 'url' && ErrorForFeild.url && value) {
+      setErrorForFeild({
+            ...ErrorForFeild,
+            url: ''
+        })
+    }
+    if (name === 'url' && value === '') {
+      setErrorForFeild({
+            ...ErrorForFeild,
+            url: 'Enter Vlaid Url .'
+        })
+    }
+
 }
 
   const handleInputChangeForLargeQuestions = (event: any, index: number) => {
@@ -70,11 +146,9 @@ export default function QueForPitchSection1({ handleNext, objForAllQnA, setObjFo
           `<p key=${index}>${line}&nbsp;</p>`
         )
       }
-
     });
 
     let mergedLine: any = '';
-
     convertedLines.map((item: any) => {
       mergedLine += item
     })
@@ -85,17 +159,20 @@ export default function QueForPitchSection1({ handleNext, objForAllQnA, setObjFo
   };
 
   const handleNextButton = () => {
-    setObjForAllQnA({
-      ...objForAllQnA,
-      Business : arrayOfLargeQuestins,
-    });
-    setObjForDetailsAboutBusiness({
-      ...objForDetailsAboutBusiness,
-      startDate : objForAdditionalData.startDate,
-      buisnessMode : objForAdditionalData.buisnessMode,
-      url : objForAdditionalData.url
-    })
-    handleNext()
+    VerificationForFeilds();
+    if(objForAdditionalData.startDate && objForAdditionalData.url && objForAdditionalData.buisnessMode){
+      setObjForAllQnA({
+        ...objForAllQnA,
+        Business : arrayOfLargeQuestins,
+      });
+      setObjForDetailsAboutBusiness({
+        ...objForDetailsAboutBusiness,
+        startDate : objForAdditionalData.startDate,
+        buisnessMode : objForAdditionalData.buisnessMode,
+        url : objForAdditionalData.url
+      })
+      handleNext()
+    }
   }
 
   useEffect(() => {
@@ -134,7 +211,7 @@ export default function QueForPitchSection1({ handleNext, objForAllQnA, setObjFo
                 className="block p-5 w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
-            {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+            {ErrorForFeild.startDate && <p className='block mx-auto text-red-600 w-full'>{ErrorForFeild.startDate}</p>}
           </div>
 
           <div className="col-span-5">
@@ -154,7 +231,7 @@ export default function QueForPitchSection1({ handleNext, objForAllQnA, setObjFo
                 <FormControlLabel value="Both" control={<Radio />} label="both" />
               </RadioGroup>
             </div>
-            {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+            {ErrorForFeild.buisnessMode && <p className='block mx-auto text-red-600 w-full'>{ErrorForFeild.buisnessMode}</p>}
           </div>
 
           <div className="col-span-5">
@@ -171,7 +248,7 @@ export default function QueForPitchSection1({ handleNext, objForAllQnA, setObjFo
                 className="block p-5 w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
-            {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+            {ErrorForFeild.url && <p className='block mx-auto text-red-600 w-full'>{ErrorForFeild.url}</p>}
           </div>
 
           <div className="col-span-5">

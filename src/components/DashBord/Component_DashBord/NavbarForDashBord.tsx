@@ -16,6 +16,7 @@ import NotificationBar from '../../Notifications/NotificationBar';
 import Badge from '@mui/material/Badge';
 import { NotificationContext } from '../../../context/NotificationContext'
 import Logo from '../../../Assets/logo';
+import LogoForSmallScreen from '../../../Assets/LogoForSmallScreen';
 
 const navigationForSideBar = [
   { name: 'Home', href: '/feed', icon: <HomeIcon />, current: false, inMobile: true },
@@ -150,10 +151,12 @@ export default function NavbarForDashBord() {
             <div className=" w-full px-4 sm:px-6 lg:px-8 ">
               <div className="flex h-14 items-center justify-between flex-initial">
                 {/*  Company Logo */}
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 hidden xl:flex md:flex">
                  <Logo/>
                 </div>
-
+                <div className="flex-shrink-0 xl:hidden md:hidden">
+                 <LogoForSmallScreen/>
+                </div>
                 {/*Search Bar  */}
                 <div className='xl:flex my-4 md:hidden'>
                   <input

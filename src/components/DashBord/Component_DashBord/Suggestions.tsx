@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react"
-import { CF, INDIVIDUAL, PRODUCT } from '../../Route/type.router'
 import Skeleton from '@mui/material/Skeleton';
 import axios from "../../../../axios.config";
 import { ContextForDashBord } from "../../../context/contextForDashBord";
@@ -18,6 +17,7 @@ function SkeletonForSuggestions() {
         </>
     )
 }
+
 export default function Suggestions() {
     const contextForDashBord = useContext(ContextForDashBord);
     const navigate = useNavigate();
@@ -39,9 +39,9 @@ export default function Suggestions() {
         <>
             {/*Box for tops start up*/}
             <div className="mx-2 my-5 border rounded-lg bg-slate-200 w-full">
-                <h3 className="border-b-2 my-4 items-center ">Suggestions</h3>
+                <h3 className="border-b-2 my-4 text-center font-bold">Suggestions</h3>
                 {SuggestedUser !== null && (
-                    <ul className="divide-y divide-gray-100 rounded-lg bg-white">
+                    <ul className="divide-y divide-gray-100 rounded-lg bg-white p-2">
                         {SuggestedUser.map((person: any , index) => (
                             <li key={index} className="flex justify-between gap-x-6 py-5 mx-2 cursor-pointer"
                             onClick={()=>navigate(`/profile/${person.username}/`)}

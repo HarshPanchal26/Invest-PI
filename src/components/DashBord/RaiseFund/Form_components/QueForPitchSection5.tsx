@@ -2,7 +2,7 @@
 import React, { SetStateAction, useEffect, useState } from 'react'
 import { Button } from '@mui/material'
 import axios from '../../../../../axios.config'
-import { TypeForFAQs , TypeForDetailsAboutBusiness} from '../../../../utils/type'
+import { TypeForFAQs, TypeForDetailsAboutBusiness } from '../../../../utils/type'
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -11,28 +11,23 @@ type Props = {
     handleNext: Function
     objForAllQnA: TypeForFAQs,
     setObjForAllQnA: React.Dispatch<SetStateAction<TypeForFAQs>>
-    objForDetailsAboutBusiness : TypeForDetailsAboutBusiness
-    setObjForDetailsAboutBusiness : React.Dispatch<SetStateAction<TypeForDetailsAboutBusiness>>
-  }
+    objForDetailsAboutBusiness: TypeForDetailsAboutBusiness
+    setObjForDetailsAboutBusiness: React.Dispatch<SetStateAction<TypeForDetailsAboutBusiness>>
+}
 
 type TypeForAudiance = {
     targetAudiences: string
 }
 
-    export default function QueForPitchSection5({ handleNext, objForAllQnA, setObjForAllQnA  , objForDetailsAboutBusiness , setObjForDetailsAboutBusiness}: Props) {
+export default function QueForPitchSection5({ handleNext, objForAllQnA, setObjForAllQnA, objForDetailsAboutBusiness, setObjForDetailsAboutBusiness }: Props) {
 
     const [objForAdditionalData, setObjForAdditionalData] = useState<TypeForAudiance>({
         targetAudiences: '',
     })
 
-    const handleNextPage = async () => {
-        setObjForDetailsAboutBusiness({
-            ...objForDetailsAboutBusiness,
-            targetAudiences : objForAdditionalData.targetAudiences
-        })
-        handleNext();
-    }
-
+    const [ErrorForFeild , setErrorForFeild] = useState<{targetAudiences : string}>({
+        targetAudiences : ''
+    })
     // const handleInputChange = (event: any, index: number) => {
     //     const inputText = event.target.value;
     //     setOriginalText({
@@ -64,23 +59,49 @@ type TypeForAudiance = {
 
     // };
 
-    const handleInputChange = (event : any)=>{
-        const {name , value} = event.target;
+    const handleInputChange = (event: any) => {
+        const { name, value } = event.target;
         setObjForAdditionalData({
             ...objForAdditionalData,
-            [name] : value
-        })   
+            [name]: value
+        })
+
+        if(name === 'targetAudiences' &&  ErrorForFeild.targetAudiences && value){
+            setErrorForFeild({
+                ...ErrorForFeild,
+                targetAudiences : ''
+            })
+        }
+
+        if(name === 'targetAudiences' && value === ''){
+            setErrorForFeild({
+                ...ErrorForFeild,
+                targetAudiences : 'Please Enter the valid field.'
+            })
+        }
     }
 
+    const handleNextPage = async () => {
+        if(objForAdditionalData.targetAudiences){
+            setObjForDetailsAboutBusiness({
+                ...objForDetailsAboutBusiness,
+                targetAudiences: objForAdditionalData.targetAudiences
+            })
+            handleNext();
+        }else{
+            setErrorForFeild({
+                ...ErrorForFeild,
+                targetAudiences : 'Please Enter the valid field.'
+            })
+        }
+    }
     useEffect(() => {
         setObjForAdditionalData({
             targetAudiences: objForDetailsAboutBusiness.targetAudiences
         })
     }, [])
 
-    useEffect(() => {
 
-    }, [])
     return (
         <main className='w-4/5 mx-auto'>
             <div className='p-4 rounded-2xl'>
@@ -107,7 +128,7 @@ type TypeForAudiance = {
                                 <FormControlLabel value="International Markets" control={<Radio />} label="International Markets" />
                             </RadioGroup>
                         </div>
-                        {/* {errorMessage.milestones && <p className='block mx-auto text-red-600 w-full'>{errorMessage.milestones}</p>} */}
+                        {ErrorForFeild.targetAudiences && <p className='block mx-auto text-red-600 w-full'>{ErrorForFeild.targetAudiences}</p>}
                     </div>
 
                 </div>

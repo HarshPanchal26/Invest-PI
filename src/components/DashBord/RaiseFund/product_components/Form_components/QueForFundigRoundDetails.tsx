@@ -190,8 +190,6 @@ export default function QueForFundigRoundDetails({ handleNext, setObjForNewInves
                     } else {
                         setprofileForLeadInvestor(schema);
                     }
-                    // document.getElementById(id)?.classList.add('hidden');
-                    // setSuggestionMenuForaTag(true)
                 }, 1000)
             } else {
                 if (suggestionMenuForTag) {
@@ -224,6 +222,10 @@ export default function QueForFundigRoundDetails({ handleNext, setObjForNewInves
             ...objForNewInvestment,
             [type]: newArray,
         })
+        if (type === 'allInvestor')
+            document.getElementById('suggestion-modal-for-all')?.classList.add('hidden');
+        else
+            document.getElementById('suggestion-modal-for-lead')?.classList.add('hidden');
         if (objForNewInvestment.leadInvestors.length !== 0 && errorMessage.leadInvestors) {
             setErrorMessage({
                 ...errorMessage,
@@ -275,7 +277,6 @@ export default function QueForFundigRoundDetails({ handleNext, setObjForNewInves
                             />
                         </div>
                         {errorMessage.dateofInvestment && <p id='date_id' className='block mx-auto text-red-600 w-full'>{errorMessage.dateofInvestment}</p>}
-
                     </div>
 
                     <div className="col-span-5 md:col-span-3">
