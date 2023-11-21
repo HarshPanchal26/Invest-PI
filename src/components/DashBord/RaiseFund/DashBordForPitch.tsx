@@ -74,9 +74,9 @@ export default function DashBordForPitch() {
                     onClick={() => navigation(`/pitch/${item._id}`)}
                   >
                     <div className='w-full  hidden md:block'>
-                      <p className='text-sm text-gray-500 font-bold mt-2 text-left'>
-                        Publish On {`12/10/2032`}
-                      </p>
+                      {/* <p className='text-sm text-gray-500 font-bold mt-2 text-left'>
+                        Publish On {``}
+                      </p> */}
                     </div>
                     <section className='flex md:flex-row flex-col'>
                       <div className='md:w-4/5 w-full p-1 border-r '>
@@ -88,7 +88,7 @@ export default function DashBordForPitch() {
                             className="rounded-full border-4 border-white shadow-lg"
                           />
                           <span className='text-left w-full my-auto mx-4'>
-                            <p className='text-lg font-bold'>{`Harsh Panchal's Pitch `}</p>
+                            <p className='text-lg font-bold'>{contextForDashBord.USER.COMPANYNAME}</p>
                             <p className='text-sm text-gray-500 font-bold mt-2'>{contextForDashBord.USER.BIO}</p>
                           </span>
                         </div>
@@ -105,20 +105,20 @@ export default function DashBordForPitch() {
                             </p>
                           </p>
                         </div>
-                        <div className='flex flex-row p-1 gap-5'>
-                          <div className='p-2'>
+                        <div className='flex flex-row p-1 gap-5 mt-4'>
+                          <div className='p-2 text-center'>
                             <VisibilityIcon />
                             <p className='text-lg cursor-pointer mt-2'>
                               <span className='font-bold hover:border-b mx-1'>{item.engagement.views.length}</span>Views
                             </p>
                           </div>
-                          <div className='p-2'>
+                          <div className='p-2 text-center'>
                             <StarIcon />
                             <p className='text-lg cursor-pointer mt-2'>
                               <span className='font-bold hover:border-b mx-1'>{item.engagement.counter.length}</span>Likes
                             </p>
                           </div>
-                          <div className='p-2'>
+                          <div className='p-2 text-center'>
                             <LocalOfferIcon />
                             <p className='text-lg cursor-pointer mt-2'>
                               <span className='font-bold hover:border-b mx-1'>{item.engagement.counter.length}</span>Counters
@@ -127,22 +127,22 @@ export default function DashBordForPitch() {
                         </div>
                       </div>
                       <div className='md:w-1/5 w-full bg-slate-200 '>
-                        <div className='flex md:flex-col flex-row gap-3'>
+                        <div className='flex md:flex-col flex-row gap-3 text-center'>
 
                           <div className='border-b flex-1 p-1'>
-                            <p className='text-xl my-1'>${item.seekingFund}M</p>
+                            <p className='text-xl my-1 font-bold'>${item.seekingFund}M</p>
                             <p className='text-sm text-gray-600'>Seeking for</p>
                           </div>
                           <div className='border-b flex-1 p-1'>
-                            <p className='text-xl my-1'>{item.offeredEquity}%</p>
+                            <p className='text-xl my-1 font-bold'>{item.offeredEquity}%</p>
                             <p className='text-sm text-gray-600'>Equity</p>
                           </div>
                           <div className='border-b flex-1 p-1'>
-                            <p className='text-xl my-1'>{item.fundingType}</p>
+                            <p className='text-xl my-1 font-bold'>{item.fundingType}</p>
                             <p className='text-sm text-gray-600'>Type</p>
                           </div>
-                          <div className='border-b flex-1 p-4 bg-red-600'>
-                            <p className='text-sm text-white'>Open For Investments</p>
+                          <div className='border-b flex-1 p-4 bg-red-600 text-center'>
+                            <p className='text-sm text-white font-bold'>Open For Investments</p>
                           </div>
                         </div>
                       </div>
