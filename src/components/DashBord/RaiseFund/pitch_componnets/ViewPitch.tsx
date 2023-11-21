@@ -315,12 +315,12 @@ export default function ViewPitch({ PitchData = null, CompanyData = null, Produc
                             ]} />
                         </div>)}
                         {/* Table*/}
-                        <div className='my-11'>
+                        {ArrayForPitchData.PRODUCTDATA?.investments.length !== 0 && (<div className='my-11'>
                             <div className='text-2xl font-bold text-left my-10'>Finance</div>
                             <ViewTable
                                 dataForInvestments={ArrayForPitchData.PRODUCTDATA?.investments}
                             />
-                        </div>
+                        </div>)}
                         {/* Answers of Questions */}
                         {ArrayForPitchData.PITCHDATA && (<div className='my-11'>
                             <div className='text-2xl font-bold text-left my-4'>OverView</div>
