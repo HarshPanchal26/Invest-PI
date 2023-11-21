@@ -131,7 +131,7 @@ export default function DashBordForPitch() {
 
                           <div className='border-b flex-1 p-1'>
                             <p className='text-xl my-1 font-bold'>${item.seekingFund}M</p>
-                            <p className='text-sm text-gray-600'>Seeking for</p>
+                            <p className='text-sm text-gray-600'>Asking For</p>
                           </div>
                           <div className='border-b flex-1 p-1'>
                             <p className='text-xl my-1 font-bold'>{item.offeredEquity}%</p>

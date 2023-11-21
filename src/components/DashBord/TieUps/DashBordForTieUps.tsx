@@ -42,9 +42,9 @@ export default function TieUps() {
     fetchNewPitch()
   }, [])
 
-  useEffect(()=>{
-    console.log("ArrayForTieUpsData" ,ArrayForTieUpsData)
-  } , [ArrayForTieUpsData])
+  useEffect(() => {
+    console.log("ArrayForTieUpsData", ArrayForTieUpsData)
+  }, [ArrayForTieUpsData])
 
   return (
     <div className='w-full h-full overflow-auto p-2 mt-2'>
@@ -114,11 +114,11 @@ export default function TieUps() {
             <div className='flex flex-col xl:w-[44%] md:w-4/5 w-full rounded-lg shadow-md cursor-pointer xl:ml-10 p-2' key={index}
               onClick={() => navigation(`/pitch/${item.PITCHDATA?._id}`)}
             >
-              <div className='w-full hidden md:block'>
+              {/* <div className='w-full hidden md:block'>
                 <p className='text-sm text-gray-500 font-bold mt-2 text-left'>
                   Publish On {`12/10/2032`}
                 </p>
-              </div>
+              </div> */}
               <section className='flex md:flex-row flex-col '>
                 <div className=' w-full p-1 border-r'>
                   <div className='flex flex-row p-4 border-b'>
@@ -190,26 +190,21 @@ export default function TieUps() {
                   </div> */}
                 </div>
                 <div className='md:w-[25%] w-full bg-slate-200 '>
-                  <div className='flex md:flex-col flex-row gap-3'>
-                    {/* <div className='border-b flex-1 p-1'>
-                      <p className='text-xl my-1'>{item.PITCHDATA?.targetAudiences}</p>
-                      <p className='text-sm text-gray-600'>Bussines </p>
-                    </div> */}
+                  <div className='flex md:flex-col flex-row gap-3 text-center'>
                     <div className='border-b flex-1 p-1'>
-                      <p className='text-xl my-1'>${item.PITCHDATA?.seekingFund}M</p>
-                      <p className='text-sm text-gray-600'>Seeking for</p>
+                      <p className='text-xl my-1 font-bold'>${item.PITCHDATA?.seekingFund}M</p>
+                      <p className='text-sm text-gray-600'>Asking For</p>
                     </div>
                     <div className='border-b flex-1 p-1'>
-                      <p className='text-xl my-1'>{item.PITCHDATA?.offeredEquity}%</p>
+                      <p className='text-xl my-1 font-bold'>{item.PITCHDATA?.offeredEquity}%</p>
                       <p className='text-sm text-gray-600'>Equity</p>
                     </div>
                     <div className='border-b flex-1 p-1'>
-                      <p className='text-xl my-1'>{item.PITCHDATA?.fundingType}</p>
+                      <p className='text-xl my-1 font-bold'>{item.PITCHDATA?.fundingType}</p>
                       <p className='text-sm text-gray-600'>Funding </p>
                     </div>
                     <div className='border-b flex-1 p-2 bg-red-600 '>
-                      <p className='text-sm text-white'>Open </p>
-                      <p className='text-sm text-white'>For Investments</p>
+                      <p className='text-sm text-white font-bold'>Open For Investments</p>
                     </div>
                   </div>
                 </div>
