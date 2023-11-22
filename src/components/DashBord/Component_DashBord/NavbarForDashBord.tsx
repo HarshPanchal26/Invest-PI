@@ -152,10 +152,10 @@ export default function NavbarForDashBord() {
               <div className="flex h-14 items-center justify-between flex-initial">
                 {/*  Company Logo */}
                 <div className="flex-shrink-0 hidden xl:flex md:flex">
-                 <Logo/>
+                  <Logo />
                 </div>
                 <div className="flex-shrink-0 xl:hidden md:hidden">
-                 <LogoForSmallScreen/>
+                  <LogoForSmallScreen />
                 </div>
                 {/*Search Bar  */}
                 <div className='xl:flex my-4 md:hidden'>
@@ -232,70 +232,70 @@ export default function NavbarForDashBord() {
 
                 {/* Icons  Big Screen */}
                 <div className="hidden md:block ">
-                  {/* xl:mx-32 */}
                   {/* Problem here give border and check  */}
-                  <div className="flex items-baseline space-x-5 h-full gap-4 p-1">
+                  <div className="flex flex-row space-x-5 h-full gap-4 p-1 items-center">
                     {navigationForSideBar.map((item) => (
                       <NavLink to={item.href}>
-                        <IconButton
-                          aria-label="upload picture"
-                          component="span"
-                          className="h-10 w-10 cursor-pointer mx-2 border border-blue-800"
-                          id={`like-btn`}
-                          style={{ color: 'black' }}
-                        >
-                          {item.icon}
-                        </IconButton>
-                        <p className='text-gray-900 text-center text-lg xl:block hidden w-auto'>{item.name}</p>
+                          <IconButton
+                            aria-label="upload picture"
+                            component="span"
+                            className="h-10 w-10 cursor-pointer mx-2 "
+                            id={`like-btn`}
+                            style={{ color: 'black' }}
+                          >
+                            {item.icon}
+                          </IconButton>
+                          <p className='text-gray-900 text-center text-lg xl:block hidden w-auto'>{item.name}</p>
                       </NavLink>
                     ))}
-                    {contextForDashBord.USER.TYPE === 'product' && <Menu as="div" className="relative ml-3">
-                      <div>
-                        <Menu.Button className="flex max-w-xs items-center text-sm">
-                          <span className="sr-only">Open user menu</span>
-                          <div className='border'>
-                            <IconButton
-                              aria-label="upload picture"
-                              component="span"
-                              className="h-10 w-10 cursor-pointer mx-2"
-                              id={`like-btn`}
-                              style={{ color: 'black' }}
-                            >
-                              <CurrencyDollarIcon />
-                            </IconButton>
-                            <p className='text-center text-lg xl:block hidden w-auto'>{'Raise Funds'}</p>
-                          </div>
-                          {/* </NavLink> */}
-                        </Menu.Button>
-                      </div>
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          {navigationForRaiseFund.map((item) => (
-                            <Menu.Item key={item.name}>
-                              {({ active }) => (
-                                <Link to={item.href} about='about'><div
-                                  className={classNames(
-                                    active ? 'bg-gray-100' : '',
-                                    'block px-4 py-2 text-sm text-gray-700 cursor-pointer text-left'
-                                  )}
-                                  onClick={() => handleClickForAccount(item.value)}
-                                >
-                                  {item.icon}<span className='ml-3'>{item.name}</span>
-                                </div></Link>
-                              )}
-                            </Menu.Item>
-                          ))}
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>}
+                    {contextForDashBord.USER.TYPE === 'product' &&
+                      <Menu as="div" className="relative ml-3 border">
+                        <div className='flex flex-col items-center'>
+                          <Menu.Button className="flex max-w-xs items-center text-sm">
+                            <span className="sr-only">Open user menu</span>
+                            <div className=''>
+                              <IconButton
+                                aria-label="upload picture"
+                                component="span"
+                                className="h-10 w-10 cursor-pointer mx-2"
+                                id={`like-btn`}
+                                style={{ color: 'black' }}
+                              >
+                                <CurrencyDollarIcon />
+                              </IconButton>
+                              <p className='text-center text-lg xl:block hidden w-auto'>{'Raise Funds'}</p>
+                            </div>
+                            {/* </NavLink> */}
+                          </Menu.Button>
+                        </div>
+                        <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            {navigationForRaiseFund.map((item) => (
+                              <Menu.Item key={item.name}>
+                                {({ active }) => (
+                                  <Link to={item.href} about='about'><div
+                                    className={classNames(
+                                      active ? 'bg-gray-100' : '',
+                                      'block px-4 py-2 text-sm text-gray-700 cursor-pointer text-left'
+                                    )}
+                                    onClick={() => handleClickForAccount(item.value)}
+                                  >
+                                    {item.icon}<span className='ml-3'>{item.name}</span>
+                                  </div></Link>
+                                )}
+                              </Menu.Item>
+                            ))}
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>}
                   </div>
                 </div>
 

@@ -97,34 +97,46 @@ export default function ModalForCreateUSPs({ objForUpdateUsp, closeModal, dataFo
                         'Content-Type': 'multipart/form-data', // Important for file uploads
                     },
                 });
+                if (dataForUSPs !== null && res !== null && task === 'new') {
+                    let newArray = [...dataForUSPs];
+                    if (!updateData.imageUrl)
+                        updateData.imageUrl = 'https://firebasestorage.googleapis.com/v0/b/projectpi-fa7b4.appspot.com/o/uspmedia%2FUSP.official.jpg?alt=media&token=11b9cd84-ad1a-4f0c-adc0-d3d9b4ce0154'
+                    newArray.push(updateData);
+                    setDataForUSPs(newArray);
+                    contextForDashBord.USER.PRODUCTINSIDE.usp = dataForUSPs;
+                }
             } else {
                 res = await axios.post(`${import.meta.env.VITE_APP_API_URL}product/update/usp`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data', // Important for file uploads
                     },
                 });
-            }
-            if (dataForUSPs !== null && res !== null) {
-                let newArray = [...dataForUSPs];
-                newArray.push(updateData);
-                setDataForUSPs(newArray);
-                contextForDashBord.USER.PRODUCTINSIDE.usp = dataForUSPs;
+                if (dataForUSPs !== null && res !== null && task === 'update' && objForUpdateUsp) {
+                    let newArray = [...dataForUSPs];
+                    newArray[objForUpdateUsp?.index] = updateData;
+                    setDataForUSPs(newArray);
+                    contextForDashBord.USER.PRODUCTINSIDE.usp = dataForUSPs;
+                }
+                console.log("Res", res)
             }
             closeModal({
                 child: null,
                 open: false
             })
-
         } catch (error: any) {
+            console.log("Error in USP", error)
             setLoader(false);
-            setError(error.message)
+            setError("Error is here")
         }
     }
 
 
     useEffect(() => {
         if (task === 'update' && objForUpdateUsp !== undefined) {
-            objForUpdateUsp.data && setupdateData(objForUpdateUsp.data)
+            objForUpdateUsp.data && setupdateData({
+                ...objForUpdateUsp.data,
+                index: objForUpdateUsp.index
+            })
         }
         setLoader(false);
     }, [])

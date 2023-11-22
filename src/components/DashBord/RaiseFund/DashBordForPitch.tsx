@@ -109,19 +109,19 @@ export default function DashBordForPitch() {
                           <div className='p-2 text-center'>
                             <VisibilityIcon />
                             <p className='text-lg cursor-pointer mt-2'>
-                              <span className='font-bold hover:border-b mx-1'>{item.engagement.views.length}</span>Views
+                              <span className='font-bold hover:border-b mx-1'>{item.engagement.views}</span>Views
                             </p>
                           </div>
                           <div className='p-2 text-center'>
                             <StarIcon />
                             <p className='text-lg cursor-pointer mt-2'>
-                              <span className='font-bold hover:border-b mx-1'>{item.engagement.counter.length}</span>Likes
+                              <span className='font-bold hover:border-b mx-1'>{item.engagement.counter}</span>Likes
                             </p>
                           </div>
                           <div className='p-2 text-center'>
                             <LocalOfferIcon />
                             <p className='text-lg cursor-pointer mt-2'>
-                              <span className='font-bold hover:border-b mx-1'>{item.engagement.counter.length}</span>Counters
+                              <span className='font-bold hover:border-b mx-1'>{item.engagement.counter}</span>Counters
                             </p>
                           </div>
                         </div>

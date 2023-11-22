@@ -60,7 +60,7 @@ export default function Financial() {
                     </span><span className='mx-3'><ArrowForwardIosIcon /></span>
                 </div>
                 <div className=' p-5 text-center sm:w-full shadow-md bg-slate-200 rounded-lg'>
-                    Funding Amount <span className='text-blue-700 ml-3 text-2xl font-bold'>
+                    Raised Amount <span className='text-blue-700 ml-3 text-2xl font-bold'>
                         ${dataForFinance && dataForFinance.totalRaisedFund}M
                     </span><span className='mx-3'><ArrowForwardIosIcon /></span>
                 </div>

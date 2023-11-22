@@ -116,7 +116,7 @@ export default function USPs() {
                                             />
                                             </div>
                                             <div className='w-full mt-5'>
-                                                <p className='text-center font-bold text-lg'>{item.title}</p>
+                                                <p className='text-center font-bold text-lg border'>{item.title}</p>
                                             </div>
                                             <div className='h-auto mt-5 p-2 '>
                                                 {/* <div>
