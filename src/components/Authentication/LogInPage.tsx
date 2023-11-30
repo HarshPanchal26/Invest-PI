@@ -88,7 +88,7 @@ export default function LogInPage() {
             Login to your account
           </h2>
         </div>
-        {error && <p className=' my-5 p-1 text-lg block mx-auto text-red-600 w-1/2'>{error}</p>}
+        {error && <p className='my-5 p-1 text-lg block mx-auto text-red-600 w-1/2 text-center'>{error}</p>}
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" action="#" method="POST">
@@ -147,10 +147,10 @@ export default function LogInPage() {
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-10 text-center text-sm  text-indigo-600 ">
             Not a member?{' '}
             <a href="/signin/type" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              Create Your Account
+              <p className="inline-block p-3 border rounded-lg mx-3 text-white bg-red-600">Create Your Account</p>
             </a>
           </p>
         </div>
