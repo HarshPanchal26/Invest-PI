@@ -43,10 +43,10 @@ export default function PersonalDetailsForCF({ handleNext, setObjForSignInComone
   }, [])
   return (
     <div className='mx-2 my-5 '>
-      <div className="  pb-12">
+      <div className="pb-12 text-center">
         <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
         <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
-        {errorMessage && <p className=' my-5 border border-red-700 rounded-xl p-1 bg-red-600 block mx-auto text-white w-1/2'>{errorMessage}</p>}
+        {errorMessage && <p className='my-5 p-1 text-lg block mx-auto text-red-600 w-1/2 text-center'>{errorMessage}</p>}
 
         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="col-span-5 md:col-span-3">
@@ -244,6 +244,7 @@ export default function PersonalDetailsForCF({ handleNext, setObjForSignInComone
         </div>
       </div>
       {/* <button type='button' className='p-3 w-28 border my-5' onClick={handleClick}>Next Inside</button> */}
+      <div className="flex w-full justify-center my-5">
       <Button
         variant='contained'
         color='primary'
@@ -251,6 +252,7 @@ export default function PersonalDetailsForCF({ handleNext, setObjForSignInComone
         onClick={handleClick}
       >
         Next</Button>
+        </div>
     </div>
   )
 }

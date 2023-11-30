@@ -45,7 +45,7 @@ export default function InterestInInvestment({ handleNext, setObjForSignInComone
     return (
         <>
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-4 mx-10 start-4 sm:col-start-2">
+                <div className="sm:col-span-4 mx-10 start-4 sm:col-start-2 text-center">
                     <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
                         Have you ever invested in any startup or Company ?
                     </label>
@@ -85,7 +85,7 @@ export default function InterestInInvestment({ handleNext, setObjForSignInComone
                     </div>
                 </div>)}
             </div>
-            <div className="my-5">
+            <div className="flex w-full my-10 justify-center ">
                 <Button
                     variant='contained'
                     color='primary'

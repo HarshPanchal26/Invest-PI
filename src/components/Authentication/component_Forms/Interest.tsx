@@ -91,11 +91,13 @@ export default function Interest({handleNext , setArrayForInterest}: propsType) 
                     )
                 })
             }
+            <div className='w-full flex justify-center my-10'>
             <Button 
             variant='contained'  
             color='primary'
             onClick={handleClickForNext}
             >Next</Button>
+            </div>
         </div>
     )
 }

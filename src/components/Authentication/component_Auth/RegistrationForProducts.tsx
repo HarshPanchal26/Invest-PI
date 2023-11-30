@@ -104,7 +104,7 @@ export default function RegistrationForProducts() {
               Back
             </Button>
           </div>
-          <div className='h-auto mx-2 border'>
+          <div className='h-auto mx-2'>
             {activeStep === 0 && <PersonalDetailsForProducts 
                                   handleNext={handleNext} 
                                   setObjForSignInComonent={setObjForSignInComonent}

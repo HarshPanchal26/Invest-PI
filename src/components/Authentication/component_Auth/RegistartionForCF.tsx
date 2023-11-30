@@ -107,7 +107,7 @@ export default function RegistartionForCF() {
               Back
             </Button>
           </div>
-          <div className='h-auto mx-2 border'>
+          <div className='h-auto mx-2 '>
             {activeStep === 0 && <PersonalDetailsForCF handleNext={handleNext} setObjForSignInComonent={setObjForSignInComonent} />}
             {activeStep === 1 && <Interest handleNext={handleNext} setArrayForInterest={setArrayForInterest} />}
             {/* {activeStep === 1 && <Interest handleNext={handleNext} />} */}

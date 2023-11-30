@@ -10,7 +10,7 @@ import Loading from '../../Assets/Loading';
 const userCast = ["investor", "business", "founder", "CF", "product", "individuals"];
 
 export default function SignInPage() {
-                        
+
   const [loader, setloader] = React.useState<boolean>(true)
   const [userType, setUserType] = useState<String | null>(null);
 
@@ -58,28 +58,26 @@ export default function SignInPage() {
           userType === 'CF' && <RegistartionForCF />
         }
         {
-          //  used for angel investor or individual investpr (Not in use)
-          userType === 'investor' && <RegistrationForAngel />
-        }
-        {
           //  used for founders registration
           userType === 'individuals' && <RegistrationForIndividuals />
-        }
-        {
-          //(Not in use right now)  used for registartion of Buisness (Start ups , Mid level company , giant company)
-          userType === 'business' && <RegistrationForBuisness />
         }
         {
           //  used for registartion of Buisness (Start ups , Mid level company , giant company)
           userType === 'product' && <RegistrationForProducts />
         }
+        {/* {
+          //(Not in use right now)  used for registartion of Buisness (Start ups , Mid level company , giant company)
+          userType === 'business' && <RegistrationForBuisness />
+        } */}
+        {/* {
+          //  used for angel investor or individual investpr (Not in use)
+          userType === 'investor' && <RegistrationForAngel />
+        } */}
       </div>
     )
   } else {
     return (
       <Loading />
-      // <div className='border h-auto md:mx-5 md:p-8 mx-2 p-5'>
-      // </div>
     )
   }
 }

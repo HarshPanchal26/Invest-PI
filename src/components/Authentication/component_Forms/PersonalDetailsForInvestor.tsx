@@ -4,9 +4,9 @@
 import React, { useEffect, useState } from "react";
 import { Button } from '@mui/material';
 import { PersonalDataVarificationForInvestor } from '../../../Verification/PersonalDataVarification'
-import { objForPersonalDataOfInvestor  } from '../../../utils/factory/ObjForFormData';
+import { objForPersonalDataOfInvestor } from '../../../utils/factory/ObjForFormData';
 import { SchemaForInvestorObj } from '../../../utils/factory/ObjForSchema';
-import {TypeForInvestorData} from '../../../utils/type'
+import { TypeForInvestorData } from '../../../utils/type'
 
 type propsType = {
     handleNext: Function
@@ -18,7 +18,7 @@ type propsType = {
 export default function PersonalDetailsForInvestor({ handleNext, setObjForSignInComonent }: propsType) {
 
 
-    const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForInvestorData>(objForPersonalDataOfInvestor )
+    const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForInvestorData>(objForPersonalDataOfInvestor)
 
     const [errorMessage, setErrorMessage] = useState<String | null>(null);
 
@@ -43,16 +43,33 @@ export default function PersonalDetailsForInvestor({ handleNext, setObjForSignIn
         }
     }
     useEffect(() => {
-        setDataForPersonalDetails(objForPersonalDataOfInvestor )
+        setDataForPersonalDetails(objForPersonalDataOfInvestor)
     }, [])
 
     return (
         <div className='mx-2 my-5'>
-            <div className="  pb-12">
+            <div className=" pb-12 text-center">
                 <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
                 <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
-                {errorMessage && <p className=' my-5 border border-red-700 rounded-xl p-1 bg-red-600 block mx-auto text-white w-1/2'>{errorMessage}</p>}
-
+                {errorMessage && <p className='my-5 p-1 text-lg block mx-auto text-red-600 w-1/2 text-center'>{errorMessage}</p>}
+                {/* <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div className="col-span-5 md:col-span-3">
+                        <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
+                            First Name
+                        </label>
+                        <div className="mt-2">
+                            <input
+                                type="text"
+                                name="first-name"
+                                id="first-name"
+                                autoComplete="first-name"
+                                onChange={handleChageInValue}
+                                value={dataForPersonalDetails["first-name"]}
+                                className="block w-full p-5 rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                            />
+                        </div>
+                    </div>
+                </div> */}
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="col-span-5 md:col-span-3">
                         <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
@@ -70,10 +87,6 @@ export default function PersonalDetailsForInvestor({ handleNext, setObjForSignIn
                             />
                         </div>
                     </div>
-                </div>
-
-
-                <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="col-span-5 md:col-span-3">
                         <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
                             Last Name
@@ -193,13 +206,15 @@ export default function PersonalDetailsForInvestor({ handleNext, setObjForSignIn
 
                 </div>
             </div>
-            <Button
-                variant='contained'
-                color='primary'
-                className='my-10'
-                onClick={handleClick}
-            >
-                Next</Button>
+            <div className="flex w-full justify-center">
+                <Button
+                    variant='contained'
+                    color='primary'
+                    className='my-10 border'
+                    onClick={handleClick}
+                >
+                    Next</Button>
+            </div>
         </div>
     )
 }

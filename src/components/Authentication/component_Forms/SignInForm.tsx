@@ -95,8 +95,8 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
       <Logo />
       {error && <p className=' my-5 p-1 text-lg block mx-auto text-red-600 w-1/2'>{error}</p>}
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <div className="space-y-6" >
-          <div className="">
+        <div className="space-y-6">
+          <div>
             <div className="text-sm flex justify-between">
               <label htmlFor="password" className="flex justify-start text-sm font-medium leading-6 text-gray-900">
                 Email
@@ -118,9 +118,8 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-5 "
               />
             </div>
-            <p className="mt-1 text-sm leading-6 text-gray-600">This Email will use for your login , If you want you can change it now.</p>
+            <p className="mt-1 p-2 text-sm leading-6 text-gray-600">This Email will use for your login , If you want to change , change it now.</p>
           </div>
-
           <div>
             <div className="flex items-center justify-between">
               <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
@@ -139,7 +138,6 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
               />
             </div>
           </div>
-
           <div>
             <div className="flex items-center justify-between">
               <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
@@ -163,7 +161,6 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
               />
             </div>
           </div>
-
           <div>
             <div className="flex items-center justify-between">
               <label htmlFor="cpassword" className="block text-sm font-medium leading-6 text-gray-900">
@@ -182,7 +179,6 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
               />
             </div>
           </div>
-
           <div className='my-4'>
             <button
               type="submit"

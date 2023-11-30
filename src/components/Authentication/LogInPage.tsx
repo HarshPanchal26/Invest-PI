@@ -150,7 +150,7 @@ export default function LogInPage() {
           <p className="mt-10 text-center text-sm  text-indigo-600 ">
             Not a member?{' '}
             <a href="/signin/type" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              <p className="inline-block p-3 border rounded-lg mx-3 text-white bg-red-600">Create Your Account</p>
+              <p className="inline-block p-2 border rounded-lg mx-3 text-white bg-red-600">Create Your Account</p>
             </a>
           </p>
         </div>

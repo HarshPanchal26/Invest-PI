@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Button } from '@mui/material';
 import { PersonalDataVarificationForIndividuals } from '../../../Verification/PersonalDataVarification'
-import {objForPersonalDataOfIndividuals} from '../../../utils/factory/ObjForFormData';
-import {SchemaForIndividualsObj} from '../../../utils/factory/ObjForSchema'
-import {TypeForIndividualsData} from '../../../utils/type'
+import { objForPersonalDataOfIndividuals } from '../../../utils/factory/ObjForFormData';
+import { SchemaForIndividualsObj } from '../../../utils/factory/ObjForSchema'
+import { TypeForIndividualsData } from '../../../utils/type'
 
 type propsType = {
   handleNext: Function,
   setObjForSignInComonent: React.Dispatch<React.SetStateAction<Object>>
 }
 
-export default function PersonalDetailsForIndividuals({ handleNext  , setObjForSignInComonent}: propsType) {
+export default function PersonalDetailsForIndividuals({ handleNext, setObjForSignInComonent }: propsType) {
 
   const [dataForPersonalDetails, setDataForPersonalDetails] = useState<TypeForIndividualsData>(objForPersonalDataOfIndividuals)
 
@@ -25,7 +25,7 @@ export default function PersonalDetailsForIndividuals({ handleNext  , setObjForS
     objForPersonalDataOfIndividuals[name] = value;
   }
 
-  const handleClick = async() => {
+  const handleClick = async () => {
     try {
       await PersonalDataVarificationForIndividuals(dataForPersonalDetails);
       let Schema = SchemaForIndividualsObj(dataForPersonalDetails);
@@ -36,11 +36,11 @@ export default function PersonalDetailsForIndividuals({ handleNext  , setObjForS
     }
   }
   return (
-    <div className='mx-2 my-5 '>
-      <div className="  pb-12">
+    <div className='mx-2 my-5'>
+      <div className="pb-12 text-center">
         <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
         <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
-        {errorMessage && <p className=' my-5 border border-red-700 rounded-xl p-1 bg-red-600 block mx-auto text-white w-1/2'>{errorMessage}</p>}
+        {errorMessage && <p className='my-5 p-1 text-lg block mx-auto text-red-600 w-1/2 text-center'>{errorMessage}</p>}
 
         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="sm:col-span-3">
@@ -224,13 +224,15 @@ export default function PersonalDetailsForIndividuals({ handleNext  , setObjForS
         </div>
       </div>
       {/* <button type='button' className='p-3 w-28 border my-5' onClick={handleClick}>Next Inside</button> */}
-      <Button
-        variant='contained'
-        color='primary'
-        className='my-10'
-        onClick={handleClick}
-      >
-        Next</Button>
+      <div className="flex w-full justify-center">
+        <Button
+          variant='contained'
+          color='primary'
+          className='my-10 border'
+          onClick={handleClick}
+        >
+          Next</Button>
+      </div>
     </div>
   )
 }
