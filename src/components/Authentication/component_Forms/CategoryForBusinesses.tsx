@@ -25,7 +25,7 @@ export default function CategoryForBusinesses({handleNext , setTypeofBusiness}: 
     return (
             <div className=' flex items-center justify-center h-auto flex-col'>
                 <Logo />
-                <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10">Slecte your Preference</p>
+                <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl my-10">Select  your Preference</p>
                 <div className='p-4 rounded-lg w-[80%] lg:w-5/6 text-center flex sm:flex-row flex-col flex-wrap h-[80%]  md:bg-gray-200'>
 
                     {categoryForUser.map((item, index) => {

@@ -7,11 +7,8 @@ import { NotificationContextProvier } from '../../context/NotificationContext';
 import SidePannelForTieUps from '../DashBord/TieUps/components/SidePanleForTieUps';
 import SocketContextComponent from '../../context/ScoketHandlerComponent'
 import { Alert } from '@mui/material';
-// import SideBar from '../DashBord/Component_DashBord/SideBar';
-// import SideBar from '../DashBord/Component_DashBord/SideBar';
-// import Suggestions from '../DashBord/Component_DashBord/Suggestions';
-// import SuggestedPeople from '../DashBord/Component_DashBord/SuggestedPeople';
-// import SidePannelForPeople from '../DashBord/Component_DashBord/SidePannelForPeople';
+import { QueryClientProvider, QueryClient } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 const RoutingForIntroPages = [
     ...IntroPages
@@ -30,109 +27,113 @@ const RoutingForTieUps = [
 ]
 
 export default function IndexForRoute() {
+
+    const queryClient = new QueryClient();
+
     return (
         <>
-            <Router basename="/">
-                <Routes>
-                    {RoutingForIntroPages.map((page) => {
-                        return (
-                            <Route
-                                path={page.path}
-                                element={
-                                    // <ContextProviderForDashBord>
+            <QueryClientProvider client={queryClient}>
+                <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+                <Router basename="/">
+                    <Routes>
+                        {RoutingForIntroPages.map((page) => {
+                            return (
+                                <Route
+                                    path={page.path}
+                                    element={
+                                        // <ContextProviderForDashBord>
                                         <Suspense fallback={<div>Loading......</div>}>
                                             {page.component}
                                         </Suspense>
-                                    // </ContextProviderForDashBord>
-                                }
-                            />
-                        )
-                    })}
-                    {RoutingForDashBordPages.map((page) => {
-                        return (
-                            <Route
-                                path={page.path}
-                                element={
-                                    <ContextProviderForDashBord>
-                                        <NotificationContextProvier>
-                                            <SocketContextComponent>
-                                                <div className='md:flex flex-row h-full w-full gap-1'>
-                                                    <div className='flex flex-col w-full'>
-                                                        <NavbarForDashBord />
-                                                        <Alert variant='standard' severity="warning">
-                                                            <p className='text-lg font-bold'>
-                                                                Info — This is a proposal web app designed to acquaint you with the fundamental business workflow. This is not an official website for Investi PI .
-                                                            </p>
-                                                        </Alert>
-                                                        <Suspense fallback={<div>Loading......</div>}>
-                                                            <div className='mt-2 overflow-auto h-full mx-2'>
-                                                                {page.component}
+                                        // </ContextProviderForDashBord>
+                                    }
+                                />
+                            )
+                        })}
+                        {RoutingForDashBordPages.map((page) => {
+                            return (
+                                <Route
+                                    path={page.path}
+                                    element={
+                                            <ContextProviderForDashBord>
+                                                <NotificationContextProvier>
+                                                    <SocketContextComponent>
+                                                        <div className='md:flex flex-row h-full w-full gap-1'>
+                                                            <div className='flex flex-col w-full'>
+                                                                <NavbarForDashBord />
+                                                                <Alert variant='standard' severity="warning">
+                                                                    <p className='text-lg font-bold'>
+                                                                        Info — This is a proposal web app designed to acquaint you with the fundamental business workflow. This is not an official website for Investi PI .
+                                                                    </p>
+                                                                </Alert>
+                                                                <Suspense fallback={<div>Loading......</div>}>
+                                                                    <div className='mt-2 overflow-auto h-full mx-2'>
+                                                                        {page.component}
+                                                                    </div>
+                                                                </Suspense>
                                                             </div>
+                                                        </div>
+                                                    </SocketContextComponent>
+                                                </NotificationContextProvier>
+                                            </ContextProviderForDashBord>
+                                    }
+                                />
+                            )
+                        })}
+                        {RoutingForProfilePage.map((page) => {
+                            return (
+                                <Route
+                                    path={page.path}
+                                    element={
+                                        <ContextProviderForDashBord>
+                                            <NotificationContextProvier>
+                                                <SocketContextComponent>
+                                                    <div className='flex flex-col flex-grow w-auto' >
+                                                        <NavbarForDashBord />
+                                                        <Suspense fallback={<div>Loading......</div>}>
+                                                            {page.component}
                                                         </Suspense>
+
                                                     </div>
-                                                </div>
-                                            </SocketContextComponent>
-                                        </NotificationContextProvier>
-                                    </ContextProviderForDashBord>
-                                }
-                            />
-                        )
-                    })}
-                    {RoutingForProfilePage.map((page) => {
-                        return (
-                            <Route
-                                path={page.path}
-                                element={
-                                    <ContextProviderForDashBord>
-                                        <NotificationContextProvier>
-                                            <SocketContextComponent>
-                                                <div className='flex flex-col flex-grow w-auto' >
-                                                    <NavbarForDashBord />
-                                                    <Suspense fallback={<div>Loading......</div>}>
-                                                        {page.component}
-                                                    </Suspense>
+                                                </SocketContextComponent>
+                                            </NotificationContextProvier>
+                                        </ContextProviderForDashBord>
 
-                                                </div>
-                                            </SocketContextComponent>
-                                        </NotificationContextProvier>
-                                    </ContextProviderForDashBord>
-
-                                }
-                            />
-                        )
-                    })}
-                    {RoutingForTieUps.map((page) => {
-                        return (
-                            <Route
-                                path={page.path}
-                                element={
-                                    <ContextProviderForDashBord>
-                                        <NotificationContextProvier>
-                                            <SocketContextComponent>
-                                                <div className='flex flex-col flex-grow w-auto' >
-                                                    <NavbarForDashBord />
-                                                    <div className='flex flex-row w-full h-full gap-4 mt-2'>
-                                                        <div className='w-1/5 xl:block hidden h-full sticky top-14'>
-                                                            <SidePannelForTieUps />
-                                                        </div>
-                                                        <div className='xl:w-4/5 w-full h-full'>
-                                                            <Suspense fallback={<div>Loading......</div>}>
-                                                                {page.component}
-                                                            </Suspense>
+                                    }
+                                />
+                            )
+                        })}
+                        {RoutingForTieUps.map((page) => {
+                            return (
+                                <Route
+                                    path={page.path}
+                                    element={
+                                        <ContextProviderForDashBord>
+                                            <NotificationContextProvier>
+                                                <SocketContextComponent>
+                                                    <div className='flex flex-col flex-grow w-auto' >
+                                                        <NavbarForDashBord />
+                                                        <div className='flex flex-row w-full h-full gap-4 mt-2'>
+                                                            <div className='w-1/5 xl:block hidden h-full sticky top-14'>
+                                                                <SidePannelForTieUps />
+                                                            </div>
+                                                            <div className='xl:w-4/5 w-full h-full'>
+                                                                <Suspense fallback={<div>Loading......</div>}>
+                                                                    {page.component}
+                                                                </Suspense>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </SocketContextComponent>
-                                        </NotificationContextProvier>
-                                    </ContextProviderForDashBord>
-                                }
-                            />
-                        )
-                    })}
-                </Routes>
-            </Router>
-
-
+                                                </SocketContextComponent>
+                                            </NotificationContextProvier>
+                                        </ContextProviderForDashBord>
+                                    }
+                                />
+                            )
+                        })}
+                    </Routes>
+                </Router>
+            </QueryClientProvider>
         </>
     )
 }

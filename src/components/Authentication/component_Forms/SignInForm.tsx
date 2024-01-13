@@ -63,7 +63,6 @@ export default function SignInForm({ objForSignInComonent, ArrayForInterest }: t
             setError(result.data.message)
             setLoaderForLogin(false)
           }
-
         } catch (error: any) {
           setLoaderForLogin(false)
           if (error.response?.data?.message) setError(error.response.data.message);

@@ -1,0 +1,204 @@
+-----------------------------------      REACT QUERY      -----------------------------------
+
+** Main points of react query 
+
+BASIC QUERY 
+POLL DATA 
+RQ DEV TOOL 
+CREATE REUSEABLE REACT TOOLS
+QUERY BY ID
+PARELLEL QUERY 
+DYNAMIC QUERIES 
+DEPENDANT QUERIES
+INFINTE & PAGINATED QUERY 
+
+
+
+1 . install package react-query 
+2 .  import {QueryClientProvider  , QueryClient } from 'rect-query;
+3 . Wrap the component on which you want impact of react -query with QueryClientProvider
+4 . make a instance of QueryClient() usind new and pass it as a props in <QueryClientProvider></QueryClientProvider>
+
+
+** useQuery hook 
+
+ const {isLoading , data , error , isError} = useQuery('query-name-as-per-use , (()=>{
+    return axios.get('url')
+ }))
+
+ Beacuse of this default destructuring which resturn loading state and data , we do not need to use additional state for maintain mean time (loading time) , and also return error flags and isError flag to handle error , reduce lines for try catch block
+
+
+
+*** Devtool 
+
+import {ReactQueryDevTools} from 'rect-query/devtool
+
+and wrap all the component with <ReactQueryDevTools>  , it is a kind of siblling of browser develper tool , learn more about it later in the session 
+
+
+*** Query Cache
+
+    react query comes up with another mindblowing thing called query cache , will store query requeest (fetchd api ) for 5 min (which can be change) in cache memory , so each time in between givin duartion if some one re-visit the page , react query can easily fetch it from cache , no need to go for server . 
+
+    Not enough ohk !!! evnen  after serve fetch data react query goes for server to fetch data if there might be any change in data in between mintime (5 mins)
+
+    Still not enough !! ohk , here is more for you , react-query provide a "staleTime" for you to set a time , when react-query should fire background request for fetch new data (if there is any chnage in your dtabase for user , so you can set time as per your requirment , so react-query throws request afetr specfic time , by default the time is 0 min )
+
+    How to know it ? Is react -query provide any flag for it ? 
+
+    Yes !!!! 
+     
+     const {isLoading , data , error , isError , isFetching } = useQuery('query-name-as-per-use , (()=>{
+         return axios.get('url')
+     }, 
+     {
+      cacheTime : 5min (default 5 min),  
+      staleTime : 1 min (default 0 min),
+      refetchOnMount : true/false/always (default true ---> fetch each time component re-renders)  
+      refetchOnWindowFocus : true/false/always (default true ---> fetch each time when tab chamge or window lose and gain focus again re-renders)  
+     }
+   ))
+
+
+   ** Polling 
+
+
+   polloing is important when we need continue updation in data , whether user update component irrecpective of  any user action which causes rerender, or window focus (like stock market app) 
+
+   polling fetch data in each period of interval irrecpective of any other factor 
+
+
+    const {isLoading , data , error , isError , isFetching } = useQuery('query-name-as-per-use , (()=>{
+         return axios.get('url')
+     }, 
+     {
+        refetcInterval : 2000, (refetch data in every 2 sec)
+        refetchIntervalInBackground : 2000  (refetch data in every 2 sec , event if window losses focus)
+     }
+   ))
+
+
+
+   *** Success and error callbcak 
+
+    const onError = ()=>{
+        // do some side effect when error occurs  
+    }
+
+    const onSuccess = ()=>{
+        // do some side effect when error occurs  
+    }
+
+    const {isLoading , data , error , isError , isFetching } = useQuery('query-name-as-per-use , (()=>{
+         return axios.get('url')
+     }, 
+     {
+        refetcInterval : 2000,    //(refetch data in every 2 sec)
+        refetchIntervalInBackground : 2000 ,   //(refetch data in every 2 sec , event if window losses focus)
+        onSuccess : onSuccess,
+        onError : onError 
+     }
+   ))
+
+
+** Data tarsformation 
+
+    we can even manuplate data we recive from serve , beacuse at front end configartion required for dispaly data might be diffrent 
+
+        const onError = (error)=>{
+            // magically comes with default paremeter called error ,which contains all about error 
+        // do some side effect when error occurs  
+    }
+
+    const onSuccess = (data)=>{
+        // magically comes with default paremeter called data ,which contains all about data 
+        // do some side effect when error occurs  
+    }
+
+    const {isLoading , data , error , isError , isFetching } = useQuery('query-name-as-per-use , (()=>{
+         return axios.get('url')
+     }), 
+     {
+        onSuccess : onSuccess,
+        onError : onError ,
+        select : (data) => {
+            const newData = data.map/filter/resduce   // do any necessary operation 
+            return newData
+        }
+     }
+   )
+
+
+   because of this cofigartion now , wherever we get data (in onSuccess) is with change configartion as we set in select query
+
+
+   *** Custom hook 
+
+
+      we can make a custom hook  by wrapping up it by a one function which returns useQuery hook , pass all necessary configartion for query through object type argument , and get it those parameter as props in custom hooks 
+
+
+      example : 
+
+      const useCustomQueryHook = (props)=>{
+        return useQuery(['query-name' , dependencies] , (()=>{
+                 return axios.get('url')
+              }) , props)
+      }
+
+
+      // in another file 
+
+      import useCustomQueryHook from './path'
+
+      const {isLoading , data , error , isError , isFetching} 
+      =  useCustomQueryHook({neccessary cinfigartion for query})
+
+
+
+      *** refetch  (onClick)
+
+
+      just make any button , onClick you want to trigger an api request  . useQuey gives us one more functionality in callles refetch . 
+
+      const {refetch , and other things} = useQuery()
+
+      use this refetch in any button onClick={refetch} anf it will trigger api request.
+
+      <button onClick={refetch}></button>
+
+
+    **parallel query 
+
+        const {data : asYouwant}  = useQuery();      
+        const {data : asYouwant1}  = useQuery();      
+
+    ** Dynamic Query 
+
+
+    When you want to trigger same api request for moere the one time at a same time , react-query comes with "useQueries"  
+
+    const dynamicQuery = ({arrayOfId}: props)=>{
+            const result = useQueris(
+                arrayOfId.map((id)=>{
+                    return {
+                        querykey : ['name-of-query' , id],
+                        queryFn : () => await axios.get('find/${id}')
+                    }
+                })
+        )
+    }
+
+
+    ** pagination 
+
+    depends more on backend , but we can maintain old data while requesting for anothe page ,  so we do not need to shoe loading satatus , instead until react-query fetching new data , it shows old data . Give good user experiance (personaly I do not recomend this in envey sitaation)
+
+    // just add this configration
+
+    {
+        keepPreviousData : true,
+    }
+
+
