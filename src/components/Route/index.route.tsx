@@ -63,7 +63,7 @@ export default function IndexForRoute() {
                                                                 <NavbarForDashBord />
                                                                 <Alert variant='standard' severity="warning">
                                                                     <p className='text-lg font-bold'>
-                                                                        Info — This is a proposal web app designed to acquaint you with the fundamental business workflow. This is not an official website for Investi PI .
+                                                                        Info — This platform serves as a prototype to familiarize investors with the foundational aspects of the business. A comprehensive website tailored for user engagement is currently in development and is slated for launch by July 2024.
                                                                     </p>
                                                                 </Alert>
                                                                 <Suspense fallback={<div>Loading......</div>}>
